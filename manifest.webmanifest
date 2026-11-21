@@ -1,0 +1,26 @@
+{
+  "id": "/deutsch-lernen/",
+  "name": "Deutsch lernen — AZ",
+  "short_name": "Deutsch AZ",
+  "description": "Alman dili A1: dərslər, lüğət, qrammatika və praktika.",
+  "lang": "az",
+  "start_url": "/deutsch-lernen/",
+  "scope": "/deutsch-lernen/",
+  "display": "standalone",
+  "background_color": "#f5f5ed",
+  "theme_color": "#183b32",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
