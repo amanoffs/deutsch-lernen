@@ -1,4 +1,4 @@
-/* Responsive PDF reader V2.0.19. Open-source PDF.js loads only in the PDF tab. */
+/* Responsive PDF reader V2.0.20. Open-source PDF.js loads only in the PDF tab. */
 const PDF_JS_CDN='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
 const PDF_WORKER_CDN='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 let pdfJsPromise=null;
@@ -32,7 +32,7 @@ function renderPdfBookNew(view){
  const file=el('input');file.type='file';file.accept='.pdf,application/pdf';file.className='pdf-import-input';
  const choose=btn('PDF-ni cihazdan seç',()=>file.click(),'pdf-local-option');
  root.append(menu,screen,file);view.append(root);
- let pdf=null,drawTask=null,renderId=0,source=PDF_PUBLIC_SOURCE,available=false;
+ let pdf=null,drawTask=null,renderId=0,source=PDF_PUBLIC_SOURCE,available=false,nativeFrame=null;
  function reflect(){
   const max=pdf?.numPages||PDF_TOTAL_PAGES;
   pdfBookPage=Math.max(1,Math.min(max,Math.floor(Number(pdfBookPage)||1)));
@@ -60,21 +60,31 @@ function renderPdfBookNew(view){
    await drawTask.promise;
   }catch(e){if(e?.name!=='RenderingCancelledException'&&alive())fallback()}
  }
- function goto(p){pdfBookPage=Math.max(1,Math.min(pdf?.numPages||PDF_TOTAL_PAGES,Math.floor(Number(p)||1)));reflect();if(available)paint()}
+ function goto(p){
+  pdfBookPage=Math.max(1,Math.min(pdf?.numPages||PDF_TOTAL_PAGES,Math.floor(Number(p)||1)));
+  reflect();full.href=source+'#page='+pdfBookPage;
+  if(available)paint();
+  else if(nativeFrame)nativeFrame.src=source+'#page='+pdfBookPage+'&toolbar=1&view=FitH';
+ }
  chapters.onchange=()=>goto(chapters.value);
  pageNum.onchange=()=>goto(pageNum.value);
  pageNum.onkeydown=e=>{if(e.key==='Enter'){goto(pageNum.value);pageNum.blur()}};
  function fallback(){
   if(!alive())return;
-  available=false;menu.hidden=true;
-  const frame=el('iframe',undefined,'pdf-embed-fallback');frame.title='Begegnungen A1+ PDF kitab';frame.src=source+'#toolbar=1&view=FitH';
-  const link=el('a','↗','pdf-full-link pdf-embed-open');link.href=source;link.target='_blank';link.rel='noopener noreferrer';link.setAttribute('aria-label','PDF-ni başqa pəncərədə aç');
-  const wrap=el('div',undefined,'pdf-fallback-wrap');wrap.append(frame,link,choose);
-  screen.replaceChildren(wrap);
+  available=false;pdf=null;menu.hidden=false;
+  const frame=el('iframe',undefined,'pdf-embed-fallback');
+  frame.title='Begegnungen A1+ PDF kitab';
+  frame.src=source+'#page='+pdfBookPage+'&toolbar=1&view=FitH';
+  frame.setAttribute('allowfullscreen','');
+  nativeFrame=frame;
+  const wrap=el('div',undefined,'pdf-fallback-wrap');
+  wrap.append(frame,choose);screen.replaceChildren(wrap);
+  full.href=source+'#page='+pdfBookPage;
+  reflect();
  }
  async function load(url){
   if(!alive())return;
-  source=url;available=false;menu.hidden=true;screen.replaceChildren(el('div','PDF açılır…','pdf-spinner'));full.href=url;
+  source=url;available=false;nativeFrame=null;menu.hidden=false;screen.replaceChildren(el('div','PDF açılır…','pdf-spinner'));full.href=url;
   try{
    const lib=await ensurePdfJs();
    if(!alive())return;
@@ -112,6 +122,8 @@ function renderPdfBookNew(view){
   if(saved?.blob instanceof Blob){await load(pdfLocalLink(saved.blob,saved.name));return}
   let hosted=false;
   try{const r=await fetch(PDF_BOOK_FILE,{method:'HEAD',cache:'no-store'});hosted=r.ok&&(r.headers.get('content-type')||'').includes('pdf')}catch{}
-  if(alive())await load(hosted?PDF_BOOK_FILE:PDF_PUBLIC_SOURCE);
+  if(!alive())return;
+  if(hosted)await load(PDF_BOOK_FILE);
+  else{source=PDF_PUBLIC_SOURCE;fallback()}
  })();
 }
