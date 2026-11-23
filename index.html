@@ -18,6 +18,13 @@ html,body{width:100%;max-width:100%;margin:0}body{overflow-wrap:anywhere}main,he
 @media(max-width:700px){#nav{display:flex;gap:3px}#nav button,body.dark #nav button{font-size:clamp(9px,2.6vw,12px);padding:8px 1px;min-height:44px}body{padding-bottom:calc(100px + env(safe-area-inset-bottom))}}
  .practice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.practice-tile{text-align:left;display:flex;flex-direction:column;gap:8px;padding:16px;min-height:95px}.practice-tile:first-child{grid-column:1/-1}.practice-area{display:grid;gap:10px;margin:16px 0}.practice-option{text-align:left;width:100%}.practice-bank{display:flex;flex-wrap:wrap;gap:8px;min-height:58px;padding:10px;border:1px solid #8ba397;border-radius:12px}.practice-match{display:grid;grid-template-columns:1fr 1fr;gap:8px}.practice-match>div{display:grid;gap:8px}.practice-feedback{white-space:pre-line;border-radius:12px;padding:12px}.practice-feedback:empty{display:none}.p-good,body.dark .p-good{background:#dceee3!important;color:#17583c!important;border-color:#368565!important}.p-bad,body.dark .p-bad{background:#f8e5df!important;color:#8a352b!important;border-color:#bd6555!important}.practice-card button:disabled{opacity:.65}.practice-card .bar{margin-top:12px}@media(max-width:700px){#nav button,body.dark #nav button{font-size:clamp(8px,2.25vw,11px);padding:7px 0;letter-spacing:-.2px}}
 .vocab-section{font-size:1rem;font-weight:700;background:var(--accent,#183b32);color:#fff;background:#193c32;padding:9px 13px;border-radius:9px;margin:16px 0 8px;letter-spacing:.02em}.dark .vocab-section{background:#315c4c;color:#fff}.vocab-page-label{font-weight:600;margin:20px 0 5px;color:inherit}.vocab-heading{display:flex;align-items:baseline;gap:10px;min-width:0}.vocab-heading h2{margin:0;min-width:0;flex:1}.vocab-number{font-size:.85rem;font-weight:600;opacity:.72;flex:none;font-variant-numeric:tabular-nums}.vocab-controls{display:grid;gap:8px;margin:10px 0}.vocab-controls select,.vocab-controls input{width:100%}.vocab-subnumber{font-size:.8rem;opacity:.75;margin:0 0 5px}.vocab-card{margin-top:8px}
+.vocab-card>.az{margin:8px 0 12px}
+.vocab-filters{margin:0 0 12px}
+.vocab-filters>select{max-width:100%;margin-top:8px}
+.vocab-answer-filter{display:flex;align-items:center;gap:8px;margin-top:10px}
+.vocab-details{margin-top:12px;border-top:1px solid #9dbdb0;padding-top:8px}
+.vocab-details>summary,.vocab-filters>summary{cursor:pointer;font-weight:600;padding:6px 0}
+.vocab-details>p{margin:7px 0}
 .picker-label{display:block;font-size:13px;opacity:.85;margin:0 0 6px}#lessonSectionWrap{margin-top:10px}#pickerContext{margin:0;font-size:14px} [hidden]{display:none!important}
 
 /* V2.0.24 — self-check translation reveal and compact vocabulary usage notes */
@@ -279,6 +286,20 @@ function interactiveHeading(x,vocabContext=false){let h=el('h2');for(const t of 
 
 // V2.0.24 — Compact A1 grammar reference and one-question-at-a-time review.
 const grammarTopics=[
+ {id:'have-exist',name:'Var və yox — haben, es gibt, da sein',
+  desc:'Almancada sahiblik üçün «haben», bir yerdə nəyinsə mövcudluğunu demək üçün «es gibt», müəyyən adamın və ya əşyanın orada olduğunu bildirmək üçün «da sein» işlədilir.',
+  rows:[['haben + Akkusativ','Sahiblik. «ich habe» — mənim var, «du hast» — sənin var.'],
+   ['es gibt + Akkusativ','Bir yerdə nəsə var və ya mövcuddur.'],
+   ['da sein','Müəyyən adam və ya əşya buradadır, oradadır və ya yerindədir.'],
+   ['kein / keine / keinen','İsmi inkar edir. «einen Stift» → «keinen Stift», «eine Apotheke» → «keine Apotheke».'],
+   ['nicht da','Burada, orada və ya yerində deyil.'],
+   ['Ja / Nein','Suala qısa cavab. «Ja» — bəli, «Nein» — xeyr.']],
+  examples:[['Ich habe einen Stift.','Mənim qələmim var.'],['Ich habe keinen Stift.','Mənim qələmim yoxdur.'],
+   ['Hier gibt es eine Apotheke.','Burada aptek var.'],['Hier gibt es keine Apotheke.','Burada aptek yoxdur.'],
+   ['Emil ist da.','Emil buradadır.'],['Emil ist nicht da.','Emil burada yoxdur.'],
+   ['Hast du einen Stift?','Qələmin var?'],['Nein, ich habe keinen Stift.','Xeyr, qələmim yoxdur.']],
+  tip:'Stift kişi cinsindədir (der Stift), buna görə burada einen və keinen işlənir. Apotheke qadın cinsindədir (die Apotheke), buna görə eine və keine işlənir.'},
+
  {id:'pronouns',name:'Şəxs əvəzlikləri — ich, du, er, sie...',desc:'Almancada «o» və «siz» üçün fərqli əvəzliklər var. Qeyri-rəsmi «du» tək, «ihr» cəm müraciətdir.',rows:[
   ['ich','mən'],['du','sən (qeyri-rəsmi)'],['er','o (kişi)'],['sie','o (qadın)'],['es','o (orta cins)'],['wir','biz'],['ihr','siz (qeyri-rəsmi, cəm)'],['sie','onlar'],['Sie','Siz (rəsmi)']],
   examples:[['Ich lerne Deutsch.','Mən alman dili öyrənirəm.'],['Wir lernen Deutsch.','Biz alman dili öyrənirik.']],
@@ -369,6 +390,8 @@ const grammarTopics=[
  tip:'Rəsmi göstərişdə «fel + Sie» işlənir: «Hören Sie!». «bitte» xahişi nəzakətli edir.'}
 ];
 const grammarQuickQuiz=[
+ {question:'«Mənim qələmim yoxdur» almancada necə deyilir?',options:['Ich habe keinen Stift.','Ich habe einen Stift.','Der Stift ist da.'],answer:0,why:'Sahibliyin inkarında «einen Stift» → «keinen Stift» olur.'},
+ {question:'«Burada aptek var» cümləsində hansı quruluş işlənir?',options:['Ich habe','Hier gibt es','Emil ist da'],answer:1,why:'«Hier gibt es eine Apotheke.» burada aptekin mövcud olduğunu bildirir.'},
  {question:'«Sie ist Lehrerin.» cümləsində «Sie» nə deməkdir?',options:['o (qadın)','onlar','Siz (rəsmi)'],answer:0,why:'«ist» 3-cü şəxs tək formasıdır.'},
  {question:'«Frau Müller, sprechen Sie Deutsch?» cümləsində «Sie» nə deməkdir?',options:['o (qadın)','Siz (rəsmi)','onlar'],answer:1,why:'Birbaşa «Frau Müller» deyə müraciət edilir.'},
  {question:'«Die Kinder sind hier. Sie spielen.» cümləsində «Sie» nə deməkdir?',options:['onlar','o (qadın)','Siz (rəsmi)'],answer:0,why:'Öncəki cümlədə söhbət uşaqlardan gedir.'},
@@ -622,7 +645,7 @@ function sourceSelect(value,change,all=false){let r=el('div',undefined,'row');fo
 function vocabGroup(l,x){return x.section||'Bölmə qeyd edilməyib'}
 function vocabSectionHeader(view,x,section){let label=x.section_header_number!=null?x.section_header_number+' · '+section:section;view.append(el('div',label,'vocab-section'))}
 function vocabHeading(x){let r=el('div',undefined,'vocab-heading');if(x.source_number!=null)r.append(el('span',String(x.source_number)+'.','vocab-number'));r.append(interactiveHeading(x,true));return r}
-let libraryPage='';let librarySection='all';let lessonSection='all';let sentenceTitle=lessons[li]?.title||initial.title;
+let libraryPage='';let librarySection='all';let hideVocabAnswers=false;let lessonSection='all';let sentenceTitle=lessons[li]?.title||initial.title;
 const legacyTitle8='Begegnungen A1+ · Kapitel 1 · A1 – Sich vorstellen (səh. 8)';
 const legacyTitle9=initial.title;
 function chapterOf(l){return Number(l.chapter)||((l.title===legacyTitle8||l.title===legacyTitle9)?1:Number(l.title.match(/Kapitel\s+(\d+)/i)?.[1])||0)}
@@ -806,22 +829,109 @@ function lessonTranslation(x,i){
 }
 
 function renderLibrary(view){
- view.append(el('h2','Lüğət kitabı'));
- let books=orderedBooks('vocabulary');if(!books.length){view.append(el('p','Bu kitab üçün hələ səhifə əlavə edilməyib.'));return}
- let vocab=true;
- let select=el('select');select.setAttribute('aria-label','Kitab səhifəsi');let all=el('option','Bütün səhifələr');all.value='all';select.append(all);
- for(let l of books){let o=el('option',l.title);o.value=String(lessons.indexOf(l));select.append(o)}
- if(vocab){let current=currentVocab();li=lessons.indexOf(current);select.value=libraryPage==='all'?'all':String(li);if(libraryPage!=='all')libraryPage=current.title;refresh()}
- let sec=el('select');sec.setAttribute('aria-label','Kitabdakı tapşırıq bölməsi');let inp=el('input');inp.placeholder=vocab?'Söz, tərcümə və ya sıra nömrəsi axtar':'Almanca və ya Azərbaycanca axtar';inp.value=query;
- let controls=el('div',undefined,'vocab-controls');controls.append(select);if(vocab)controls.append(sec);controls.append(inp);let list=el('div');view.append(controls,learnedVisibilityControl(),list);
- function selectedBooks(){return select.value==='all'?books:[lessons[+select.value]].filter(Boolean)}
- function sections(){if(!vocab)return;let names=[...new Set(selectedBooks().flatMap(l=>l.items.map(x=>vocabGroup(l,x))))];sec.replaceChildren();let o=el('option','Bütün bölmələr');o.value='all';sec.append(o);for(let s of names){let o=el('option',s);o.value=s;sec.append(o)}if(!names.includes(librarySection))librarySection='all';sec.value=librarySection}
- function draw(){list.replaceChildren();let q=query.trim().toLocaleLowerCase('az');for(let l of selectedBooks()){
- let lastSection=null,started=false;for(let x of l.items){let k=lessons.indexOf(l)+':'+l.items.indexOf(x);if(!showLearnedItems&&known[k])continue;let group=vocabGroup(l,x);if(vocab&&sec.value!=='all'&&sec.value!==group)continue;let search=(x.de+' '+x.az+' '+(vocab?group:'')).toLocaleLowerCase('az');let numberMatch=vocab&&/^\d+$/.test(q)&&(String(x.source_number)===q||String(x.parent_number)===q||String(x.section_header_number)===q);if(q&&(/^\d+$/.test(q)&&vocab?!numberMatch:!search.includes(q)))continue;
- if(vocab&&!started&&select.value==='all')list.append(el('div',l.title,'vocab-page-label'));started=true;if(vocab&&group!==lastSection){let headerItem=l.items.find(y=>vocabGroup(l,y)===group&&y.section_header_number!=null)||x;vocabSectionHeader(list,headerItem,group);lastSection=group}
- let c=el('article',undefined,'card'+(vocab?' vocab-card':''));c.append(vocab?vocabHeading(x):interactiveHeading(x));if(vocab&&x.parent_number!=null)c.append(el('small','№ '+x.parent_number+' · fel forması','vocab-subnumber'));c.append(el('p',x.pron,'pron'),vocabTranslationToggle(x,l));if(x.article||x.plural)c.append(el('small',[x.article?'Artikl: '+x.article:'',x.plural?'Cəm: '+x.plural:''].filter(Boolean).join(' · ')));if(x.ipa)c.append(el('small',x.ipa));if(x.phonetics_source==='automatic')c.append(el('small','IPA / oxunuş: avtomatik, təxmini.'));if(x.number_note)c.append(el('small',x.number_note));let r=el('div',undefined,'row');sound(r,x.de);r.append(btn(stars[k]?'★':'☆',()=>{stars[k]=!stars[k];save();draw()}),btn(known[k]?'✓ Öyrənilib':'Öyrəndim',()=>{known[k]=!known[k];save();draw()},known[k]?'primary':''));c.append(r);list.append(c)
- }}if(!list.children.length)list.append(el('p',!showLearnedItems?'Öyrənilməmiş söz görünmür. Öyrəndiklərini yuxarıdakı düymə ilə göstərə bilərsən.':'Nəticə tapılmadı.','learned-empty'))}
- select.onchange=()=>{if(vocab){libraryPage=select.value==='all'?'all':lessons[+select.value].title;if(select.value!=='all')li=+select.value;resetSelection();librarySection='all';sections();refresh();smartRefresh()}draw()};sec.onchange=()=>{librarySection=sec.value;draw()};inp.oninput=()=>{query=inp.value;draw()};sections();draw()
+ view.append(el('h2','Lüğət'));
+ const books=orderedBooks('vocabulary');
+ if(!books.length){view.append(el('p','Lüğətə hələ səhifə əlavə edilməyib.'));return}
+ const select=el('select');
+ select.setAttribute('aria-label','Lüğət səhifəsi');
+ const all=el('option','Bütün səhifələr');
+ all.value='all';select.append(all);
+ for(const book of books){
+  const page=pageOf(book);
+  const option=el('option',page?'Səhifə '+page:book.title);
+  option.value=String(lessons.indexOf(book));
+  select.append(option);
+ }
+ const current=currentVocab();
+ li=lessons.indexOf(current);
+ select.value=libraryPage==='all'?'all':String(li);
+ if(libraryPage!=='all')libraryPage=current.title;
+ refresh();
+
+ const input=el('input');
+ input.type='search';input.placeholder='Söz, tərcümə və ya nömrə axtar';
+ input.setAttribute('aria-label','Lüğətdə axtar');input.value=query;
+ const controls=el('div',undefined,'vocab-controls');
+ controls.append(input,select);
+ const filters=el('details',undefined,'vocab-filters');
+ const section=el('select');
+ section.setAttribute('aria-label','Kitab bölməsi');
+ const answerToggle=el('input');answerToggle.type='checkbox';answerToggle.checked=hideVocabAnswers;
+ const answerLabel=el('label',undefined,'vocab-answer-filter');
+ answerLabel.append(answerToggle,document.createTextNode('Tərcümələri gizlət'));
+ filters.append(el('summary','Filtrlər'),section,answerLabel,learnedVisibilityControl());
+ filters.open=librarySection!=='all'||hideVocabAnswers;
+ const list=el('div');
+ view.append(controls,filters,list);
+
+ function selectedBooks(){return select.value==='all'?books:[lessons[Number(select.value)]]}
+ function updateSections(){
+  const names=[...new Set(selectedBooks().flatMap(book=>book.items.map(item=>vocabGroup(book,item))))];
+  const allSections=el('option','Bütün mövzular');
+  allSections.value='all';
+  section.replaceChildren(allSections,...names.map(name=>el('option',name)));
+  if(!names.includes(librarySection))librarySection='all';
+  section.value=librarySection;
+ }
+ function draw(){
+  list.replaceChildren();
+  const term=query.trim().toLocaleLowerCase('az');
+  const byNumber=/^\d+$/.test(term);
+  for(const book of selectedBooks()){
+   let started=false;
+   let lastSection=null;
+   for(const [index,item] of book.items.entries()){
+    const key=lessons.indexOf(book)+':'+index;
+    const group=vocabGroup(book,item);
+    if(!showLearnedItems&&known[key])continue;
+    if(section.value!=='all'&&section.value!==group)continue;
+    const searchable=(item.de+' '+item.az+' '+group).toLocaleLowerCase('az');
+    if(term&&(byNumber?![item.source_number,item.parent_number,item.section_header_number].some(number=>String(number)===term):!searchable.includes(term)))continue;
+    if(!started&&select.value==='all')list.append(el('div',pageOf(book)?'Səhifə '+pageOf(book):book.title,'vocab-page-label'));
+    started=true;
+    if(!term&&group!=='Bölmə qeyd edilməyib'&&group!==lastSection){
+     vocabSectionHeader(list,item,group);
+     lastSection=group;
+    }
+
+    const card=el('article',undefined,'card vocab-card');
+    card.append(vocabHeading(item),hideVocabAnswers?vocabTranslationToggle(item,book):el('p',item.az,'az'));
+    const actions=el('div',undefined,'row');
+    const favorite=btn(stars[key]?'★':'☆',()=>{stars[key]=!stars[key];save();draw()});
+    favorite.setAttribute('aria-label',stars[key]?'Seçilmişlərdən çıxar':'Seçilmişlərə əlavə et');
+    actions.append(btn('🔊 Dinlə',()=>say(item.de)),favorite,
+      btn(known[key]?'✓ Öyrənilib':'Öyrəndim',()=>{known[key]=!known[key];refresh();draw()},known[key]?'primary':''));
+    card.append(actions);
+
+    const details=el('details',undefined,'vocab-details');
+    details.append(el('summary','Sözün detalları'));
+    if(item.pron)details.append(el('p','Oxunuş: '+item.pron));
+    if(item.ipa)details.append(el('p','IPA: '+item.ipa));
+    if(item.phonetics_source==='automatic')details.append(el('small','IPA və oxunuş avtomatik hazırlanıb, təxminidir.'));
+    if(item.article||item.plural)details.append(el('p',[item.article?'Artikl: '+item.article:'',item.plural?'Cəm: '+item.plural:''].filter(Boolean).join(' · ')));
+    if(item.parent_number!=null)details.append(el('p','№ '+item.parent_number+' · fel forması'));
+    if(item.number_note)details.append(el('p',item.number_note));
+    if(item.rules)details.append(el('p',item.rules));
+    const hint=item.translation_note||vocabHint(item);
+    if(hint)details.append(el('p',hint));
+    const audio=el('div',undefined,'row');
+    audio.append(btn('◷ Yavaş dinlə',()=>say(item.de,.5,'sentence')),btn('Dayandır',stopAudio));
+    details.append(audio);
+    card.append(details);
+    list.append(card);
+   }
+  }
+  if(!list.children.length)list.append(el('p','Nəticə tapılmadı.','learned-empty'));
+ }
+ select.onchange=()=>{
+  libraryPage=select.value==='all'?'all':lessons[Number(select.value)].title;
+  if(select.value!=='all')li=Number(select.value);
+  const search=input.value;resetSelection();query=search;librarySection='all';updateSections();refresh();smartRefresh();draw();
+ };
+ section.onchange=()=>{librarySection=section.value;draw()};
+ answerToggle.onchange=()=>{hideVocabAnswers=answerToggle.checked;draw()};
+ input.oninput=()=>{query=input.value;draw()};
+ updateSections();draw();
 }
 function ppool(){let current=practiceSource==='vocabulary'?currentVocab():practiceSource==='sentences'?orderedBooks('sentences').find(l=>l.title===sentenceTitle)||orderedBooks('sentences')[0]:lessons[li];let selected=(practiceScope==='all'?lessons:[current]).filter(l=>l&&(practiceSource==='all'||bookType(l)===practiceSource));if(practiceSource==='vocabulary'&&!selected.length)selected=orderedBooks('vocabulary');let rows=[],words=[];for(let l of selected)for(let x of l.items){if(typeof x.de!=='string'||typeof x.az!=='string'||!x.de.trim()||!x.az.trim())continue;if(bookType(l)==='vocabulary'){words.push(x);continue}rows.push(x);for(let line of (x.words||'').split('\n')){let i=line.indexOf('—');if(i<0)continue;let de=line.slice(0,i).trim(),az=line.slice(i+1).trim();if(de&&az&&/\p{L}/u.test(de))words.push({de,az})}}let unique=a=>[...new Map(a.map(x=>[pkey(x),x])).values()];return {rows:unique(rows),words:unique(words)}}
 function poptions(x,pool,field,other){let correct=String(x[field]||'').trim();let seen=new Set([pnorm(correct)]);let vals=[];for(let y of mix(pool)){let value=String(y[field]||'').trim();let normalized=pnorm(value);if(!normalized||seen.has(normalized)||pnorm(y[other]||'')===pnorm(x[other]||''))continue;seen.add(normalized);vals.push(value);if(vals.length===3)break}return mix([correct,...vals])}
