@@ -22,6 +22,7 @@ VOICES = {"de": "de-DE-KatjaNeural", "az": "az-AZ-BanuNeural"}
 PAUSE_BETWEEN_LANGUAGES_MS = 480
 PAUSE_BETWEEN_WORDS_MS = 900
 MAX_PARALLEL_REQUESTS = 3
+# Source update starts the page-one audio workflow once it is installed.
 
 
 async def generate_mp3(text: str, locale: str, path: Path, lock: asyncio.Semaphore):
