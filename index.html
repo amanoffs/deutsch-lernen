@@ -144,6 +144,10 @@ body.dark .number-value{background:#294d3b;color:#c1ecd4}
 .listening-info{font-size:13px;opacity:.8}
 .listening-summary{line-height:1.6;font-size:14px;margin:12px 0 18px}
 .listening-audio-area{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+.listening-caption{display:grid;align-content:center;gap:6px;min-height:7rem;padding:14px 16px;border:1px solid #9dbdb0;border-radius:12px;background:#e8f4ec;color:#183b32}
+body.dark .listening-caption{background:#1a342a;color:#f0fbf5;border-color:#466257}
+.listening-caption small{font-size:14px}
+.listening-caption strong{font-size:clamp(20px,5vw,27px);line-height:1.25;overflow-wrap:anywhere}
 .listening-audio-area audio{display:block;width:100%;max-width:100%;min-height:54px}
 .listening-download{display:inline-flex;align-items:center;justify-content:center;padding:13px 18px;text-decoration:none;border-radius:12px;background:#236b52;color:#fff;font-weight:700;min-height:46px}
 .listening-download:hover{background:#1a533e}
@@ -942,15 +946,130 @@ function renderNumbers(view){
 }
 
 
-/* One complete audio recording per vocabulary page, not per word. */
+// Speech onsets in audio-lessons/vocab-page-01.mp3, in seconds.
+const LISTENING_PAGE_ONE_CUES=[
+ [0.086, "de", "die Kommunikation"],
+ [2.665, "az", "kommunikasiya, ünsiyyət"],
+ [5.965, "de", "begrüßen"],
+ [7.833, "az", "salamlamaq"],
+ [9.704, "de", "sich vorstellen"],
+ [11.929, "az", "özünü təqdim etmək"],
+ [14.337, "de", "andere vorstellen"],
+ [16.563, "az", "başqasını təqdim etmək"],
+ [18.833, "de", "sich und andere vorstellen"],
+ [21.657, "az", "özünü və başqasını təqdim etmək"],
+ [24.892, "de", "buchstabieren"],
+ [26.969, "az", "hərf-hərf demək"],
+ [29.205, "de", "zählen"],
+ [30.886, "az", "saymaq"],
+ [32.6, "de", "der Wortschatz"],
+ [34.536, "az", "söz ehtiyatı"],
+ [36.711, "de", "die Angabe"],
+ [38.711, "az", "məlumat"],
+ [40.568, "de", "die Person"],
+ [42.518, "az", "şəxs"],
+ [43.704, "de", "Angaben zur Person"],
+ [46.112, "az", "şəxsə dair məlumatlar"],
+ [48.777, "de", "der Name"],
+ [50.637, "az", "ad, soyad"],
+ [52.906, "de", "das Alter"],
+ [54.776, "az", "yaş"],
+ [56.279, "de", "die Familie"],
+ [58.233, "az", "ailə"],
+ [59.828, "de", "das Land"],
+ [61.656, "az", "ölkə"],
+ [63.324, "de", "die Stadt"],
+ [65.076, "az", "şəhər"],
+ [66.838, "de", "der Beruf"],
+ [68.819, "az", "peşə, sənət, vəzifə"],
+ [72.009, "de", "die Sprache"],
+ [74.072, "az", "dil"],
+ [75.544, "de", "das Hobby"],
+ [77.431, "az", "hobbi"],
+ [78.742, "de", "die Zahl"],
+ [80.757, "az", "say"],
+ [81.861, "de", "hören"],
+ [83.554, "az", "qulaq asmaq"],
+ [85.141, "de", "lesen"],
+ [86.877, "az", "oxumaq"],
+ [88.568, "de", "das Jahr"],
+ [90.426, "az", "il"],
+ [91.562, "de", "alt"],
+ [93.082, "az", "qoca, köhnə"],
+ [95.4, "de", "die Muttersprache"],
+ [97.64, "az", "ana dili"],
+ [99.399, "de", "sprechen"],
+ [101.241, "az", "danışmaq"],
+ [102.953, "de", "lernen"],
+ [104.746, "az", "oxumaq, öyrənmək"],
+ [107.452, "de", "jetzt"],
+ [109.177, "az", "indi"],
+ [110.781, "de", "bisschen"],
+ [112.536, "az", "bir az"],
+ [114.231, "de", "sehr"],
+ [116.056, "az", "çox"],
+ [117.408, "de", "gut"],
+ [118.98, "az", "yaxşı"],
+ [120.566, "de", "sehr gut"],
+ [122.456, "az", "çox yaxşı"],
+ [124.357, "de", "wiederholen"],
+ [126.296, "az", "təkrar etmək"],
+ [128.356, "de", "wie"],
+ [129.994, "az", "necə"],
+ [131.598, "de", "heißen"],
+ [133.381, "az", "adlanmaq"],
+ [134.966, "de", "der Vorname"],
+ [137.064, "az", "ad"],
+ [137.863, "de", "der Familienname"],
+ [140.136, "az", "soyad"],
+ [141.66, "de", "woher"],
+ [143.482, "az", "haradan"],
+ [145.045, "de", "kommen"],
+ [146.679, "az", "gəlmək"],
+ [148.315, "de", "aus"],
+ [149.685, "az", "-dan, -dən"],
+ [151.698, "de", "Woher kommen Sie?"],
+ [153.74, "az", "Siz haradansınız?"],
+ [155.933, "de", "Ich komme aus Deutschland."],
+ [158.257, "az", "Mən Almaniyadanam."],
+ [160.667, "de", "was"],
+ [162.298, "az", "nə"],
+ [163.616, "de", "Was sind Sie von Beruf?"],
+ [165.86, "az", "Siz nəçisiniz?"],
+ [167.979, "de", "welche"],
+ [169.701, "az", "hansı"],
+ [171.009, "de", "Welche Sprachen sprechen Sie?"],
+ [173.641, "az", "Siz hansı dillərdə danışırsınız?"]
+];
+function addListeningCaptions(audio){
+ const caption=el('div',undefined,'listening-caption');
+ const language=el('small');
+ const phrase=el('strong');
+ caption.append(language,phrase);
+ let currentCue,frame=0;
+ function sync(){
+  const cue=LISTENING_PAGE_ONE_CUES.findLast(([start])=>start<=audio.currentTime);
+  if(cue===currentCue&&phrase.textContent)return;
+  currentCue=cue;
+  language.textContent=cue?(cue[1]==='de'?'Almanca':'Azərbaycanca'):'';
+  phrase.lang=cue?.[1]??'az';
+  phrase.textContent=cue?.[2]??'Dinləməyə başla';
+ }
+ function syncWhilePlaying(){
+  if(!audio.isConnected||audio.paused||audio.ended){frame=0;return}
+  sync();
+  frame=requestAnimationFrame(syncWhilePlaying);
+ }
+ audio.addEventListener('playing',()=>{if(!frame)syncWhilePlaying()});
+ for(const event of ['timeupdate','seeking','seeked','pause','ended'])audio.addEventListener(event,sync);
+ sync();
+ return caption;
+}
 function renderListening(view){
  const card=el('section',undefined,'card listening-page');
  card.append(el('h2','Dinləyərək öyrən'));
- const vocabulary=orderedBooks('vocabulary');
- const first=vocabulary[0];
- if(!first){card.append(el('p','Lüğət səhifələri hələ əlavə edilməyib.'));view.append(card);return}
  const heading=el('div',undefined,'listening-heading');
- heading.append(el('strong','Lüğət · 1-ci səhifə'),el('span',first.items.length+' söz və ifadə','listening-info'));
+ heading.append(el('strong','Lüğət · 1-ci səhifə'),el('span',(LISTENING_PAGE_ONE_CUES.length/2)+' söz və ifadə','listening-info'));
  card.append(heading);
  card.append(el('p','Hər söz əvvəl almanca, ardınca Azərbaycan dilində səslənir. Bütün səhifə bir MP3 faylıdır.','listening-summary'));
  const status=el('p','Audio faylı yoxlanılır…','listening-status');status.setAttribute('role','status');
@@ -969,7 +1088,7 @@ function renderListening(view){
    audio.setAttribute('aria-label','Lüğətin birinci səhifəsi — almanca və azərbaycanca');
    const download=el('a','↓ MP3 faylını telefona endir','listening-download');
    download.href=path;download.download='Deutsch-AZ-Luget-Sehife-01.mp3';
-   audioArea.replaceChildren(audio,download);
+   audioArea.replaceChildren(addListeningCaptions(audio),audio,download);
    status.textContent='';
   }catch(e){
    if(!card.isConnected||mode!=='Dinləyərək öyrən')return;
@@ -983,5 +1102,5 @@ function renderListening(view){
 
 function render(){practiceStop();closeWord();$('nav').after($('settingsPanels'));$('settingsPanels').hidden=mode!=='Ayarlar';if(mode==='Dərslər'&&bookType(lessons[li])==='vocabulary')restoreSentence();let view=$('view');view.replaceChildren();delete view.dataset.lastVocabSection;renderPicker();renderNavigation();refresh();if(mode==='Ayarlar'){}else if(mode==='Dinləyərək öyrən'){renderListening(view)}else if(mode==='Saylar'){renderNumbers(view)}else if(mode==='Praktika'){renderPractice(view)}else if(mode==='Fonetika'){renderPhon(view)}else if(mode==='Qrammatika'){renderGrammar(view)}else if(mode==='Dərslər'||mode==='Seçilmişlər'){let lastExercise=null,visibleCards=0;if(mode==='Dərslər')view.append(learnedVisibilityControl());items().forEach((x,i)=>{if(mode==='Dərslər'&&!showLearnedItems&&known[key(i)])return;let group=exerciseOf(lessons[li],x,i);if(mode==='Dərslər'&&lessonSection!=='all'&&group!==lessonSection)return;if(mode==='Seçilmişlər'&&!stars[key(i)])return;if(mode==='Dərslər'&&group!==lastExercise){if(group!=='Bölmə qeyd edilməyib')vocabSectionHeader(view,{},exerciseLabel(lessons[li],group));lastExercise=group}let c=el('article',undefined,'card');let vocab=bookType(lessons[li])==='vocabulary';if(vocab){if(!view.children.length||view.dataset.lastVocabSection!==vocabGroup(lessons[li],x)){vocabSectionHeader(view,x,vocabGroup(lessons[li],x));view.dataset.lastVocabSection=vocabGroup(lessons[li],x)}c.append(vocabHeading(x));if(x.parent_number!=null)c.append(el('small','№ '+x.parent_number+' · fel forması','vocab-subnumber'))}else c.append(el('small',`İFADƏ ${i+1}`),interactiveHeading(x));c.append(el('p',x.pron,'pron'),vocab?vocabTranslationToggle(x,lessons[li]):lessonTranslation(x,i));let r=el('div',undefined,'row');sound(r,x.de);r.append(btn(stars[key(i)]?'★':'☆',()=>{stars[key(i)]=!stars[key(i)];render()}),btn(known[key(i)]?'✓ Öyrənilib':'Öyrəndim',()=>{known[key(i)]=!known[key(i)];render()},known[key(i)]?'primary':''));c.append(r);let d=el('details');d.append(el('summary','Sözbəsöz tərcümə və fonetika'));for(let line of x.words.split('\n')){if(!line.trim())continue;let w=el('div',undefined,'word');w.append(el('span',line),btn('🔊',()=>say(line.split('—')[0].trim(),undefined,'sentence')));d.append(w)}d.append(el('h3','Tələffüz qaydaları'),el('p',x.rules),el('h3','IPA'),el('p',x.ipa));c.append(d);view.append(c);visibleCards++});if(!visibleCards)view.append(el('p',mode==='Dərslər'&&!showLearnedItems?'Öyrənilməmiş ifadə görünmür. Öyrəndiklərini yuxarıdakı düymə ilə göstərə bilərsən.':'Hələ seçilmiş ifadə yoxdur.','learned-empty'))}else if(mode==='Lüğət'){renderLibrary(view)}else if(mode==='Flashcard'){let x=items()[idx],c=el('div',undefined,'card center');c.append(el('small',`${idx+1} / ${items().length}`),interactiveHeading(x));let r=el('div',undefined,'row');sound(r,x.de);c.append(r);if(reveal)c.append(el('p',x.az,'az'),el('p',x.pron,'pron'),btn('Təkrar etməliyəm',()=>{known[key(idx)]=false;next()}),btn('Bilirəm',()=>{known[key(idx)]=true;next()},'primary'));else c.append(btn('Cavabı göstər',()=>{reveal=true;render()},'primary'));c.append(el('p',''),btn('← Əvvəlki',()=>{idx=(idx+items().length-1)%items().length;reveal=false;render()}),btn('Növbəti →',next));view.append(c)}else{if(!quiz){let x=items()[idx];let opts=[...new Set(items().map(y=>y.az).filter(a=>a!==x.az))].sort(()=>Math.random()-.5).slice(0,3);opts.push(x.az);quiz={opts:opts.sort(()=>Math.random()-.5),answer:null}}let x=items()[idx],c=el('div',undefined,'card');c.append(el('small',`TEST ${idx+1} / ${items().length}`),el('h2','Eşitdiyin ifadənin mənasını seç'),btn('🔊 Dinlə',()=>say(x.de,undefined,'sentence'),'primary'));for(let a of quiz.opts){let p=el('p');let b=btn(a,()=>{quiz.answer=a;render()});b.disabled=quiz.answer!==null;p.append(b);c.append(p)}if(quiz.answer!==null)c.append(el('p',quiz.answer===x.az?'✓ Düzdür!':'Düzgün cavab: '+x.az),el('p',x.de),btn('Növbəti',()=>{quiz=null;next()},'primary'));view.append(c)}}function next(){idx=(idx+1)%items().length;reveal=false;render()}$('lesson').onchange=e=>{practiceSession=null;li=+e.target.value;sentenceTitle=lessons[li].title;resetSelection();render()};$('theme').onclick=()=>{document.body.classList.toggle('dark');save()};const importType=el('select');for(let [v,t] of [['auto','Kitab növü — avtomatik'],['sentences','Dərs kitabı'],['vocabulary','Lüğət kitabı']]){let o=el('option',t);o.value=v;importType.append(o)}$('file').before(importType);const pendingLessons=new Set();try{for(const t of JSON.parse(localStorage.getItem('deaz-pending-v201')||'[]'))if(typeof t==='string')pendingLessons.add(t)}catch{}function savePending(){try{localStorage.setItem('deaz-pending-v201',JSON.stringify([...pendingLessons]))}catch{}}function validVocabPage(l){return l&&l.type==='vocabulary'&&typeof l.title==='string'&&l.title.startsWith('Lüğət kitabı · ')&&Array.isArray(l.items)&&l.items.length>0&&l.items.every(x=>x&&['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string')&&x.de.trim()&&x.az.trim())}function importVocabPages(d){let arr=d.vocabulary_pages;if(d.format!=='deutsch-vocabulary-pages-v1'||!Array.isArray(arr)||!arr.length||!arr.every(validVocabPage)||new Set(arr.map(l=>l.title)).size!==arr.length)throw Error('Fayl uyğun deyil');let conflicts=arr.filter(l=>lessons.some(x=>x.title===l.title));if(conflicts.length&&!confirm(conflicts.length+' mövcud lüğət səhifəsi yenilənsin? Dərs kitabı dəyişməyəcək.'))return;for(let l of arr){let i=lessons.findIndex(x=>x.title===l.title);if(i>=0)lessons[i]=l;else lessons.push(l);pendingLessons.add(l.title)}savePending();li=lessons.findIndex(l=>l.title===arr[0].title);libraryPage=arr[0].title;librarySection='all';idx=0;quiz=null;practiceSession=null;mode='Lüğət';librarySource='vocabulary';query='';render();smartRefresh();$('status').textContent=arr.length+' lüğət səhifəsi əlavə edildi. Əvvəlki dərslər saxlanıldı. Hamı ilə paylaşmaq üçün “Gözləyən lüğət səhifələrini paylaş” düyməsinə basın.'}function importLesson(raw){try{let d=JSON.parse(raw);if(d&&Object.hasOwn(d,'vocabulary_pages')){importVocabPages(d);return;}let arr=d.lessons||[d];if(!d.lessons&&d&&Array.isArray(d.items)){if(importType.value!=='auto')d.type=importType.value;if(bookType(d)==='vocabulary'){d.type='vocabulary';if(!/^Lüğət kitabı · /i.test(d.title))d.title='Lüğət kitabı · '+d.title;d.items=d.items.map(x=>({pron:'',words:'',rules:'',ipa:'',...x}));}}if(!Array.isArray(arr)||!arr.length||!arr.every(l=>typeof l.title==='string'&&Array.isArray(l.items)&&l.items.length&&l.items.every(x=>['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string'))))throw Error();if(d.lessons){if(!confirm('Ehtiyat nüsxə cari dərsləri əvəz etsin?'))return;lessons=arr;known=d.known||{};stars=d.stars||{};li=0}else{let existing=lessons.findIndex(l=>l.title===d.title);if(existing>=0){if(!confirm('Mövcud dərsi yenilə?'))return;lessons[existing]=d;li=existing}else{lessons.push(d);li=lessons.length-1}pendingLessons.add(d.title);savePending();}idx=0;quiz=null;mode=!d.lessons&&bookType(d)==='vocabulary'?'Lüğət':'Dərslər';if(mode==='Lüğət'){librarySource='vocabulary';libraryPage=lessons[li].title;librarySection='all'}else if(bookType(lessons[li])==='sentences'){sentenceTitle=lessons[li].title}resetSelection();render();smartRefresh();$('status').textContent='Dərs saxlanıldı. Hamı üçün yeniləmək istəyirsinizsə, Dərsi hamı ilə paylaş düyməsini basın.'}catch{$('status').textContent='Fayl uyğun deyil. Deutsch lernen JSON faylı seçin.'}}$('file').onchange=async e=>{if(!e.target.files.length)return;try{let f=e.target.files[0];let raw=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsText(f)});importLesson(raw)}catch{$('status').textContent='Faylı oxumaq mümkün olmadı.'}finally{e.target.value=''}};$('pasteImport').onclick=()=>importLesson($('paste').value);$('backup').onclick=()=>{let a=el('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({lessons,known,stars},null,2)],{type:'application/json'}));a.download='deutsch-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};render();smartRefresh();
 const publish=btn('Dərsi hamı ilə paylaş',async()=>{const token=$('aiToken').value.trim();if(!token){$('audioPanel').open=true;$('status').textContent='Administrator açarı lazımdır.';return}try{const lessonToPublish=lessons[li];const r=await fetch(AI_URL+'lessons',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(lessonToPublish)});if(!r.ok)throw Error('HTTP '+r.status);pendingLessons.delete(lessonToPublish.title);savePending();$('status').textContent='Dərs hamı ilə paylaşıldı.'}catch(e){$('status').textContent=e.message}});$('backup').after(publish);const publishVocab=btn('Gözləyən lüğət səhifələrini paylaş',async()=>{const token=$('aiToken').value.trim();if(!token){$('audioPanel').open=true;$('status').textContent='Administrator açarı lazımdır.';return}const arr=lessons.filter(l=>bookType(l)==='vocabulary'&&pendingLessons.has(l.title));if(!arr.length){$('status').textContent='Paylaşılmamış lüğət səhifəsi yoxdur.';return}if(!confirm(arr.length+' lüğət səhifəsi hamı ilə paylaşılsın? Mövcud dərslər saxlanılacaq.'))return;publishVocab.disabled=true;publish.disabled=true;let done=0;try{for(const l of arr){$('status').textContent='Paylaşılır: '+(done+1)+' / '+arr.length+' — '+l.title;const r=await fetch(AI_URL+'lessons',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(l)});if(!r.ok)throw Error('HTTP '+r.status);pendingLessons.delete(l.title);savePending();done++;}$('status').textContent=done+' / '+arr.length+' lüğət səhifəsi hamı ilə paylaşıldı.';}catch(e){$('status').textContent=done+' / '+arr.length+' səhifə paylaşıldı. '+e.message+'. Qalan səhifələr üçün düyməni yenidən basın.';}finally{publishVocab.disabled=false;publish.disabled=false;}});publish.after(publishVocab);
-async function loadShared(){try{const r=await fetch(AI_URL+'lessons',{cache:'no-store'});if(!r.ok)return;const arr=await r.json();if(!Array.isArray(arr))return;for(const l of arr){if(!l||!Array.isArray(l.items)||!l.items.length||pendingLessons.has(l.title))continue;const i=lessons.findIndex(x=>x.title===l.title);if(i<0)lessons.push(l);else lessons[i]=l}render();smartRefresh()}catch{}}loadShared();
+async function loadShared(){try{const r=await fetch(AI_URL+'lessons',{cache:'no-store'});if(!r.ok)return;const arr=await r.json();if(!Array.isArray(arr))return;for(const l of arr){if(!l||!Array.isArray(l.items)||!l.items.length||pendingLessons.has(l.title))continue;const i=lessons.findIndex(x=>x.title===l.title);if(i<0)lessons.push(l);else lessons[i]=l}if(mode!=='Dinləyərək öyrən')render();smartRefresh()}catch{}}loadShared();
 </script></body></html>
