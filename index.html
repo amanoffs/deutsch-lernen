@@ -86,7 +86,7 @@ body.dark .more-sheet{background:#223a31;color:#e6f1e9}
 body.dark .more-grid button.more-choice.active{background:#36795f;color:white}
 @media(max-width:700px){
  body{padding-bottom:calc(99px + env(safe-area-inset-bottom))}
- #nav{position:fixed;bottom:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;align-items:stretch;width:100%;max-width:100%;margin:0;background:#183b32;padding:7px max(3px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(3px,env(safe-area-inset-left))}
+ #nav{position:fixed;bottom:0;left:0;right:0;z-index:20;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;align-items:stretch;width:100%;max-width:100%;margin:0;background:#183b32;padding:7px max(3px,env(safe-area-inset-right)) calc(7px + env(safe-area-inset-bottom)) max(3px,env(safe-area-inset-left))}
  #nav button.nav-tab,body.dark #nav button.nav-tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:0;max-width:100%;min-height:64px;padding:5px 1px;background:#254a3e;color:#fff;border:1px solid #527568;border-radius:11px;letter-spacing:0}
  #nav button.nav-tab.active,body.dark #nav button.nav-tab.active{background:#dceee3;color:#183b32;border-color:#dceee3}
  #nav .nav-icon{width:21px;height:21px;flex-basis:21px}
@@ -829,8 +829,8 @@ if(q.kind==='word'||q.kind==='listen'||q.kind==='gap'){area.append(el('h2',q.kin
 
 
 /* Main navigation */
-const NAV_PRIMARY=[['Dərslər','lessons'],['Lüğət','dict'],['Qrammatika','grammar'],['Fonetika','phon']];
-const NAV_OTHER=[['Flashcard','flash'],['Test','test'],['Seçilmişlər','fav'],['Praktika','practice'],['Saylar','numbers'],['Dinləyərək öyrən','listen'],['Ayarlar','settings']];
+const NAV_PRIMARY=[['Dərslər','lessons'],['Lüğət','dict'],['Dinləyərək öyrən','listen'],['Qrammatika','grammar'],['Fonetika','phon']];
+const NAV_OTHER=[['Flashcard','flash'],['Test','test'],['Seçilmişlər','fav'],['Praktika','practice'],['Saylar','numbers'],['Ayarlar','settings']];
 const NAV_ICONS={
  lessons:'<path d="M12 6C9 4 6 4 3 5v13c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1z"/><path d="M12 6v13"/>',
  dict:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/>',
