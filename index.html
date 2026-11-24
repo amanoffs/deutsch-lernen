@@ -645,7 +645,7 @@ function sourceSelect(value,change,all=false){let r=el('div',undefined,'row');fo
 function vocabGroup(l,x){return x.section||'Bölmə qeyd edilməyib'}
 function vocabSectionHeader(view,x,section){let label=x.section_header_number!=null?x.section_header_number+' · '+section:section;view.append(el('div',label,'vocab-section'))}
 function vocabHeading(x){let r=el('div',undefined,'vocab-heading');if(x.source_number!=null)r.append(el('span',String(x.source_number)+'.','vocab-number'));r.append(interactiveHeading(x,true));return r}
-let libraryPage='';let librarySection='all';let hideVocabAnswers=false;let lessonSection='all';let sentenceTitle=lessons[li]?.title||initial.title;
+let libraryPage='';let librarySection='all';let hideVocabAnswers=true;let lessonSection='all';let sentenceTitle=lessons[li]?.title||initial.title;
 const legacyTitle8='Begegnungen A1+ · Kapitel 1 · A1 – Sich vorstellen (səh. 8)';
 const legacyTitle9=initial.title;
 function chapterOf(l){return Number(l.chapter)||((l.title===legacyTitle8||l.title===legacyTitle9)?1:Number(l.title.match(/Kapitel\s+(\d+)/i)?.[1])||0)}
@@ -856,13 +856,13 @@ function renderLibrary(view){
  const filters=el('details',undefined,'vocab-filters');
  const section=el('select');
  section.setAttribute('aria-label','Kitab bölməsi');
- const answerToggle=el('input');answerToggle.type='checkbox';answerToggle.checked=hideVocabAnswers;
+ const answerToggle=el('input');answerToggle.type='checkbox';answerToggle.checked=!hideVocabAnswers;
  const answerLabel=el('label',undefined,'vocab-answer-filter');
- answerLabel.append(answerToggle,document.createTextNode('Tərcümələri gizlət'));
- filters.append(el('summary','Filtrlər'),section,answerLabel,learnedVisibilityControl());
- filters.open=librarySection!=='all'||hideVocabAnswers;
+ answerLabel.append(answerToggle,document.createTextNode('Bütün tərcümələri göstər'));
+ filters.append(el('summary','Filtrlər'),section,answerLabel);
+ filters.open=librarySection!=='all'||!hideVocabAnswers;
  const list=el('div');
- view.append(controls,filters,list);
+ view.append(controls,learnedVisibilityControl(),filters,list);
 
  function selectedBooks(){return select.value==='all'?books:[lessons[Number(select.value)]]}
  function updateSections(){
@@ -929,7 +929,7 @@ function renderLibrary(view){
   const search=input.value;resetSelection();query=search;librarySection='all';updateSections();refresh();smartRefresh();draw();
  };
  section.onchange=()=>{librarySection=section.value;draw()};
- answerToggle.onchange=()=>{hideVocabAnswers=answerToggle.checked;draw()};
+ answerToggle.onchange=()=>{hideVocabAnswers=!answerToggle.checked;draw()};
  input.oninput=()=>{query=input.value;draw()};
  updateSections();draw();
 }
