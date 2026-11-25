@@ -895,7 +895,9 @@ function renderLibrary(view){
     }
 
     const card=el('article',undefined,'card vocab-card');
-    card.append(vocabHeading(item),hideVocabAnswers?vocabTranslationToggle(item,book):el('p',item.az,'az'));
+    card.append(vocabHeading(item));
+    if(item.pron)card.append(el('p',item.pron,'pron'));
+    card.append(hideVocabAnswers?vocabTranslationToggle(item,book):el('p',item.az,'az'));
     const actions=el('div',undefined,'row');
     const favorite=btn(stars[key]?'★':'☆',()=>{stars[key]=!stars[key];save();draw()});
     favorite.setAttribute('aria-label',stars[key]?'Seçilmişlərdən çıxar':'Seçilmişlərə əlavə et');
@@ -905,7 +907,6 @@ function renderLibrary(view){
 
     const details=el('details',undefined,'vocab-details');
     details.append(el('summary','Sözün detalları'));
-    if(item.pron)details.append(el('p','Oxunuş: '+item.pron));
     if(item.ipa)details.append(el('p','IPA: '+item.ipa));
     if(item.phonetics_source==='automatic')details.append(el('small','IPA və oxunuş avtomatik hazırlanıb, təxminidir.'));
     if(item.article||item.plural)details.append(el('p',[item.article?'Artikl: '+item.article:'',item.plural?'Cəm: '+item.plural:''].filter(Boolean).join(' · ')));
