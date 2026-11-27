@@ -1394,10 +1394,12 @@ function renderTranslator(view){
  const heading=el('h3','Almanca');
  const output=el('p',undefined,'translator-german');output.lang='de';
  const listen=btn('🔊 Dinlə',()=>say(output.textContent,undefined,'sentence'));
+ const slow=btn('◷ Yavaş dinlə',()=>say(output.textContent,.5,'sentence'));
+ const audioActions=el('div',undefined,'row');audioActions.append(listen,slow);
  const grammar=el('details',undefined,'translator-grammar');
  const explanation=el('p');
  grammar.append(el('summary','Qaydanı göstər'),explanation);
- result.append(heading,output,listen,grammar);
+ result.append(heading,output,audioActions,grammar);
  form.append(label,field,submit,note,status);
  panel.append(el('h2','Tərcümə'),form,result);
  view.append(panel);
