@@ -292,6 +292,8 @@ body.dark .bento-word-feature .vocab-actions .vocab-learned[aria-pressed="true"]
 }
 .translator-note,.translator-status{margin:0;font-size:14px;color:var(--bento-muted)}
 .translator-status:empty{display:none}
+.translator-service summary{cursor:pointer;width:fit-content}
+.translator-service p{margin:5px 0 0}
 .translator-result{margin-top:16px;padding:16px;border-radius:16px;background:var(--bento-mint);color:var(--bento-mint-ink)}
 .translator-result h3{margin:0;color:inherit}
 .translator-german{font-size:clamp(21px,5.5vw,28px);font-weight:700;overflow-wrap:anywhere;margin:8px 0 12px}
@@ -1392,7 +1394,10 @@ function addListeningCaptions(audio){
  sync();
  return caption;
 }
+const formalGreeting=/^(?:hallo[,.!]?\s+)?wie geht es Ihnen[?!.]?$/iu;
 function translationRule(german){
+ if(formalGreeting.test(german))
+  return 'Wie geht es Ihnen? = Necəsiniz? Ihnen rəsmi Sie əvəzliyinin Dativ formasıdır. Qeyri-rəsmi müraciətdə dir işlənir: Wie geht es dir? = Necəsən?'
  if(/^ich brauche einen stift[.!]?$/i.test(german))
   return 'Ich brauche = mənə lazımdır. Brauchen feli Akkusativ tələb edir. Stift kişi cinsindədir (der Stift), ona görə ein Stift burada einen Stift olur.';
  if(/^ich brauche (?:einen|eine|ein)\s/i.test(german))
@@ -1426,14 +1431,19 @@ async function requestTranslation(text,langpair){
   clearTimeout(timeout);
  }
 }
+const greetingWordGlossary=new Map([
+ ['hallo','salam'],['wie','necə'],['geht','gedir (gehen felinin forması)'],
+ ['es','bu ifadədə qrammatik mübtəda'],['ihnen','Sizə (rəsmi müraciət, Dativ)']
+]);
 const translatorWordGlossary=new Map([
  ['ich','mən'],['brauche','ehtiyacım var (brauchen felinin forması)'],['stift','qələm'],
  ['ein','bir (qeyri-müəyyən artikl)'],['eine','bir (qeyri-müəyyən artikl)'],
  ['einen','bir (kişi cinsi, Akkusativdə)']
 ]);
-async function showTranslatorWord(word,button,lookups){
+async function showTranslatorWord(word,button,lookups,german){
  const key=word.normalize('NFC').toLocaleLowerCase('de');
- const local=translatorWordGlossary.get(key)??(Object.hasOwn(vocabTokenGlossary,key)?vocabTokenGlossary[key]:undefined);
+ const local=(formalGreeting.test(german)?greetingWordGlossary.get(key):undefined)
+  ??translatorWordGlossary.get(key)??(Object.hasOwn(vocabTokenGlossary,key)?vocabTokenGlossary[key]:undefined);
  const popup=openWord(null,word,button,local||'Sözün mənası axtarılır…');
  if(!popup||local)return;
  const {card,meaning}=popup;
@@ -1458,7 +1468,9 @@ function renderTranslator(view){
  field.placeholder='Mənə qələm lazımdır.';
  const label=el('label','Azərbaycanca cümlə');label.htmlFor=field.id;
  const submit=el('button','Almancaya çevir','primary');submit.type='submit';
- const note=el('p','Onlayn tərcümə üçün cümlə və axtarılan sözlər MyMemory xidmətinə göndərilir.','translator-note');
+ const note=el('details',undefined,'translator-note translator-service');
+ note.append(el('summary','Tərcümə xidməti'),
+  el('p','Onlayn tərcümə üçün cümlə və axtarılan sözlər MyMemory xidmətinə göndərilir.'));
  const status=el('p',undefined,'translator-status');status.setAttribute('role','status');
  const result=el('section',undefined,'translator-result');result.hidden=true;
  const heading=el('h3','Almanca');
@@ -1490,11 +1502,11 @@ function renderTranslator(view){
    }
    if(!panel.isConnected)return;
    output.replaceChildren();
-   appendGermanTokens(output,german,(word,button)=>showTranslatorWord(word,button,wordLookups));
+   appendGermanTokens(output,german,(word,button)=>showTranslatorWord(word,button,wordLookups,german));
    grammar.open=false;
    const rule=translationRule(german);
    grammar.hidden=!rule;explanation.textContent=rule;
-   status.textContent=example?'':'Avtomatik tərcümə'+(rule?'':' · Bu cümlə üçün hazır qrammatika izahı yoxdur.');
+   status.textContent='';
    result.hidden=false;
   }catch(error){
    status.textContent=error.message==='quota'?'Tərcümə xidmətinin müvəqqəti limiti dolub.':'Tərcümə alınmadı. Bir az sonra yenidən yoxla.';
