@@ -295,6 +295,10 @@ body.dark .bento-word-feature .vocab-actions .vocab-learned[aria-pressed="true"]
 .translator-result{margin-top:16px;padding:16px;border-radius:16px;background:var(--bento-mint);color:var(--bento-mint-ink)}
 .translator-result h3{margin:0;color:inherit}
 .translator-german{font-size:clamp(21px,5.5vw,28px);font-weight:700;overflow-wrap:anywhere;margin:8px 0 12px}
+.translator-german .de-token,.dark .translator-german .de-token{
+ white-space:normal;overflow-wrap:anywhere;text-decoration:underline dotted;text-underline-offset:.19em
+}
+.translator-german .de-token[aria-expanded="true"]{text-decoration-style:solid}
 .translator-grammar{margin-top:12px}
 .translator-grammar summary{cursor:pointer;font-weight:650}
 </style><body><header><div><h1>Deutsch lernen — AZ</h1><small>Şəxsi Alman dili kitabxanan · A1 · V2.0.24</small></div></header><main><div class="card lesson-picker"><label id="lessonLabel" for="lesson" class="picker-label">Dərs kitabı</label><select aria-label="Dərs" id="lesson" style="width:100%"></select><div id="lessonSectionWrap"><label for="lessonSection" class="picker-label">Tapşırıq bölməsi</label><select aria-label="Tapşırıq bölməsi" id="lessonSection" style="width:100%"></select></div><p id="pickerContext" hidden></p><p id="progress"></p><div class="bar"><i id="bar"></i></div></div><noscript>JavaScript işləmir. Faylı önizləmə deyil, Chrome, Edge və ya yayımlanmış Safari səhifəsində açın.</noscript><section id="settingsPanels" hidden><div class="settings-head"><h2 id="settingsTitle">Ayarlar</h2><button aria-label="Rəng rejimi" id="theme"></button></div><details class="card control-panel" id="audioPanel" name="management"><summary><strong id="audioSettingsTitle">Səsləndirmə ayarları</strong></summary><p><label for="aiEngine">Səs sistemi</label></p><select id="aiEngine"><option value="apple">Cihazın səsi (standart)</option><option value="gemini">Gemini AI (avtomatik model)</option></select><div id="aiSettings"><p><label for="aiToken">Administrator açarı (yalnız yeni audio və dərs üçün)</label></p><input autocomplete="off" id="aiToken" placeholder="Cloudflare-də seçdiyin parol" style="width:100%" type="password"/><p><label for="aiVoice">Gemini səsi</label></p><select id="aiVoice"><option>Kore</option><option>Puck</option><option>Aoede</option><option>Charon</option><option>Zephyr</option><option>Fenrir</option></select><p><button id="aiSave">Admin açarını saxla</button> <button id="aiForget">Admin açarını sil</button></p><small>Dinləmək üçün açar lazım deyil. Administrator açarı yalnız bu brauzerdə saxlanılır.</small><p id="aiStatus" role="status"></p><audio controls="" hidden="" id="aiPlayer" preload="none" style="width:100%"></audio></div><p>Cihazın alman dili səsi</p><select aria-label="Alman dili səsi" id="audioVoice" style="width:100%"></select><p><label for="audioRate">Sürət: <output id="audioRateValue"></output></label></p><input id="audioRate" max="1.25" min="0.5" step="0.05" style="width:100%" type="range"/><p><label for="audioMode">Rejim</label></p><select id="audioMode"><option value="sentence">Bütöv cümlə</option><option value="word">Sözbəsöz</option><option value="repeat">Cümləni 3 dəfə təkrarla</option></select><p><label for="audioPause">Fasilə (saniyə)</label> <select id="audioPause"><option>0.5</option><option>1</option><option>2</option><option>3</option></select></p><div class="row"><button id="audioTest">▶ Səsi yoxla</button><button id="audioStop">■ Dayandır</button><button id="audioRefresh">Səsləri yenilə</button></div><p id="audioInfo" role="status"></p></details><details class="card control-panel" id="lessonPanel" name="management"><summary>📚 Dərs əlavə et və idarə et</summary><div class="row"><label for="file" style="font-weight:650">＋ Dərs əlavə et</label><input accept=".json,application/json" id="file" style="max-width:100%" type="file"/><button id="backup">Ehtiyat nüsxə</button></div><details><summary>Fayl seçimi işləmirsə: JSON mətnini əlavə et</summary><textarea id="paste" placeholder="JSON mətnini bura yapışdır" rows="5" style="width:100%;margin:10px 0"></textarea><button id="pasteImport">Dərsi idxal et</button></details></details></section><nav id="nav"></nav><div id="status" role="status"></div><section id="view"></section><footer>Azərbaycan dilində yazılan oxunuşlar təxmini səs qarşılıqlarıdır; IPA və alman dilində səsləndirmə əsas götürülməlidir. Məlumatlar bu brauzerdə saxlanılır.<p>Almanca IPA mənbəsi: <a href="https://github.com/open-dict-data/ipa-dict" target="_blank" rel="noopener noreferrer">ipa-dict</a> / <a href="https://github.com/devio-at/german-ipa-dict" target="_blank" rel="noopener noreferrer">german-ipa-dict</a> (Wiktionary, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA</a>). Seçilmiş mürəkkəb sözlər üçün transkripsiyalar tərkib hissələri əsasında yoxlanılıb.</p></footer></main><script>
@@ -447,9 +451,29 @@ function grammarTipFor(word){
  return tips[w]||null;
 }
 
-function openWord(x,word,anchor,meaningOverride){if(activeWord===anchor){closeWord();return}closeWord();activeWord=anchor;wordOpenedAt=performance.now();anchor.setAttribute('aria-expanded','true');let card=el('section',undefined,'word-pop');card.id='wordSheet';card.setAttribute('role','dialog');card.setAttribute('aria-label','Sözün tərcüməsi');let top=el('div',undefined,'pop-top');let close=btn('×',closeWord,'pop-close');close.setAttribute('aria-label','Bağla');top.append(el('strong',word),close);let [a,b]=typeof meaningOverride==='string'&&meaningOverride?[word,meaningOverride]:wordMeaning(x,word);card.append(top,el('p',b));if(a!==word)card.append(el('p',a,'pop-meta'));const grammarInfo=grammarTipFor(word);if(grammarInfo){card.append(el('p',grammarInfo[0],'grammar-note-pop'));card.append(btn('Qrammatikada bax',()=>{closeWord();grammarFocus=grammarInfo[1];mode='Qrammatika';render();smartRefresh();document.getElementById('view')?.scrollIntoView({block:'start',behavior:'smooth'})},'grammar-pop-link'))}let bottom=el('div',undefined,'pop-bottom');let meta=el('span','Sözü dinlə','pop-meta');let audio=btn('🔊',()=>say(word,undefined,'sentence'));audio.setAttribute('aria-label','Sözü dinlə');bottom.append(meta,audio);card.append(bottom);document.body.append(card);let r=anchor.getBoundingClientRect(),w=card.offsetWidth,h=card.offsetHeight;let left=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));let above=r.bottom+10+h>innerHeight-12&&r.top>h+12;card.classList.toggle('above',above);card.style.left=left+'px';card.style.top=Math.max(12,Math.min(innerHeight-h-12,above?r.top-h-10:r.bottom+10))+'px';card.style.setProperty('--arrow',Math.max(12,Math.min(w-12,r.left+r.width/2-left))+'px')}
+function positionWordPopup(card,anchor){
+ let r=anchor.getBoundingClientRect(),w=card.offsetWidth,h=card.offsetHeight;let left=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));let above=r.bottom+10+h>innerHeight-12&&r.top>h+12;card.classList.toggle('above',above);card.style.left=left+'px';card.style.top=Math.max(12,Math.min(innerHeight-h-12,above?r.top-h-10:r.bottom+10))+'px';card.style.setProperty('--arrow',Math.max(12,Math.min(w-12,r.left+r.width/2-left))+'px')
+}
+function openWord(x,word,anchor,meaningOverride){if(activeWord===anchor){closeWord();return}closeWord();activeWord=anchor;wordOpenedAt=performance.now();anchor.setAttribute('aria-expanded','true');let card=el('section',undefined,'word-pop');card.id='wordSheet';card.setAttribute('role','dialog');card.setAttribute('aria-label','Sözün tərcüməsi');let top=el('div',undefined,'pop-top');let close=btn('×',closeWord,'pop-close');close.setAttribute('aria-label','Bağla');top.append(el('strong',word),close);let [a,b]=typeof meaningOverride==='string'&&meaningOverride?[word,meaningOverride]:wordMeaning(x,word);const meaning=el('p',b);card.append(top,meaning);if(a!==word)card.append(el('p',a,'pop-meta'));const grammarInfo=grammarTipFor(word);if(grammarInfo){card.append(el('p',grammarInfo[0],'grammar-note-pop'));card.append(btn('Qrammatikada bax',()=>{closeWord();grammarFocus=grammarInfo[1];mode='Qrammatika';render();smartRefresh();document.getElementById('view')?.scrollIntoView({block:'start',behavior:'smooth'})},'grammar-pop-link'))}let bottom=el('div',undefined,'pop-bottom');let meta=el('span','Sözü dinlə','pop-meta');let audio=btn('🔊',()=>say(word,undefined,'sentence'));audio.setAttribute('aria-label','Sözü dinlə');bottom.append(meta,audio);card.append(bottom);document.body.append(card);positionWordPopup(card,anchor);return {card,meaning}}
 document.addEventListener('click',e=>{if(activeWord&&!e.target.closest('.word-pop')&&!e.target.closest('.de-token'))closeWord()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeWord()});window.addEventListener('resize',closeWord);window.addEventListener('scroll',()=>{if(activeWord&&performance.now()-wordOpenedAt>350)closeWord()},{passive:true});
-function interactiveHeading(x,vocabContext=false){let h=el('h2');for(const t of x.de.split(/([\p{L}\p{M}\p{N}]+(?:[-’'][\p{L}\p{M}\p{N}]+)*)/u)){if(!t)continue;if(/^[\p{L}\p{N}]/u.test(t)){let b=el('button',undefined,'de-token');b.type='button';b.setAttribute('aria-label',t+' — tərcümə');b.append(coloredWord(t));b.setAttribute('aria-expanded','false');b.onclick=()=>openWord(x,t,b,vocabContext?vocabWordMeaning(x,t):undefined);h.append(b)}else h.append(document.createTextNode(t))}return h}
+function appendGermanTokens(container,german,onWord){
+ for(const token of german.split(/([\p{L}\p{M}\p{N}]+(?:[-’'][\p{L}\p{M}\p{N}]+)*)/u)){
+  if(!token)continue;
+  if(!/^[\p{L}\p{N}]/u.test(token)){container.append(document.createTextNode(token));continue}
+  const button=el('button',undefined,'de-token');
+  button.type='button';
+  button.setAttribute('aria-label',token+' — tərcümə');
+  button.setAttribute('aria-expanded','false');
+  button.append(coloredWord(token));
+  button.onclick=()=>onWord(token,button);
+  container.append(button);
+ }
+}
+function interactiveHeading(x,vocabContext=false){
+ const heading=el('h2');
+ appendGermanTokens(heading,x.de,(word,button)=>openWord(x,word,button,vocabContext?vocabWordMeaning(x,word):undefined));
+ return heading;
+}
 
 // V2.0.24 — Compact A1 grammar reference and one-question-at-a-time review.
 const grammarTopics=[
@@ -1381,6 +1405,52 @@ function translationRule(german){
   return 'Es gibt = var. Bu ifadədən sonra isim Akkusativdə olur. Məsələn, der Stift → es gibt einen Stift.';
  return '';
 }
+async function requestTranslation(text,langpair){
+ const controller=new AbortController();
+ const timeout=setTimeout(()=>controller.abort(),12000);
+ try{
+  const url=new URL('https://api.mymemory.translated.net/get');
+  url.search=new URLSearchParams({q:text,langpair});
+  const response=await fetch(url,{signal:controller.signal});
+  if(response.status===429)throw Error('quota');
+  if(!response.ok)throw Error('service');
+  const data=await response.json();
+  if(data.quotaFinished||Number(data.responseStatus)===429)throw Error('quota');
+  const raw=data.responseData?.translatedText?.trim();
+  if(Number(data.responseStatus)!==200||!raw)throw Error('translation');
+  const entities={'&quot;':'"','&amp;':'&','&apos;':"'",'&#39;':"'",'&lt;':'<','&gt;':'>'};
+  const translated=raw.replace(/&(?:quot|amp|apos|#39|lt|gt);/g,entity=>entities[entity]);
+  if(translated.toLocaleLowerCase('az')===text.toLocaleLowerCase('az'))throw Error('translation');
+  return translated;
+ }finally{
+  clearTimeout(timeout);
+ }
+}
+const translatorWordGlossary=new Map([
+ ['ich','mən'],['brauche','ehtiyacım var (brauchen felinin forması)'],['stift','qələm'],
+ ['ein','bir (qeyri-müəyyən artikl)'],['eine','bir (qeyri-müəyyən artikl)'],
+ ['einen','bir (kişi cinsi, Akkusativdə)']
+]);
+async function showTranslatorWord(word,button,lookups){
+ const key=word.normalize('NFC').toLocaleLowerCase('de');
+ const local=translatorWordGlossary.get(key)??(Object.hasOwn(vocabTokenGlossary,key)?vocabTokenGlossary[key]:undefined);
+ const popup=openWord(null,word,button,local||'Sözün mənası axtarılır…');
+ if(!popup||local)return;
+ const {card,meaning}=popup;
+ meaning.setAttribute('aria-live','polite');
+ let lookup=lookups.get(word);
+ if(!lookup){
+  lookup=requestTranslation(word,'de|az');
+  lookups.set(word,lookup);
+ }
+ try{
+  meaning.textContent=await lookup;
+ }catch(error){
+  lookups.delete(word);
+  meaning.textContent=error.message==='quota'?'Tərcümə xidmətinin müvəqqəti limiti dolub.':'Bu sözün mənası tapılmadı.';
+ }
+ if(card.isConnected&&button.isConnected)positionWordPopup(card,button);
+}
 function renderTranslator(view){
  const panel=el('section',undefined,'card translator-panel');
  const form=el('form',undefined,'translator-form');
@@ -1388,18 +1458,20 @@ function renderTranslator(view){
  field.placeholder='Mənə qələm lazımdır.';
  const label=el('label','Azərbaycanca cümlə');label.htmlFor=field.id;
  const submit=el('button','Almancaya çevir','primary');submit.type='submit';
- const note=el('p','Onlayn tərcümə üçün cümlə MyMemory xidmətinə göndərilir.','translator-note');
+ const note=el('p','Onlayn tərcümə üçün cümlə və axtarılan sözlər MyMemory xidmətinə göndərilir.','translator-note');
  const status=el('p',undefined,'translator-status');status.setAttribute('role','status');
  const result=el('section',undefined,'translator-result');result.hidden=true;
  const heading=el('h3','Almanca');
  const output=el('p',undefined,'translator-german');output.lang='de';
+ const wordHint=el('p','Mənasını görmək üçün sözə toxun.','translator-note');
+ const wordLookups=new Map();
  const listen=btn('🔊 Dinlə',()=>say(output.textContent,undefined,'sentence'));
  const slow=btn('◷ Yavaş dinlə',()=>say(output.textContent,.5,'sentence'));
  const audioActions=el('div',undefined,'row');audioActions.append(listen,slow);
  const grammar=el('details',undefined,'translator-grammar');
  const explanation=el('p');
  grammar.append(el('summary','Qaydanı göstər'),explanation);
- result.append(heading,output,audioActions,grammar);
+ result.append(heading,output,wordHint,audioActions,grammar);
  form.append(label,field,submit,note,status);
  panel.append(el('h2','Tərcümə'),form,result);
  view.append(panel);
@@ -1410,31 +1482,24 @@ function renderTranslator(view){
   if(new TextEncoder().encode(input).length>500){status.textContent='Cümlə çox uzundur. Daha qısa hissəyə böl.';return}
   const example=input.toLocaleLowerCase('az').replace(/[.!]+$/,'')==='mənə qələm lazımdır';
   submit.disabled=true;result.hidden=true;status.textContent='Tərcümə hazırlanır…';
-  const controller=new AbortController();
-  const timeout=setTimeout(()=>controller.abort(),12000);
+  closeWord();
   try{
    let german='Ich brauche einen Stift.';
    if(!example){
-    const url=new URL('https://api.mymemory.translated.net/get');
-    url.search=new URLSearchParams({q:input,langpair:'az|de'});
-    const response=await fetch(url,{signal:controller.signal});
-    if(!response.ok)throw Error('service');
-    const data=await response.json();
-    if(data.quotaFinished||Number(data.responseStatus)===429){status.textContent='Tərcümə xidmətinin müvəqqəti limiti dolub.';return}
-    german=data.responseData?.translatedText?.trim();
-    if(Number(data.responseStatus)!==200||!german||german.toLocaleLowerCase('az')===input.toLocaleLowerCase('az'))throw Error('translation');
-    german=german.replace(/&(?:quot|amp|apos|#39|lt|gt);/g,entity=>({'&quot;':'"','&amp;':'&','&apos;':"'",'&#39;':"'",'&lt;':'<','&gt;':'>'})[entity]);
+    german=await requestTranslation(input,'az|de');
    }
    if(!panel.isConnected)return;
-   output.textContent=german;grammar.open=false;
+   output.replaceChildren();
+   appendGermanTokens(output,german,(word,button)=>showTranslatorWord(word,button,wordLookups));
+   grammar.open=false;
    const rule=translationRule(german);
    grammar.hidden=!rule;explanation.textContent=rule;
    status.textContent=example?'':'Avtomatik tərcümə'+(rule?'':' · Bu cümlə üçün hazır qrammatika izahı yoxdur.');
    result.hidden=false;
-  }catch{
-   status.textContent='Tərcümə alınmadı. Bir az sonra yenidən yoxla.';
+  }catch(error){
+   status.textContent=error.message==='quota'?'Tərcümə xidmətinin müvəqqəti limiti dolub.':'Tərcümə alınmadı. Bir az sonra yenidən yoxla.';
   }finally{
-   clearTimeout(timeout);submit.disabled=false;
+   submit.disabled=false;
   }
  };
 }
