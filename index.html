@@ -295,7 +295,19 @@ body.dark .bento-word-feature .vocab-actions .vocab-learned[aria-pressed="true"]
 .translator-german .de-token[aria-expanded="true"]{text-decoration-style:solid}
 .translator-grammar{margin-top:12px}
 .translator-grammar summary{cursor:pointer;font-weight:650}
-.course-page-button{margin-top:10px;min-height:44px}
+.course-page-button,body.dark .course-page-button{
+ position:fixed;z-index:25;right:max(16px,env(safe-area-inset-right));bottom:calc(18px + env(safe-area-inset-bottom));
+ display:grid;place-items:center;width:54px;height:54px;min-height:54px;padding:0;
+ background:#236b52;color:white;border:1px solid #83c7a7;border-radius:50%;
+ box-shadow:0 4px 15px #092c2660
+}
+.course-page-button .nav-icon{display:inline-flex;width:25px;height:25px}
+.course-page-button .nav-icon svg{width:100%;height:100%}
+.course-page-button:focus-visible{outline:3px solid #d18a23;outline-offset:3px}
+body:has(.course-page-button:not([hidden])) #view{padding-bottom:68px}
+@media(max-width:700px){
+ .course-page-button,body.dark .course-page-button{bottom:calc(92px + env(safe-area-inset-bottom))}
+}
 .course-reader{width:min(900px,calc(100% - 20px));max-width:100%;max-height:92dvh;padding:12px;border:1px solid #739c86;border-radius:14px;background:#f7fcf8;color:#173c2c}
 .course-reader::backdrop{background:#061d16ad}
 body.dark .course-reader{background:#142d25;color:#f0fbf5}
@@ -923,7 +935,7 @@ function restoreLoadedViewChoices(){
 function currentVocab(){let books=orderedBooks('vocabulary');return books.find(l=>l.title===libraryPage)||(bookType(lessons[li])==='vocabulary'?lessons[li]:books[0])}
 function resetSelection(){idx=0;reveal=false;quiz=null;practiceSession=null;lessonSection='all'}
 function lessonOptionLabel(b){if(b.bookEnd)return b.title;let pg=pageOf(b),ch=chapterOf(b);if(!pg)return b.title;let codes=[...new Set(b.items.map((x,i)=>exerciseOf(b,x,i)).filter(x=>/^[A-D]\d+/i.test(x)))];return (ch?'Kapitel '+ch+' · ':'')+'Səhifə '+pg+(codes.length?' — '+(codes.length>2?codes[0]+'–'+codes.at(-1):codes.join(', ')):' — '+b.title)}
-function renderPicker(){let l=lessons[li],vocab=bookType(l)==='vocabulary',books=orderedBooks('sentences');let pick=$('lesson');pick.replaceChildren(...books.map(b=>{let o=el('option',lessonOptionLabel(b));o.value=String(lessons.indexOf(b));return o}));pick.value=String(li);let panel=pick.closest('.lesson-picker');panel.hidden=!['Dərslər','Flashcard','Test','Seçilmişlər'].includes(mode);pick.hidden=vocab;$('lessonLabel').hidden=vocab;$('pickerContext').hidden=!vocab;$('pickerContext').textContent=vocab?l.title+' — səhifəni Lüğət bölməsində dəyişə bilərsiniz.':'';let sec=$('lessonSection'),names=vocab?[]:[...new Set(l.items.map((x,i)=>exerciseOf(l,x,i)))];if(!names.includes(lessonSection))lessonSection='all';sec.replaceChildren(...['all',...names].map(k=>{let o=el('option',k==='all'?'Bütün bölmələr':exerciseLabel(l,k));o.value=k;return o}));sec.value=lessonSection;$('lessonSectionWrap').hidden=vocab||mode!=='Dərslər'||!names.some(k=>k!=='Bölmə qeyd edilməyib');renderCoursePageButton(panel,l);}
+function renderPicker(){let l=lessons[li],vocab=bookType(l)==='vocabulary',books=orderedBooks('sentences');let pick=$('lesson');pick.replaceChildren(...books.map(b=>{let o=el('option',lessonOptionLabel(b));o.value=String(lessons.indexOf(b));return o}));pick.value=String(li);let panel=pick.closest('.lesson-picker');panel.hidden=!['Dərslər','Flashcard','Test','Seçilmişlər'].includes(mode);pick.hidden=vocab;$('lessonLabel').hidden=vocab;$('pickerContext').hidden=!vocab;$('pickerContext').textContent=vocab?l.title+' — səhifəni Lüğət bölməsində dəyişə bilərsiniz.':'';let sec=$('lessonSection'),names=vocab?[]:[...new Set(l.items.map((x,i)=>exerciseOf(l,x,i)))];if(!names.includes(lessonSection))lessonSection='all';sec.replaceChildren(...['all',...names].map(k=>{let o=el('option',k==='all'?'Bütün bölmələr':exerciseLabel(l,k));o.value=k;return o}));sec.value=lessonSection;$('lessonSectionWrap').hidden=vocab||mode!=='Dərslər'||!names.some(k=>k!=='Bölmə qeyd edilməyib');renderCoursePageButton(l);}
 $('lessonSection').onchange=e=>{lessonSection=e.target.value;saveViewChoices({lessonTitle:sentenceTitle,lessonSection});render()};
 
 
@@ -1175,6 +1187,7 @@ function renderLibrary(view){
 
     const highlight=!term&&!featured;
     const card=el('article',undefined,'card vocab-card'+(highlight?' bento-word-feature':''));
+    if(isMappedVocabularyBook(book))card.dataset.bookTitle=book.title;
     const heading=vocabHeading(item);
     card.append(heading);
     if(item.pron)card.append(el('p',item.pron,'pron'));
@@ -1207,6 +1220,7 @@ function renderLibrary(view){
    }
   }
   if(!list.children.length)list.append(el('p','Nəticə tapılmadı.','learned-empty'));
+  renderCoursePageButton(lessons[li]);
  }
  select.onchange=()=>{
   libraryPage=select.value==='all'?'all':lessons[Number(select.value)].title;
@@ -1721,7 +1735,7 @@ function renderTest(view){
 }
 function render(){
  try{localStorage.setItem(MENU_STORAGE_KEY,mode)}catch{}
- practiceStop();closeWord();$('nav').after($('settingsPanels'));$('settingsPanels').hidden=mode!=='Ayarlar';if(mode==='Dərslər'&&bookType(lessons[li])==='vocabulary')restoreSentence();let view=$('view');view.dataset.mode=mode;view.replaceChildren();delete view.dataset.lastVocabSection;renderPicker();renderNavigation();refresh();if(mode==='Ayarlar'){}else if(mode==='Dinləyərək öyrən'){renderListening(view)}else if(mode==='Tərcümə'){renderTranslator(view)}else if(mode==='Saylar'){renderNumbers(view)}else if(mode==='Praktika'){renderPractice(view)}else if(mode==='Fonetika'){renderPhon(view)}else if(mode==='Qrammatika'){renderGrammar(view)}else if(mode==='Dərslər'||mode==='Seçilmişlər'){let lastExercise=null,visibleCards=0;if(mode==='Dərslər'){appendLessonPractice(view,lessons[li]);view.append(learnedVisibilityControl())}items().forEach((x,i)=>{if(mode==='Dərslər'&&!showLearnedItems&&known[key(i)])return;let group=exerciseOf(lessons[li],x,i);if(mode==='Dərslər'&&lessonSection!=='all'&&group!==lessonSection)return;if(mode==='Seçilmişlər'&&!stars[key(i)])return;if(mode==='Dərslər'&&group!==lastExercise){if(group!=='Bölmə qeyd edilməyib')vocabSectionHeader(view,{},exerciseLabel(lessons[li],group));lastExercise=group}let c=el('article',undefined,'card');let vocab=bookType(lessons[li])==='vocabulary';if(vocab){if(!view.children.length||view.dataset.lastVocabSection!==vocabGroup(lessons[li],x)){vocabSectionHeader(view,x,vocabGroup(lessons[li],x));view.dataset.lastVocabSection=vocabGroup(lessons[li],x)}c.append(vocabHeading(x));if(x.parent_number!=null)c.append(el('small','№ '+x.parent_number+' · fel forması','vocab-subnumber'))}else c.append(el('small',`İFADƏ ${i+1}`),interactiveHeading(x));c.append(el('p',x.pron,'pron'),vocab?vocabTranslationToggle(x,lessons[li]):lessonTranslation(x,i));let r=el('div',undefined,'row');sound(r,x.de);r.append(btn(stars[key(i)]?'★':'☆',()=>{stars[key(i)]=!stars[key(i)];render()}),btn(known[key(i)]?'✓ Öyrənilib':'Öyrəndim',()=>{known[key(i)]=!known[key(i)];render()},known[key(i)]?'primary':''));c.append(r);let d=el('details');d.append(el('summary','Sözbəsöz tərcümə və fonetika'));for(let line of x.words.split('\n')){if(!line.trim())continue;let w=el('div',undefined,'word');w.append(el('span',line),btn('🔊',()=>say(line.split('—')[0].trim(),undefined,'sentence')));d.append(w)}d.append(el('h3','Tələffüz qaydaları'),el('p',x.rules),el('h3','IPA'),el('p',x.ipa));c.append(d);view.append(c);visibleCards++});if(!visibleCards)view.append(el('p',mode==='Dərslər'&&!showLearnedItems?'Öyrənilməmiş ifadə görünmür. Öyrəndiklərini yuxarıdakı düymə ilə göstərə bilərsən.':'Hələ seçilmiş ifadə yoxdur.','learned-empty'))}else if(mode==='Lüğət'){renderLibrary(view)}else if(mode==='Flashcard'){let x=items()[idx],c=el('div',undefined,'card center');c.append(el('small',`${idx+1} / ${items().length}`),interactiveHeading(x));let r=el('div',undefined,'row');sound(r,x.de);c.append(r);if(reveal)c.append(el('p',x.az,'az'),el('p',x.pron,'pron'),btn('Təkrar etməliyəm',()=>{known[key(idx)]=false;next()}),btn('Bilirəm',()=>{known[key(idx)]=true;next()},'primary'));else c.append(btn('Cavabı göstər',()=>{reveal=true;render()},'primary'));c.append(el('p',''),btn('← Əvvəlki',()=>{idx=(idx+items().length-1)%items().length;reveal=false;render()}),btn('Növbəti →',next));view.append(c)}else if(mode==='Test'){renderTest(view)}}function next(){idx=(idx+1)%items().length;reveal=false;render()}$('lesson').onchange=e=>{practiceSession=null;li=+e.target.value;sentenceTitle=lessons[li].title;resetSelection();saveViewChoices({lessonTitle:sentenceTitle,lessonSection});render()};$('theme').append(actionIcon('theme'));$('settingsTitle').prepend(navIcon('settings'));$('audioSettingsTitle').prepend(actionIcon('speaker'));$('theme').onclick=()=>{document.body.classList.toggle('dark');save()};const importType=el('select');for(let [v,t] of [['auto','Kitab növü — avtomatik'],['sentences','Dərs kitabı'],['vocabulary','Lüğət kitabı']]){let o=el('option',t);o.value=v;importType.append(o)}$('file').before(importType);const pendingLessons=new Set();try{for(const t of JSON.parse(localStorage.getItem('deaz-pending-v201')||'[]'))if(typeof t==='string')pendingLessons.add(t)}catch{}function savePending(){try{localStorage.setItem('deaz-pending-v201',JSON.stringify([...pendingLessons]))}catch{}}function validVocabPage(l){return l&&l.type==='vocabulary'&&typeof l.title==='string'&&l.title.startsWith('Lüğət kitabı · ')&&Array.isArray(l.items)&&l.items.length>0&&l.items.every(x=>x&&['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string')&&x.de.trim()&&x.az.trim())}function importVocabPages(d){let arr=d.vocabulary_pages;if(d.format!=='deutsch-vocabulary-pages-v1'||!Array.isArray(arr)||!arr.length||!arr.every(validVocabPage)||new Set(arr.map(l=>l.title)).size!==arr.length)throw Error('Fayl uyğun deyil');let conflicts=arr.filter(l=>lessons.some(x=>x.title===l.title));if(conflicts.length&&!confirm(conflicts.length+' mövcud lüğət səhifəsi yenilənsin? Dərs kitabı dəyişməyəcək.'))return;for(let l of arr){let i=lessons.findIndex(x=>x.title===l.title);if(i>=0)lessons[i]=l;else lessons.push(l);pendingLessons.add(l.title)}savePending();li=lessons.findIndex(l=>l.title===arr[0].title);libraryPage=arr[0].title;librarySection='all';idx=0;quiz=null;practiceSession=null;mode='Lüğət';librarySource='vocabulary';query='';saveViewChoices({vocabPage:libraryPage,vocabSection:librarySection,vocabQuery:query});render();smartRefresh();$('status').textContent=arr.length+' lüğət səhifəsi əlavə edildi. Əvvəlki dərslər saxlanıldı. Hamı ilə paylaşmaq üçün “Gözləyən lüğət səhifələrini paylaş” düyməsinə basın.'}function importLesson(raw){try{let d=JSON.parse(raw);if(d&&Object.hasOwn(d,'vocabulary_pages')){importVocabPages(d);return;}let arr=d.lessons||[d];if(!d.lessons&&d&&Array.isArray(d.items)){if(importType.value!=='auto')d.type=importType.value;if(bookType(d)==='vocabulary'){d.type='vocabulary';if(!/^Lüğət kitabı · /i.test(d.title))d.title='Lüğət kitabı · '+d.title;d.items=d.items.map(x=>({pron:'',words:'',rules:'',ipa:'',...x}));}}if(!Array.isArray(arr)||!arr.length||!arr.every(l=>typeof l.title==='string'&&Array.isArray(l.items)&&l.items.length&&l.items.every(x=>['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string'))))throw Error();if(d.lessons){if(!confirm('Ehtiyat nüsxə cari dərsləri əvəz etsin?'))return;lessons=arr;addCourseLessons();lessons.forEach(updateLessonPronunciation);known=d.known||{};stars=d.stars||{};li=0}else{let existing=lessons.findIndex(l=>l.title===d.title);if(existing>=0){if(!confirm('Mövcud dərsi yenilə?'))return;lessons[existing]=d;li=existing}else{lessons.push(d);li=lessons.length-1}pendingLessons.add(d.title);savePending();}idx=0;quiz=null;mode=!d.lessons&&bookType(d)==='vocabulary'?'Lüğət':'Dərslər';if(mode==='Lüğət'){librarySource='vocabulary';libraryPage=lessons[li].title;librarySection='all'}else if(bookType(lessons[li])==='sentences'){sentenceTitle=lessons[li].title}resetSelection();if(mode==='Dərslər')saveViewChoices({lessonTitle:sentenceTitle,lessonSection});else saveViewChoices({vocabPage:libraryPage,vocabSection:librarySection,vocabQuery:''});render();smartRefresh();$('status').textContent='Dərs saxlanıldı. Hamı üçün yeniləmək istəyirsinizsə, Dərsi hamı ilə paylaş düyməsini basın.'}catch{$('status').textContent='Fayl uyğun deyil. Deutsch lernen JSON faylı seçin.'}}$('file').onchange=async e=>{if(!e.target.files.length)return;try{let f=e.target.files[0];let raw=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsText(f)});importLesson(raw)}catch{$('status').textContent='Faylı oxumaq mümkün olmadı.'}finally{e.target.value=''}};$('pasteImport').onclick=()=>importLesson($('paste').value);$('backup').onclick=()=>{let a=el('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({lessons,known,stars},null,2)],{type:'application/json'}));a.download='deutsch-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};const COURSE_LESSONS=[
+ practiceStop();closeWord();$('nav').after($('settingsPanels'));$('settingsPanels').hidden=mode!=='Ayarlar';if(mode==='Dərslər'&&bookType(lessons[li])==='vocabulary')restoreSentence();let view=$('view');view.dataset.mode=mode;view.replaceChildren();delete view.dataset.lastVocabSection;renderPicker();renderNavigation();refresh();if(mode==='Ayarlar'){}else if(mode==='Dinləyərək öyrən'){renderListening(view)}else if(mode==='Tərcümə'){renderTranslator(view)}else if(mode==='Saylar'){renderNumbers(view)}else if(mode==='Praktika'){renderPractice(view)}else if(mode==='Fonetika'){renderPhon(view)}else if(mode==='Qrammatika'){renderGrammar(view)}else if(mode==='Dərslər'||mode==='Seçilmişlər'){let lastExercise=null,visibleCards=0;if(mode==='Dərslər'){appendLessonPractice(view,lessons[li]);view.append(learnedVisibilityControl())}items().forEach((x,i)=>{if(mode==='Dərslər'&&!showLearnedItems&&known[key(i)])return;let group=exerciseOf(lessons[li],x,i);if(mode==='Dərslər'&&lessonSection!=='all'&&group!==lessonSection)return;if(mode==='Seçilmişlər'&&!stars[key(i)])return;if(mode==='Dərslər'&&group!==lastExercise){if(group!=='Bölmə qeyd edilməyib')vocabSectionHeader(view,{},exerciseLabel(lessons[li],group));lastExercise=group}let c=el('article',undefined,'card');if(mode==='Dərslər'&&Object.hasOwn(lessons[li].exercise_pages||{},group))c.dataset.bookSection=group;let vocab=bookType(lessons[li])==='vocabulary';if(vocab){if(!view.children.length||view.dataset.lastVocabSection!==vocabGroup(lessons[li],x)){vocabSectionHeader(view,x,vocabGroup(lessons[li],x));view.dataset.lastVocabSection=vocabGroup(lessons[li],x)}c.append(vocabHeading(x));if(x.parent_number!=null)c.append(el('small','№ '+x.parent_number+' · fel forması','vocab-subnumber'))}else c.append(el('small',`İFADƏ ${i+1}`),interactiveHeading(x));c.append(el('p',x.pron,'pron'),vocab?vocabTranslationToggle(x,lessons[li]):lessonTranslation(x,i));let r=el('div',undefined,'row');sound(r,x.de);r.append(btn(stars[key(i)]?'★':'☆',()=>{stars[key(i)]=!stars[key(i)];render()}),btn(known[key(i)]?'✓ Öyrənilib':'Öyrəndim',()=>{known[key(i)]=!known[key(i)];render()},known[key(i)]?'primary':''));c.append(r);let d=el('details');d.append(el('summary','Sözbəsöz tərcümə və fonetika'));for(let line of x.words.split('\n')){if(!line.trim())continue;let w=el('div',undefined,'word');w.append(el('span',line),btn('🔊',()=>say(line.split('—')[0].trim(),undefined,'sentence')));d.append(w)}d.append(el('h3','Tələffüz qaydaları'),el('p',x.rules),el('h3','IPA'),el('p',x.ipa));c.append(d);view.append(c);visibleCards++});if(!visibleCards)view.append(el('p',mode==='Dərslər'&&!showLearnedItems?'Öyrənilməmiş ifadə görünmür. Öyrəndiklərini yuxarıdakı düymə ilə göstərə bilərsən.':'Hələ seçilmiş ifadə yoxdur.','learned-empty'))}else if(mode==='Lüğət'){renderLibrary(view)}else if(mode==='Flashcard'){let x=items()[idx],c=el('div',undefined,'card center');c.append(el('small',`${idx+1} / ${items().length}`),interactiveHeading(x));let r=el('div',undefined,'row');sound(r,x.de);c.append(r);if(reveal)c.append(el('p',x.az,'az'),el('p',x.pron,'pron'),btn('Təkrar etməliyəm',()=>{known[key(idx)]=false;next()}),btn('Bilirəm',()=>{known[key(idx)]=true;next()},'primary'));else c.append(btn('Cavabı göstər',()=>{reveal=true;render()},'primary'));c.append(el('p',''),btn('← Əvvəlki',()=>{idx=(idx+items().length-1)%items().length;reveal=false;render()}),btn('Növbəti →',next));view.append(c)}else if(mode==='Test'){renderTest(view)}}function next(){idx=(idx+1)%items().length;reveal=false;render()}$('lesson').onchange=e=>{practiceSession=null;li=+e.target.value;sentenceTitle=lessons[li].title;resetSelection();saveViewChoices({lessonTitle:sentenceTitle,lessonSection});render()};$('theme').append(actionIcon('theme'));$('settingsTitle').prepend(navIcon('settings'));$('audioSettingsTitle').prepend(actionIcon('speaker'));$('theme').onclick=()=>{document.body.classList.toggle('dark');save()};const importType=el('select');for(let [v,t] of [['auto','Kitab növü — avtomatik'],['sentences','Dərs kitabı'],['vocabulary','Lüğət kitabı']]){let o=el('option',t);o.value=v;importType.append(o)}$('file').before(importType);const pendingLessons=new Set();try{for(const t of JSON.parse(localStorage.getItem('deaz-pending-v201')||'[]'))if(typeof t==='string')pendingLessons.add(t)}catch{}function savePending(){try{localStorage.setItem('deaz-pending-v201',JSON.stringify([...pendingLessons]))}catch{}}function validVocabPage(l){return l&&l.type==='vocabulary'&&typeof l.title==='string'&&l.title.startsWith('Lüğət kitabı · ')&&Array.isArray(l.items)&&l.items.length>0&&l.items.every(x=>x&&['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string')&&x.de.trim()&&x.az.trim())}function importVocabPages(d){let arr=d.vocabulary_pages;if(d.format!=='deutsch-vocabulary-pages-v1'||!Array.isArray(arr)||!arr.length||!arr.every(validVocabPage)||new Set(arr.map(l=>l.title)).size!==arr.length)throw Error('Fayl uyğun deyil');let conflicts=arr.filter(l=>lessons.some(x=>x.title===l.title));if(conflicts.length&&!confirm(conflicts.length+' mövcud lüğət səhifəsi yenilənsin? Dərs kitabı dəyişməyəcək.'))return;for(let l of arr){let i=lessons.findIndex(x=>x.title===l.title);if(i>=0)lessons[i]=l;else lessons.push(l);pendingLessons.add(l.title)}savePending();li=lessons.findIndex(l=>l.title===arr[0].title);libraryPage=arr[0].title;librarySection='all';idx=0;quiz=null;practiceSession=null;mode='Lüğət';librarySource='vocabulary';query='';saveViewChoices({vocabPage:libraryPage,vocabSection:librarySection,vocabQuery:query});render();smartRefresh();$('status').textContent=arr.length+' lüğət səhifəsi əlavə edildi. Əvvəlki dərslər saxlanıldı. Hamı ilə paylaşmaq üçün “Gözləyən lüğət səhifələrini paylaş” düyməsinə basın.'}function importLesson(raw){try{let d=JSON.parse(raw);if(d&&Object.hasOwn(d,'vocabulary_pages')){importVocabPages(d);return;}let arr=d.lessons||[d];if(!d.lessons&&d&&Array.isArray(d.items)){if(importType.value!=='auto')d.type=importType.value;if(bookType(d)==='vocabulary'){d.type='vocabulary';if(!/^Lüğət kitabı · /i.test(d.title))d.title='Lüğət kitabı · '+d.title;d.items=d.items.map(x=>({pron:'',words:'',rules:'',ipa:'',...x}));}}if(!Array.isArray(arr)||!arr.length||!arr.every(l=>typeof l.title==='string'&&Array.isArray(l.items)&&l.items.length&&l.items.every(x=>['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string'))))throw Error();if(d.lessons){if(!confirm('Ehtiyat nüsxə cari dərsləri əvəz etsin?'))return;lessons=arr;addCourseLessons();lessons.forEach(updateLessonPronunciation);known=d.known||{};stars=d.stars||{};li=0}else{let existing=lessons.findIndex(l=>l.title===d.title);if(existing>=0){if(!confirm('Mövcud dərsi yenilə?'))return;lessons[existing]=d;li=existing}else{lessons.push(d);li=lessons.length-1}pendingLessons.add(d.title);savePending();}idx=0;quiz=null;mode=!d.lessons&&bookType(d)==='vocabulary'?'Lüğət':'Dərslər';if(mode==='Lüğət'){librarySource='vocabulary';libraryPage=lessons[li].title;librarySection='all'}else if(bookType(lessons[li])==='sentences'){sentenceTitle=lessons[li].title}resetSelection();if(mode==='Dərslər')saveViewChoices({lessonTitle:sentenceTitle,lessonSection});else saveViewChoices({vocabPage:libraryPage,vocabSection:librarySection,vocabQuery:''});render();smartRefresh();$('status').textContent='Dərs saxlanıldı. Hamı üçün yeniləmək istəyirsinizsə, Dərsi hamı ilə paylaş düyməsini basın.'}catch{$('status').textContent='Fayl uyğun deyil. Deutsch lernen JSON faylı seçin.'}}$('file').onchange=async e=>{if(!e.target.files.length)return;try{let f=e.target.files[0];let raw=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsText(f)});importLesson(raw)}catch{$('status').textContent='Faylı oxumaq mümkün olmadı.'}finally{e.target.value=''}};$('pasteImport').onclick=()=>importLesson($('paste').value);$('backup').onclick=()=>{let a=el('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({lessons,known,stars},null,2)],{type:'application/json'}));a.download='deutsch-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};const COURSE_LESSONS=[
  {
   "type": "sentences",
   "title": "Kapitel 1 · Guten Tag! · Salam və tanışlıq",
@@ -2662,7 +2676,8 @@ function updateLessonPronunciation(lesson){
 }
 const COURSE_FILE_HASH='c6f64f4487a8b36fcb940f7a1fec4e6db59b09de712e073dbef41a150e2f7366';
 const COURSE_PDF_MODULE='https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.624/legacy/build/';
-let openCourseBook;
+const openBookDocuments=new Map();
+const VOCABULARY_FILE_KEY='begegnungen-a1-woerterbuch';
 
 function addCourseLessons(){
  for(const lesson of COURSE_LESSONS){
@@ -2687,18 +2702,31 @@ function courseFileStorage(mode,operation){
  });
 }
 
-async function readCourseBook(file){
+async function readBook(file,vocabulary,minimumPages){
  const bytes=new Uint8Array(await file.arrayBuffer());
- const digest=new Uint8Array(await crypto.subtle.digest('SHA-256',bytes));
- const hex=Array.from(digest,byte=>byte.toString(16).padStart(2,'0')).join('');
- if(hex!==COURSE_FILE_HASH)throw new Error('edition');
+ if(!vocabulary){
+  const digest=new Uint8Array(await crypto.subtle.digest('SHA-256',bytes));
+  const hex=Array.from(digest,byte=>byte.toString(16).padStart(2,'0')).join('');
+  if(hex!==COURSE_FILE_HASH)throw new Error('edition');
+ }
  const pdfjs=await import(COURSE_PDF_MODULE+'pdf.min.mjs');
  pdfjs.GlobalWorkerOptions.workerSrc=COURSE_PDF_MODULE+'pdf.worker.min.mjs';
  const pdf=await pdfjs.getDocument({data:bytes,isEvalSupported:false,enableXfa:false,
   standardFontDataUrl:new URL('../../standard_fonts/',COURSE_PDF_MODULE).href,
   cMapUrl:new URL('../../cmaps/',COURSE_PDF_MODULE).href,
   wasmUrl:new URL('../../wasm/',COURSE_PDF_MODULE).href}).promise;
- if(pdf.numPages!==239){await pdf.destroy();throw new Error('edition')}
+ try{
+  if(vocabulary){
+   if(pdf.numPages<minimumPages)throw new Error('edition');
+   const first=await pdf.getPage(3);
+   const {items}=await first.getTextContent();
+   const letters=items.map(item=>item.str||'').join('').normalize('NFC').toLocaleLowerCase('de').replace(/[^\p{L}]/gu,'');
+   if(letters.length>50&&(!letters.includes('kommunikation')||!letters.includes('begrüßen')&&!letters.includes('begrüssen')))throw new Error('edition');
+  }else if(pdf.numPages!==239)throw new Error('edition');
+ }catch(error){
+  await pdf.destroy();
+  throw error;
+ }
  return pdf;
 }
 
@@ -2711,11 +2739,13 @@ function bookPageRange(lesson,section){
  return {start,end,page};
 }
 
-function showCoursePage(lesson,section){
- const {start,end,page}=bookPageRange(lesson,section);
+function showBookPage({start,end,page},vocabulary=false){
+ const fileKey=vocabulary?VOCABULARY_FILE_KEY:COURSE_FILE_HASH;
+ const pdfOffset=vocabulary?2:1;
+ const bookName=vocabulary?'Begegnungen A1+ Wörterbuch':'Begegnungen A1+ dərs kitabı';
  const dialog=el('dialog',undefined,'course-reader');
  dialog.setAttribute('aria-labelledby','coursePageTitle');
- const title=el('h2','Kitab səhifəsi');title.id='coursePageTitle';
+ const title=el('h2',vocabulary?'Lüğət kitabı':'Kitab səhifəsi');title.id='coursePageTitle';
  const close=btn('Bağla',()=>dialog.close());
  const top=el('div',undefined,'course-reader-bar');top.append(title,close);
  const controls=el('div',undefined,'course-reader-bar');
@@ -2726,7 +2756,7 @@ function showCoursePage(lesson,section){
  const next=btn('Sonrakı',()=>{pages.value=String(Number(pages.value)+1);draw()});
  const zoom=el('select');zoom.setAttribute('aria-label','Böyütmə');
  for(const [scale,label] of [['1','Enə uyğun'],['1.5','150%'],['2','200%'],['3','300%']])zoom.add(new Option(label,scale));
- const fileLabel=el('label','Begegnungen A1+ kitab faylını seç');
+ const fileLabel=el('label',bookName+' faylını seç');
  const fileInput=el('input');fileInput.type='file';fileInput.accept='.pdf,application/pdf';
  fileLabel.append(fileInput);
  const status=el('p','Kitab faylını cihazından seç. Fayl bu brauzerdə açılır.');
@@ -2751,7 +2781,7 @@ function showCoursePage(lesson,section){
   if(old)await old.promise.catch(()=>{});
   if(id!==drawId||!dialog.open)return;
   try{
-   const bookPage=await pdf.getPage(selected+1);
+   const bookPage=await pdf.getPage(selected+pdfOffset);
    if(id!==drawId||!dialog.open)return;
    const natural=bookPage.getViewport({scale:1});
    const width=Math.max(200,frame.clientWidth)*Number(zoom.value);
@@ -2772,18 +2802,19 @@ function showCoursePage(lesson,section){
   const id=++loadId;
   status.textContent='Kitab açılır…';
   try{
-   const nextPdf=openCourseBook||await readCourseBook(file);
-   if(id!==loadId||!dialog.open){if(nextPdf!==openCourseBook)await nextPdf.destroy();return}
-   openCourseBook=pdf=nextPdf;
+   const nextPdf=openBookDocuments.get(fileKey)||await readBook(file,vocabulary,end+pdfOffset);
+   if(id!==loadId||!dialog.open){if(nextPdf!==openBookDocuments.get(fileKey))await nextPdf.destroy();return}
+   openBookDocuments.set(fileKey,nextPdf);
+   pdf=nextPdf;
    fileLabel.hidden=true;
    controls.hidden=false;
    frame.hidden=false;
    await draw();
-   if(remember)courseFileStorage('readwrite',store=>store.put(file,COURSE_FILE_HASH)).catch(()=>{});
+   if(remember)courseFileStorage('readwrite',store=>store.put(file,fileKey)).catch(()=>{});
   }catch(error){
    if(id!==loadId||!dialog.open)return;
    status.textContent=error.message==='edition'
-    ?'Bu fayl səhifə nömrələri uyğunlaşdırılmış Begegnungen A1+ nəşri deyil. Orijinal kitab faylını seç.'
+    ?'Səhifə nömrələri uyğun gəlmir. '+bookName+' faylını seç.'
     :'Kitab açıla bilmədi. İnternet bağlantısını yoxlayıb yenidən cəhd et.';
   }
  }
@@ -2800,21 +2831,57 @@ function showCoursePage(lesson,section){
  });
  controls.hidden=frame.hidden=true;
  dialog.showModal();
- if(openCourseBook)load();
- else courseFileStorage('readonly',store=>store.get(COURSE_FILE_HASH))
+ if(openBookDocuments.has(fileKey))load();
+ else courseFileStorage('readonly',store=>store.get(fileKey))
   .then(file=>{if(file&&dialog.open&&!loadId)load(file,false)})
   .catch(()=>{});
 }
-function renderCoursePageButton(panel,lesson){
+function isMappedVocabularyBook(book){
+ return book?.book==='Begegnungen A1+ Wörterbuch'&&Number.isInteger(book.page)&&book.page>0&&Number(book.pdf_page)===book.page+2;
+}
+function visibleBookCard(selector){
+ const readingLine=innerHeight*.25;
+ let lastVisible=null;
+ for(const card of $('view').querySelectorAll(selector)){
+  const {top,bottom}=card.getBoundingClientRect();
+  if(top>=innerHeight)break;
+  if(bottom<=0)continue;
+  lastVisible=card;
+  if(bottom>readingLine)return card;
+ }
+ return lastVisible;
+}
+function renderCoursePageButton(lesson){
  let button=$('coursePageButton');
  if(!button){
-  button=btn('Kitab səhifəsi',()=>showCoursePage(lessons[li],lessonSection),'course-page-button');
+  button=btn('',()=>{
+   const current=lessons[li];
+   if(mode==='Lüğət'){
+    const books=orderedBooks('vocabulary').filter(isMappedVocabularyBook);
+    const visible=libraryPage==='all'?visibleBookCard('[data-book-title]')?.dataset.bookTitle:libraryPage;
+    const selected=books.find(book=>book.title===visible)||books.find(book=>book===current)||books[0];
+    if(selected)showBookPage({start:books[0].page,end:books.at(-1).page,page:selected.page},true);
+   }else{
+    const section=lessonSection!=='all'?lessonSection:visibleBookCard('[data-book-section]')?.dataset.bookSection||'all';
+    showBookPage(bookPageRange(current,section));
+   }
+  },'course-page-button');
   button.id='coursePageButton';
-  panel.append(button);
+  button.type='button';
+  button.setAttribute('aria-label','Cari dərsin kitab səhifəsini aç');
+  button.setAttribute('aria-haspopup','dialog');
+  button.title='Kitab səhifəsi';
+  button.append(navIcon('lessons'));
+  document.body.append(button);
  }
  const legacy=lesson?.title===legacyTitle8||lesson?.title===legacyTitle9;
- button.hidden=mode!=='Dərslər'||(!legacy&&!COURSE_LESSONS.includes(lesson));
- if(!button.hidden)button.textContent='Kitab səhifəsi · '+bookPageRange(lesson,lessonSection).page;
+ if(mode==='Lüğət'){
+  button.hidden=!orderedBooks('vocabulary').some(book=>isMappedVocabularyBook(book)&&(libraryPage==='all'||libraryPage===book.title||(!libraryPage&&book===currentVocab())));
+  button.setAttribute('aria-label','Cari lüğət səhifəsini aç');
+ }else{
+  button.hidden=mode!=='Dərslər'||(!legacy&&!COURSE_LESSONS.includes(lesson));
+  button.setAttribute('aria-label','Cari dərsin kitab səhifəsini aç');
+ }
 }
 addCourseLessons();
 lessons.forEach(updateLessonPronunciation);
