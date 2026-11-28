@@ -18,6 +18,7 @@ html,body{width:100%;max-width:100%;margin:0}body{overflow-wrap:anywhere}main,he
 @media(max-width:700px){#nav{display:flex;gap:3px}#nav button,body.dark #nav button{font-size:clamp(9px,2.6vw,12px);padding:8px 1px;min-height:44px}body{padding-bottom:calc(100px + env(safe-area-inset-bottom))}}
  .practice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}.practice-tile{text-align:left;display:flex;flex-direction:column;gap:8px;padding:16px;min-height:95px}.practice-tile:first-child{grid-column:1/-1}.practice-area{display:grid;gap:10px;margin:16px 0}.practice-option{text-align:left;width:100%}.practice-bank{display:flex;flex-wrap:wrap;gap:8px;min-height:58px;padding:10px;border:1px solid #8ba397;border-radius:12px}.practice-match{display:grid;grid-template-columns:1fr 1fr;gap:8px}.practice-match>div{display:grid;gap:8px}.practice-feedback{white-space:pre-line;border-radius:12px;padding:12px}.practice-feedback:empty{display:none}.p-good,body.dark .p-good{background:#dceee3!important;color:#17583c!important;border-color:#368565!important}.p-bad,body.dark .p-bad{background:#f8e5df!important;color:#8a352b!important;border-color:#bd6555!important}.practice-card button:disabled{opacity:.65}.practice-card .bar{margin-top:12px}@media(max-width:700px){#nav button,body.dark #nav button{font-size:clamp(8px,2.25vw,11px);padding:7px 0;letter-spacing:-.2px}}
 .vocab-section{font-size:1rem;font-weight:700;background:var(--accent,#183b32);color:#fff;background:#193c32;padding:9px 13px;border-radius:9px;margin:16px 0 8px;letter-spacing:.02em}.dark .vocab-section{background:#315c4c;color:#fff}.vocab-page-label{font-weight:600;margin:20px 0 5px;color:inherit}.vocab-heading{display:flex;align-items:baseline;gap:10px;min-width:0}.vocab-heading h2{margin:0;min-width:0;flex:1}.vocab-number{font-size:.85rem;font-weight:600;opacity:.72;flex:none;font-variant-numeric:tabular-nums}.vocab-controls{display:grid;gap:8px;margin:10px 0}.vocab-controls select,.vocab-controls input{width:100%}.vocab-subnumber{font-size:.8rem;opacity:.75;margin:0 0 5px}.vocab-card{margin-top:8px}
+.vocab-audio{flex-wrap:wrap;margin-bottom:8px}
 .vocab-card>.az{margin:8px 0 12px}
 .vocab-filters{margin:0 0 12px}
 .vocab-filters>select{max-width:100%;margin-top:8px}
@@ -172,14 +173,9 @@ body.dark .listening-caption{background:#1a342a;color:#f0fbf5;border-color:#4662
 header h1{font-size:20px;letter-spacing:-.02em}
 #nav .nav-label{font-size:11px}
 .vocab-card{padding:16px;border-radius:18px;margin:10px 0}
-.vocab-card-top{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:12px}
 .vocab-heading h2{font-size:clamp(20px,5.5vw,26px)}
 .vocab-heading{gap:6px}
 .vocab-card .pron{font-size:16px;margin:6px 0 0}
-.vocab-listen{
- display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:0;border-radius:14px
-}
-.vocab-listen .nav-icon{display:grid;width:20px;height:20px}
 .lesson-translation{margin:12px 0}
 @media(max-width:360px){
  #nav .nav-label{font-size:10px}
@@ -224,7 +220,6 @@ body .bento-word-feature,body.dark .bento-word-feature{
  background:linear-gradient(120deg,var(--bento-hero) 55%,#236b52);color:#f5fff8;border-color:transparent;
  padding:18px;isolation:isolate
 }
-.bento-word-feature .vocab-card-top{align-items:center}
 body .bento-word-feature .pron,body.dark .bento-word-feature .pron{color:#c2edcf}
 body .bento-word-feature .de-token,body.dark .bento-word-feature .de-token{color:inherit}
 body .bento-word-feature .de-token .ph-vowel,body.dark .bento-word-feature .de-token .ph-vowel{color:#a7dbff}
@@ -236,12 +231,6 @@ body .bento-word-feature .lesson-translation,body.dark .bento-word-feature .less
 }
 body .bento-word-feature .lesson-translation>summary,body.dark .bento-word-feature .lesson-translation>summary{color:#183b32}
 body .bento-word-feature .lesson-translation .az,body.dark .bento-word-feature .lesson-translation .az{color:#183b32}
-body .bento-word-feature .vocab-listen,body.dark .bento-word-feature .vocab-listen{
- width:clamp(53px,16vw,76px);height:clamp(53px,16vw,76px);border-radius:20px;
- background:linear-gradient(145deg,#d5f6d8,#87c89e);border:1px solid #a2dcb0;color:#164b37;
- box-shadow:0 6px 12px #0e302b66,inset 0 1px 0 #effff5;transform:rotate(5deg);margin:2px 2px 4px 0
-}
-.bento-word-feature .vocab-listen .nav-icon{width:65%;height:65%;filter:drop-shadow(0 2px 1px #48856855)}
 .bento-shortcuts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:10px 0 16px}
 body button.bento-shortcut,body.dark button.bento-shortcut{
  display:flex;align-items:center;gap:10px;min-height:68px;text-align:start;padding:10px 12px;
@@ -275,7 +264,7 @@ body .listening-caption,body.dark .listening-caption{background:var(--bento-hero
 @media(max-width:360px){
  body button.bento-shortcut,body.dark button.bento-shortcut{gap:6px;padding-inline:8px;font-size:14px}
 }
-.bento-word-feature .vocab-actions button,.bento-word-feature .vocab-details .row button{
+.bento-word-feature .vocab-actions button,.bento-word-feature .vocab-audio button{
  background:var(--bento-surface);color:var(--bento-mint-ink);border-color:var(--bento-border)
 }
 .vocab-card .vocab-favorite[aria-pressed="true"]{
@@ -1151,16 +1140,11 @@ function renderLibrary(view){
     const highlight=!term&&!featured;
     const card=el('article',undefined,'card vocab-card'+(highlight?' bento-word-feature':''));
     const heading=vocabHeading(item);
-    const reading=item.pron?el('p',item.pron,'pron'):null;
-    const listen=btn('',()=>say(item.de),'primary vocab-listen');
-    listen.setAttribute('aria-label','Dinlə: '+item.de);
-    listen.append(navIcon('listen'));
-    const top=el('div',undefined,'vocab-card-top');
-    const words=el('div');
-    words.append(heading);
-    if(reading)words.append(reading);
-    top.append(words,listen);
-    card.append(top);
+    card.append(heading);
+    if(item.pron)card.append(el('p',item.pron,'pron'));
+    const audio=el('div',undefined,'row vocab-audio');
+    sound(audio,item.de);
+    card.append(audio);
     card.append(hideVocabAnswers?vocabTranslationToggle(item,book):el('p',item.az,'az'));
     const actions=el('div',undefined,'row vocab-actions');
     const favorite=btn(stars[key]?'★':'☆',()=>{stars[key]=!stars[key];save();draw()},'vocab-favorite');
@@ -1181,9 +1165,6 @@ function renderLibrary(view){
     if(item.rules)details.append(el('p',item.rules));
     const hint=item.translation_note||vocabHint(item);
     if(hint)details.append(el('p',hint));
-    const audio=el('div',undefined,'row');
-    audio.append(btn('◷ Yavaş dinlə',()=>say(item.de,.5,'sentence')),btn('Dayandır',stopAudio));
-    details.append(audio);
     card.append(details);
     list.append(card);
     if(highlight){featured=true;appendVocabularyShortcuts(list)}
