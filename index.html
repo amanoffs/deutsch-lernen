@@ -318,7 +318,7 @@ body.dark .course-reader{background:#142d25;color:#f0fbf5}
 .course-reader-frame{overflow:auto;max-height:min(70dvh,900px);background:#fff;overscroll-behavior:contain}
 .course-reader-frame canvas{display:block;max-width:none}
 </style><body><header><div><h1>Deutsch lernen — AZ</h1><small>Şəxsi Alman dili kitabxanan · A1 · V2.0.24</small></div></header><main><div class="card lesson-picker"><label id="lessonLabel" for="lesson" class="picker-label">Dərs kitabı</label><select aria-label="Dərs" id="lesson" style="width:100%"></select><div id="lessonSectionWrap"><label for="lessonSection" class="picker-label">Tapşırıq bölməsi</label><select aria-label="Tapşırıq bölməsi" id="lessonSection" style="width:100%"></select></div><p id="pickerContext" hidden></p><p id="progress"></p><div class="bar"><i id="bar"></i></div></div><noscript>JavaScript işləmir. Faylı önizləmə deyil, Chrome, Edge və ya yayımlanmış Safari səhifəsində açın.</noscript><section id="settingsPanels" hidden><div class="settings-head"><h2 id="settingsTitle">Ayarlar</h2><button aria-label="Rəng rejimi" id="theme"></button></div><details class="card control-panel" id="audioPanel" name="management"><summary><strong id="audioSettingsTitle">Səsləndirmə ayarları</strong></summary><p><label for="aiEngine">Səs sistemi</label></p><select id="aiEngine"><option value="apple">Cihazın səsi (standart)</option><option value="gemini">Gemini AI (avtomatik model)</option></select><div id="aiSettings"><p><label for="aiToken">Administrator açarı (yalnız yeni audio və dərs üçün)</label></p><input autocomplete="off" id="aiToken" placeholder="Cloudflare-də seçdiyin parol" style="width:100%" type="password"/><p><label for="aiVoice">Gemini səsi</label></p><select id="aiVoice"><option>Kore</option><option>Puck</option><option>Aoede</option><option>Charon</option><option>Zephyr</option><option>Fenrir</option></select><p><button id="aiSave">Admin açarını saxla</button> <button id="aiForget">Admin açarını sil</button></p><small>Dinləmək üçün açar lazım deyil. Administrator açarı yalnız bu brauzerdə saxlanılır.</small><p id="aiStatus" role="status"></p><audio controls="" hidden="" id="aiPlayer" preload="none" style="width:100%"></audio></div><p>Cihazın alman dili səsi</p><select aria-label="Alman dili səsi" id="audioVoice" style="width:100%"></select><p><label for="audioRate">Sürət: <output id="audioRateValue"></output></label></p><input id="audioRate" max="1.25" min="0.5" step="0.05" style="width:100%" type="range"/><p><label for="audioMode">Rejim</label></p><select id="audioMode"><option value="sentence">Bütöv cümlə</option><option value="word">Sözbəsöz</option><option value="repeat">Cümləni 3 dəfə təkrarla</option></select><p><label for="audioPause">Fasilə (saniyə)</label> <select id="audioPause"><option>0.5</option><option>1</option><option>2</option><option>3</option></select></p><div class="row"><button id="audioTest">▶ Səsi yoxla</button><button id="audioStop">■ Dayandır</button><button id="audioRefresh">Səsləri yenilə</button></div><p id="audioInfo" role="status"></p></details><details class="card control-panel" id="lessonPanel" name="management"><summary>📚 Dərs əlavə et və idarə et</summary><div class="row"><label for="file" style="font-weight:650">＋ Dərs əlavə et</label><input accept=".json,application/json" id="file" style="max-width:100%" type="file"/><button id="backup">Ehtiyat nüsxə</button></div><details><summary>Fayl seçimi işləmirsə: JSON mətnini əlavə et</summary><textarea id="paste" placeholder="JSON mətnini bura yapışdır" rows="5" style="width:100%;margin:10px 0"></textarea><button id="pasteImport">Dərsi idxal et</button></details></details></section><nav id="nav"></nav><div id="status" role="status"></div><section id="view"></section><footer>Azərbaycan dilində yazılan oxunuşlar təxmini səs qarşılıqlarıdır; IPA və alman dilində səsləndirmə əsas götürülməlidir. Məlumatlar bu brauzerdə saxlanılır.<p>Almanca IPA mənbəsi: <a href="https://github.com/open-dict-data/ipa-dict" target="_blank" rel="noopener noreferrer">ipa-dict</a> / <a href="https://github.com/devio-at/german-ipa-dict" target="_blank" rel="noopener noreferrer">german-ipa-dict</a> (Wiktionary, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">CC BY-SA</a>). Seçilmiş mürəkkəb sözlər üçün transkripsiyalar tərkib hissələri əsasında yoxlanılıb.</p></footer></main><script>
-const initial={"title": "Kennenlernen – Tanışlıq (A2–A4, səh. 9)", "items": [{"de": "Teil A – Themen und Aufgaben", "pron": "Tayl Aa – Teemən unt Aufgaabən", "words": "Teil — hissə\nA — A\nThemen — mövzular\nund — və\nAufgaben — tapşırıqlar", "az": "A hissəsi – Mövzular və tapşırıqlar", "rules": "ei → ay (Teil); Th → t (Themen); au → au (Aufgaben); und: d → t; g → g (Aufgaben)", "ipa": "[taɪ̯l aː – ˈteːmən ʊnt ˈaʊ̯fˌɡaːbən]"}, {"de": "Kapitel 1", "pron": "Kapitıl ayns", "words": "Kapitel — fəsil\n1 — bir", "az": "1-ci fəsil", "rules": "1 = eins: ei → ay; s → s; i → qısa i; -el → zəif l hecası (Kapitel)", "ipa": "[kaˈpɪtl̩ aɪ̯ns]"}, {"de": "Hören und wiederholen Sie.", "pron": "Hööğən unt viidə̆hoolən zii.", "words": "Hören — dinləmək\nund — və\nwiederholen — təkrarlamaq\nSie — siz", "az": "Dinləyin və təkrarlayın.", "rules": "ie → ii (wiederholen, Sie); w → v (wiederholen); S → z (Sie); und: d → t; r → ğ (Hören); -er → ə̆ (wiederholen); h → h (wiederholen, holen hissəsində)", "ipa": "[ˈhøːʁən ʊnt ˌviːdɐˈhoːlən ziː]"}, {"de": "Wie heißen Sie?", "pron": "Vii haysən zii?", "words": "Wie — necə\nheißen — adlanmaq\nSie — siz", "az": "Adınız nədir?", "rules": "ie → ii (Wie, Sie); w → v (Wie); ei → ay (heißen); ß → s; S → z (Sie)", "ipa": "[viː ˈhaɪ̯sən ziː]"}, {"de": "Ich heiße Franziska Binder.", "pron": "İx’ haysə Fğantsiska Bində̆.", "words": "Ich — mən\nheiße — adlanıram\nFranziska Binder — şəxs adı", "az": "Mənim adım Franziska Binderdir.", "rules": "ch → yumşaq x’ [ç] (Ich); ei → ay (heiße); ß → s; z → ts (Franziska); -er → ə̆ (Binder); r → ğ (Franziska)", "ipa": "[ɪç ˈhaɪ̯sə fʁanˈtsɪska ˈbɪndɐ]"}, {"de": "Mein Name ist Peter Heinemann.", "pron": "Mayn naamə ist Peetə̆ Haynəman.", "words": "Mein — mənim\nName — ad\nist — -dır\nPeter Heinemann — şəxs adı", "az": "Mənim adım Peter Heinemanndır.", "rules": "ei → ay (Mein, Heinemann); a → uzun aa (Name); e → uzun ee (Peter); -er → ə̆ (Peter); -er → ə̆ (Peter)", "ipa": "[maɪ̯n ˈnaːmə ɪst ˈpeːtɐ ˈhaɪ̯nəman]"}, {"de": "Wie ist Ihr Vorname?", "pron": "Vii ist iiə̆ fooə̆naamə?", "words": "Wie — necə\nist — -dır\nIhr — sizin\nVorname — ad (soyaddan fərqli olaraq)", "az": "Adınız nədir?", "rules": "w → v (Wie); ie → ii (Wie); h → i saitini uzadır (Ihr); V → f (Vorname); r → ə̆ (Ihr, Vorname)", "ipa": "[viː ɪst iːɐ̯ ˈfoːɐ̯ˌnaːmə]"}, {"de": "Mein Vorname ist Franziska.", "pron": "Mayn fooə̆naamə ist Fğantsiska.", "words": "Mein — mənim\nVorname — ad\nist — -dır\nFranziska — şəxs adı", "az": "Mənim adım Franziskadır.", "rules": "ei → ay (Mein); V → f (Vorname); z → ts (Franziska); r → ə̆ (Vorname); r → ğ (Franziska)", "ipa": "[maɪ̯n ˈfoːɐ̯ˌnaːmə ɪst fʁanˈtsɪska]"}, {"de": "Mein Vorname ist Peter.", "pron": "Mayn fooə̆naamə ist Peetə̆.", "words": "Mein — mənim\nVorname — ad\nist — -dır\nPeter — şəxs adı", "az": "Mənim adım Peterdir.", "rules": "ei → ay (Mein); V → f (Vorname); -er → ə̆ (Peter); r → ə̆ (Vorname, Peter)", "ipa": "[maɪ̯n ˈfoːɐ̯ˌnaːmə ɪst ˈpeːtɐ]"}, {"de": "Wie ist Ihr Familienname?", "pron": "Vii ist iiə̆ famiilyənnaamə?", "words": "Wie — necə\nist — -dır\nIhr — sizin\nFamilienname — soyad", "az": "Soyadınız nədir?", "rules": "w → v (Wie); ie → ii (Wie); h → i saitini uzadır (Ihr); ie → i-yə yaxın (Familienname); r → ə̆ (Ihr); i → ii (Familienname)", "ipa": "[viː ɪst iːɐ̯ faˈmiːli̯ənˌnaːmə]"}, {"de": "Mein Familienname ist Binder.", "pron": "Mayn famiilyənnaamə ist Bində̆.", "words": "Mein — mənim\nFamilienname — soyad\nist — -dır\nBinder — soyad", "az": "Mənim soyadım Binderdir.", "rules": "ei → ay (Mein); ie → i-yə yaxın (Familienname); -er → ə̆ (Binder); -er → ə̆ (Binder)", "ipa": "[maɪ̯n faˈmiːli̯ənˌnaːmə ɪst ˈbɪndɐ]"}, {"de": "Mein Familienname ist Heinemann.", "pron": "Mayn famiilyənnaamə ist Haynəman.", "words": "Mein — mənim\nFamilienname — soyad\nist — -dır\nHeinemann — soyad", "az": "Mənim soyadım Heinemanndır.", "rules": "ei → ay (Mein, Heinemann); ie → i-yə yaxın (Familienname)", "ipa": "[maɪ̯n faˈmiːli̯ənˌnaːmə ɪst ˈhaɪ̯nəman]"}, {"de": "Wie alt sind Sie?", "pron": "Vii alt zint zii?", "words": "Wie — nə qədər\nalt — yaşlı\nsind — -sınız\nSie — siz", "az": "Neçə yaşınız var?", "rules": "w → v (Wie); ie → ii (Wie, Sie); s → z (sind, Sie); d → t (sind)", "ipa": "[viː alt zɪnt ziː]"}, {"de": "Ich bin 37 Jahre alt.", "pron": "İx’ bin ziibənuntdğaysix’ yaağə alt.", "words": "Ich — mən\nbin — -am\n37 — otuz yeddi\nJahre — illər\nalt — yaşında", "az": "Mənim 37 yaşım var.", "rules": "ch → yumşaq x’ (Ich); 37 = siebenunddreißig: ie → ii, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ (dreißig, Jahre)", "ipa": "[ɪç bɪn ˈziːbənʊntˌdʁaɪ̯sɪç ˈjaːʁə alt]"}, {"de": "Ich bin 35 Jahre alt.", "pron": "İx’ bin fünfuntdğaysix’ yaağə alt.", "words": "Ich — mən\nbin — -am\n35 — otuz beş\nJahre — illər\nalt — yaşında", "az": "Mənim 35 yaşım var.", "rules": "ch → yumşaq x’ (Ich); 35 = fünfunddreißig: ü → ü, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ (dreißig, Jahre)", "ipa": "[ɪç bɪn ˈfʏnfʊntˌdʁaɪ̯sɪç ˈjaːʁə alt]"}, {"de": "Woher kommen Sie?", "pron": "Voheeə̆ komən zii?", "words": "Woher — haradan\nkommen — gəlmək\nSie — siz", "az": "Haradansınız?", "rules": "w → v (Woher); mm → qısa saitdən sonra bir m (kommen); ie → ii (Sie); S → z (Sie); r → ə̆ (Woher); h → h (Woher)", "ipa": "[voˈheːɐ̯ ˈkɔmən ziː]"}, {"de": "Ich komme aus Österreich.", "pron": "İx’ komə aus Ööstəğayx’.", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nÖsterreich — Avstriya", "az": "Mən Avstriyadanam.", "rules": "ch → yumşaq x’ (Ich, Österreich); au → au (aus); ei → ay (Österreich); ö → ö; r → ğ (Österreich)", "ipa": "[ɪç ˈkɔmə aʊ̯s ˈøːstəʁaɪ̯ç]"}, {"de": "Ich komme aus Deutschland.", "pron": "İx’ komə aus Doyçlant.", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nDeutschland — Almaniya", "az": "Mən Almaniyadanam.", "rules": "ch → yumşaq x’ (Ich); au → au (aus); eu → oy (Deutschland); tsch → ç (Deutschland); d → t (Land sonunda)", "ipa": "[ɪç ˈkɔmə aʊ̯s ˈdɔɪ̯tʃlant]"}, {"de": "Wo wohnen Sie?", "pron": "Voo voonən zii?", "words": "Wo — harada\nwohnen — yaşamaq\nSie — siz", "az": "Harada yaşayırsınız?", "rules": "w → v (Wo, wohnen); h → o uzadır (wohnen); ie → ii (Sie); S → z (Sie)", "ipa": "[voː ˈvoːnən ziː]"}, {"de": "Ich wohne in Wien.", "pron": "İx’ voonə in Viin.", "words": "Ich — mən\nwohne — yaşayıram\nin — -da/-də\nWien — Vyana", "az": "Mən Vyanada yaşayıram.", "rules": "ch → yumşaq x’ (Ich); w → v (wohne, Wien); h → o uzadır (wohne); ie → ii (Wien)", "ipa": "[ɪç ˈvoːnə ɪn viːn]"}, {"de": "Ich wohne in Marburg.", "pron": "İx’ voonə in Mağbuğk.", "words": "Ich — mən\nwohne — yaşayıram\nin — -da/-də\nMarburg — Marburq", "az": "Mən Marburqda yaşayıram.", "rules": "ch → yumşaq x’ (Ich); w → v (wohne); h → o uzadır; g → k (Marburg sonunda); r → ğ (Marburg, hər iki r; samitli variant)", "ipa": "[ɪç ˈvoːnə ɪn ˈmaʁbʊʁk]"}, {"de": "Was sind Sie von Beruf?", "pron": "Vas zint zii fon bəğuuf?", "words": "Was — nə\nsind — -sınız\nSie — siz\nvon — burada ifadənin hissəsi\nBeruf — peşə\nvon Beruf — peşəcə", "az": "Peşəniz nədir?", "rules": "w → v (Was); s → z (sind, Sie); d → t (sind); ie → ii (Sie); v → f (von); r → ğ (Beruf); u → uu (Beruf)", "ipa": "[vas zɪnt ziː fɔn bəˈʁuːf]"}, {"de": "Ich bin Lehrerin.", "pron": "İx’ bin leeğəğin.", "words": "Ich — mən\nbin — -am\nLehrerin — müəllimə", "az": "Mən müəlliməyəm.", "rules": "ch → yumşaq x’ (Ich); h → e uzadır (Lehrerin); h → oxunmur, e uzanır; hər iki r → ğ (Lehrerin)", "ipa": "[ɪç bɪn ˈleːʁəʁɪn]"}, {"de": "Ich bin Informatiker.", "pron": "İx’ bin infoğmaatikə̆.", "words": "Ich — mən\nbin — -am\nInformatiker — informatika mütəxəssisi (kişi)", "az": "Mən informatika mütəxəssisiyəm.", "rules": "ch → yumşaq x’ (Ich); -er → ə̆ (Informatiker); r → ğ (Informatiker, ilk r); -er → ə̆ (sonluq)", "ipa": "[ɪç bɪn ɪnfɔʁˈmaːtɪkɐ]"}, {"de": "Welche Sprachen sprechen Sie?", "pron": "Velx’ə şpğaaxən şpğex’ən zii?", "words": "Welche — hansı\nSprachen — dillər\nsprechen — danışmaq\nSie — siz", "az": "Hansı dillərdə danışırsınız?", "rules": "w → v (Welche); ch → yumşaq x’ (Welche, sprechen), sərt x (Sprachen); sp → şp (Sprachen, sprechen); ie → ii (Sie); S → z (Sie); r → ğ (Sprachen, sprechen)", "ipa": "[ˈvɛlçə ˈʃpʁaːxən ˈʃpʁɛçən ziː]"}, {"de": "Meine Muttersprache ist Deutsch.", "pron": "Maynə mutə̆şpğaaxə ist doyç.", "words": "Meine — mənim\nMuttersprache — ana dili\nist — -dır\nDeutsch — alman dili", "az": "Mənim ana dilim alman dilidir.\nQeyd: şəkildə “ich” yazılıb; düzgün forma “ist”dir.", "rules": "ei → ay (Meine); sp → şp (Muttersprache); ch → sərt x (Muttersprache); eu → oy (Deutsch); tsch → ç (Deutsch); -er → ə̆ (Mutter); r → ğ (Sprache)", "ipa": "[ˈmaɪ̯nə ˈmʊtɐˌʃpʁaːxə ɪst dɔɪ̯tʃ]"}, {"de": "Ich spreche auch Spanisch und Englisch.", "pron": "İx’ şpğex’ə aux şpaaniş unt eŋliş.", "words": "Ich — mən\nspreche — danışıram\nauch — həmçinin\nSpanisch — ispan dili\nund — və\nEnglisch — ingilis dili", "az": "Mən həmçinin ispan və ingilis dillərində danışıram.", "rules": "ch → yumşaq x’ (Ich, spreche), sərt x (auch); sp → şp (spreche, Spanisch); sch → ş (Spanisch, Englisch); au → au (auch); ng → burun n [ŋ] (Englisch); und: d → t; r → ğ (spreche)", "ipa": "[ɪç ˈʃpʁɛçə aʊ̯x ˈʃpaːnɪʃ ʊnt ˈɛŋlɪʃ]"}, {"de": "Ich lerne jetzt Japanisch.", "pron": "İx’ leğnə yetst yapaaniş.", "words": "Ich — mən\nlerne — öyrənirəm\njetzt — indi\nJapanisch — yapon dili", "az": "Mən indi yapon dilini öyrənirəm.", "rules": "ch → yumşaq x’ (Ich); j → y (jetzt, Japanisch); tz → ts (jetzt); sch → ş (Japanisch); r → ğ (lerne, samitli variant)", "ipa": "[ɪç ˈlɛʁnə jɛtst jaˈpaːnɪʃ]"}, {"de": "Hören und lesen Sie.", "pron": "Hööğən unt leezən zii.", "words": "Hören — dinləmək\nund — və\nlesen — oxumaq\nSie — siz", "az": "Dinləyin və oxuyun.", "rules": "ö → ö (Hören); s → z (lesen, Sie); ie → ii (Sie); und: d → t; r → ğ (Hören)", "ipa": "[ˈhøːʁən ʊnt ˈleːzən ziː]"}, {"de": "Ich komme aus:", "pron": "İx’ komə aus:", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən", "az": "Mən ...-dan/-dən gəlirəm.", "rules": "ch → yumşaq x’ (Ich); mm → bir m (komme); au → au (aus)", "ipa": "[ɪç ˈkɔmə aʊ̯s]"}, {"de": "Italien", "pron": "İtaalyən", "az": "İtaliya", "ipa": "[iˈtaːli̯ən]", "rules": "ie burada yə yaxın", "words": "Italien — İtaliya"}, {"de": "Frankreich", "pron": "Fğaŋkğayx’", "az": "Fransa", "ipa": "[ˈfʁaŋkʁaɪ̯ç]", "rules": "r → ğ; ei → ay; ch → x’", "words": "Frankreich — Fransa"}, {"de": "Schweden", "pron": "Şveedən", "az": "İsveç", "ipa": "[ˈʃveːdən]", "rules": "sch → ş; w → v", "words": "Schweden — İsveç"}, {"de": "Dänemark", "pron": "Deenəmağk", "az": "Danimarka", "ipa": "[ˈdɛːnəmaʁk]", "rules": "ä → uzun açıq e; r → ğ (variant)", "words": "Dänemark — Danimarka"}, {"de": "Großbritannien", "pron": "Ğoosbğitaanyən", "az": "Böyük Britaniya", "ipa": "[ˌɡʁoːsbʁɪˈtaːni̯ən]", "rules": "ß → s; r → ğ", "words": "Großbritannien — Böyük Britaniya"}, {"de": "Polen", "pron": "Poolən", "az": "Polşa", "ipa": "[ˈpoːlən]", "rules": "o uzun", "words": "Polen — Polşa"}, {"de": "Russland", "pron": "Ğuslant", "az": "Rusiya", "ipa": "[ˈʁʊslant]", "rules": "r → ğ; d → t", "words": "Russland — Rusiya"}, {"de": "Spanien", "pron": "Şpaanyən", "az": "İspaniya", "ipa": "[ˈʃpaːni̯ən]", "rules": "sp → şp", "words": "Spanien — İspaniya"}, {"de": "Portugal", "pron": "Poğtugaal", "az": "Portuqaliya", "ipa": "[pɔʁtuˈɡaːl]", "rules": "r → ğ (variant)", "words": "Portugal — Portuqaliya"}, {"de": "Brasilien", "pron": "Bğaziilyən", "az": "Braziliya", "ipa": "[bʁaˈziːli̯ən]", "rules": "r → ğ; s → z", "words": "Brasilien — Braziliya"}, {"de": "China", "pron": "X’iina", "az": "Çin", "ipa": "[ˈçiːna]", "rules": "ch → yumşaq x’ (regional variantlar var)", "words": "China — Çin"}, {"de": "Japan", "pron": "Yapaan", "az": "Yaponiya", "ipa": "[jaˈpaːn]", "rules": "j → y", "words": "Japan — Yaponiya"}, {"de": "Belgien", "pron": "Belgyən", "az": "Belçika", "ipa": "[ˈbɛlɡi̯ən]", "rules": "i → y-yə yaxın", "words": "Belgien — Belçika"}, {"de": "Rumänien", "pron": "Ğumeenyən", "az": "Rumıniya", "ipa": "[ʁuˈmɛːni̯ən]", "rules": "r → ğ; ä → açıq uzun e", "words": "Rumänien — Rumıniya"}, {"de": "Slowenien", "pron": "Sloveenyən", "az": "Sloveniya", "ipa": "[sloˈveːni̯ən]", "rules": "s → s; w → v", "words": "Slowenien — Sloveniya"}, {"de": "Indien", "pron": "İndyən", "az": "Hindistan", "ipa": "[ˈɪndi̯ən]", "rules": "i → y-yə yaxın", "words": "Indien — Hindistan"}, {"de": "Ungarn", "pron": "Uŋgağn", "az": "Macarıstan", "ipa": "[ˈʊŋɡaʁn]", "rules": "ng → ŋg; r → ğ (variant)", "words": "Ungarn — Macarıstan"}, {"de": "Irland", "pron": "İğlant", "az": "İrlandiya", "ipa": "[ˈɪʁlant]", "rules": "r → ğ (variant); d → t", "words": "Irland — İrlandiya"}, {"de": "Griechenland", "pron": "Gğiix’ənlant", "az": "Yunanıstan", "ipa": "[ˈɡʁiːçənlant]", "rules": "ie → ii; ch → x’; d → t", "words": "Griechenland — Yunanıstan"}, {"de": "die Türkei", "pron": "dii Tüğkay", "az": "Türkiyə", "ipa": "[diː tʏʁˈkaɪ̯]", "rules": "ei → ay; r → ğ (variant)", "words": "die Türkei — Türkiyə"}, {"de": "die Ukraine", "pron": "dii Ukğaiinə", "az": "Ukrayna", "ipa": "[diː ukʁaˈiːnə]", "rules": "a və i ayrı hecalardır; r → ğ", "words": "die Ukraine — Ukrayna"}, {"de": "die Schweiz", "pron": "dii Şvayts", "az": "İsveçrə", "ipa": "[diː ʃvaɪ̯ts]", "rules": "sch → ş; w → v; ei → ay; z → ts", "words": "die Schweiz — İsveçrə"}, {"de": "die USA", "pron": "dii Uu-es-aa", "az": "ABŞ", "ipa": "[diː uː ɛs aː]", "rules": "hərflər ayrı oxunur", "words": "die USA — ABŞ"}, {"de": "die Niederlande", "pron": "dii Niidə̆landə", "az": "Niderland", "ipa": "[diː ˈniːdɐˌlandə]", "rules": "ie → ii; -er → ə̆", "words": "die Niederlande — Niderland"}, {"de": "Südafrika", "pron": "Züüt afğika", "az": "Cənubi Afrika", "ipa": "[ˈzyːtˌafʁika]", "rules": "s → z; d → t; r → ğ", "words": "Südafrika — Cənubi Afrika"}, {"de": "England", "pron": "Eŋlant", "az": "İngiltərə", "ipa": "[ˈɛŋlant]", "rules": "ng → ŋ; d → t", "words": "England — İngiltərə"}, {"de": "Chile", "pron": "Çiilə", "az": "Çili", "ipa": "[ˈtʃiːlə]", "rules": "ch → ç (variant)", "words": "Chile — Çili"}, {"de": "Ich komme aus der Türkei.", "pron": "İx’ komə aus dəə̆ Tüğkay.", "az": "Mən Türkiyədənəm.", "ipa": "[ɪç ˈkɔmə aʊ̯s deːɐ̯ tʏʁˈkaɪ̯]", "rules": "aus + Dativ: die → der (tək), die → den (cəm).", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nder Türkei — Türkiyədən"}, {"de": "Ich komme aus der Ukraine.", "pron": "İx’ komə aus dəə̆ Ukğaiinə.", "az": "Mən Ukraynadanam.", "ipa": "[ɪç ˈkɔmə aʊ̯s deːɐ̯ ukʁaˈiːnə]", "rules": "aus + Dativ: die → der (tək), die → den (cəm).", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nder Ukraine — Ukraynadan"}, {"de": "Ich komme aus der Schweiz.", "pron": "İx’ komə aus dəə̆ Şvayts.", "az": "Mən İsveçrədənəm.", "ipa": "[ɪç ˈkɔmə aʊ̯s deːɐ̯ ʃvaɪ̯ts]", "rules": "aus + Dativ: die → der (tək), die → den (cəm).", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nder Schweiz — İsveçrədən"}, {"de": "Ich komme aus den USA.", "pron": "İx’ komə aus deen Uu-es-aa.", "az": "Mən ABŞ-danam.", "ipa": "[ɪç ˈkɔmə aʊ̯s deːn uː ɛs aː]", "rules": "aus + Dativ: die → der (tək), die → den (cəm).", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nden USA — ABŞ-dan"}, {"de": "Ich komme aus den Niederlanden.", "pron": "İx’ komə aus deen Niidə̆landən.", "az": "Mən Niderlanddanam.", "ipa": "[ɪç ˈkɔmə aʊ̯s deːn ˈniːdɐˌlandən]", "rules": "aus + Dativ: die → der (tək), die → den (cəm).", "words": "Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nden Niederlanden — Niderlanddan"}, {"de": "Und Sie? Woher kommen Sie?", "pron": "Unt zii? Voheeə̆ komən zii?", "az": "Bəs siz? Haradansınız?", "ipa": "[ʊnt ziː voˈheːɐ̯ ˈkɔmən ziː]", "rules": "d → t; ie → ii; r → ə̆", "words": "Und — və/bəs\nSie — siz\nWoher — haradan\nkommen — gəlmək"}, {"de": "Woher kommen die Personen?", "pron": "Voheeə̆ komən dii Peğzoonən?", "az": "Bu şəxslər haradandır?", "ipa": "[voˈheːɐ̯ ˈkɔmən diː pɛʁˈzoːnən]", "rules": "ie → ii; s → z; r → ə̆ / ğ", "words": "Woher — haradan\nkommen — gəlmək\ndie Personen — şəxslər"}, {"de": "Fragen und antworten Sie.", "pron": "Fğaagən unt antvoğtən zii.", "az": "Sual verin və cavablandırın.", "ipa": "[ˈfʁaːɡən ʊnt ˈantvɔʁtən ziː]", "rules": "r → ğ; w → v; ie → ii", "words": "Fragen — sual vermək\nund — və\nantworten — cavab vermək\nSie — siz"}, {"de": "Hören Sie die Lösungen auf der CD.", "pron": "Hööğən zii dii löözuŋən auf deeə̆ tsee-dee.", "az": "Cavabları CD-də dinləyin.", "ipa": "[ˈhøːʁən ziː diː ˈløːzʊŋən aʊ̯f deːɐ̯ tseː deː]", "rules": "ö uzun; s → z; ng → ŋ; CD hərflərlə", "words": "Hören — dinləmək\nSie — siz\ndie Lösungen — cavablar\nauf der CD — CD-də"}, {"de": "Er kommt aus Österreich.", "pron": "Eeə̆ komt aus Ööstəğayx’.", "az": "O, Avstriyadandır.", "ipa": "[eːɐ̯ kɔmt aʊ̯s ˈøːstəʁaɪ̯ç]", "rules": "er → eeə̆; kommt: 3-cü şəxs", "words": "Er — o (kişi)\nkommt — gəlir\naus — -dan/-dən\nÖsterreich — Avstriya"}, {"de": "Sie kommt aus Frankreich.", "pron": "Zii komt aus Fğaŋkğayx’.", "az": "O, Fransadandır.", "ipa": "[ziː kɔmt aʊ̯s ˈfʁaŋkʁaɪ̯ç]", "rules": "ie → ii; ei → ay; ch → x’", "words": "Sie — o (qadın)\nkommt — gəlir\naus — -dan/-dən\nFrankreich — Fransa"}, {"de": "Woher kommt Wolfgang Amadeus Mozart?", "pron": "Voheeə̆ komt Wolfgang Amadeus Mozart?", "az": "Wolfgang Amadeus Mozart haradandır?", "ipa": "Ad xaric: [voˈheːɐ̯ kɔmt]", "rules": "Xüsusi adın IPA-sı daxil edilməyib; audio ilə dinlə.", "words": "Woher — haradan\nkommt — gəlir\nWolfgang Amadeus Mozart — şəxs adı"}, {"de": "Wolfgang Amadeus Mozart kommt aus Österreich.", "pron": "Wolfgang Amadeus Mozart komt aus Ööstəğayx’.", "az": "Wolfgang Amadeus Mozart Avstriyadandır.", "ipa": "Ad xaric: [kɔmt aʊ̯s ˈøːstəʁaɪ̯ç]", "rules": "Xüsusi adın IPA-sı daxil edilməyib.", "words": "Wolfgang Amadeus Mozart — şəxs adı\nkommt — gəlir\naus — -dan/-dən\nÖsterreich — Avstriya"}, {"de": "Woher kommt Madame Tussaud?", "pron": "Voheeə̆ komt Madame Tussaud?", "az": "Madame Tussaud haradandır?", "ipa": "Ad xaric: [voˈheːɐ̯ kɔmt]", "rules": "Xüsusi adın IPA-sı daxil edilməyib; audio ilə dinlə.", "words": "Woher — haradan\nkommt — gəlir\nMadame Tussaud — şəxs adı"}, {"de": "Madame Tussaud kommt aus Frankreich.", "pron": "Madame Tussaud komt aus Fğaŋkğayx’.", "az": "Madame Tussaud Fransadandır.", "ipa": "Ad xaric: [kɔmt aʊ̯s ˈfʁaŋkʁaɪ̯ç]", "rules": "Xüsusi adın IPA-sı daxil edilməyib.", "words": "Madame Tussaud — şəxs adı\nkommt — gəlir\naus — -dan/-dən\nFrankreich — Fransa"}, {"de": "aber", "pron": "aabə̆", "az": "amma", "ipa": "[ˈaːbɐ]", "rules": "-er → ə̆", "words": "aber — amma"}, {"de": "neun", "pron": "noyn", "az": "doqquz", "ipa": "[nɔɪ̯n]", "rules": "eu → oy", "words": "neun — doqquz"}], "exercise_answers": [["Sigmund Freud", "Österreich"], ["Albert Einstein", "Deutschland"], ["Leonardo da Vinci", "Italien"], ["William Shakespeare", "England"], ["Pablo Picasso", "Spanien"], ["Leo Tolstoi", "Russland"], ["Alfred Nobel", "Schweden"], ["Frederic Chopin", "Polen"], ["Isabel Allende", "Chile"], ["Jean-Paul Sartre", "Frankreich"], ["Konfuzius", "China"], ["Nelson Mandela", "Südafrika"], ["Mahatma Gandhi", "Indien"], ["George Washington", "den USA"]]};let lessons=[initial],known={},stars={},mode='Dərslər',idx=0,reveal=false,query='',quiz=null;const $=id=>document.getElementById(id);try{const s=JSON.parse(localStorage.getItem('deaz-v1'));if(s){lessons=s.lessons;known=s.known;stars=s.stars;document.body.classList.toggle('dark',s.dark)}}catch{}if(!lessons.some(l=>l.title===initial.title))lessons.push(initial);let li=lessons.findIndex(l=>l.title===initial.title);let showLearnedItems=false;
+const initial={"title":"Kennenlernen – Tanışlıq (A2–A4, səh. 9)","items":[{"de":"Teil A – Themen und Aufgaben","pron":"Tayl Aa – Teemən unt Aufgaabən","words":"Teil — hissə\nA — A\nThemen — mövzular\nund — və\nAufgaben — tapşırıqlar","az":"A hissəsi – Mövzular və tapşırıqlar","rules":"ei → ay (Teil); Th → t (Themen); au → au (Aufgaben); und: d → t; g → g (Aufgaben)","ipa":"[taɪ̯l aː – ˈteːmən ʊnt ˈaʊ̯fˌɡaːbən]","exercise":"Giriş","section":"Giriş"},{"de":"Kapitel 1","pron":"Kapitıl ayns","words":"Kapitel — fəsil\n1 — bir","az":"1-ci fəsil","rules":"1 = eins: ei → ay; s → s; i → qısa i; -el → zəif l hecası (Kapitel)","ipa":"[kaˈpɪtl̩ aɪ̯ns]","exercise":"Giriş","section":"Giriş"},{"de":"Hören und wiederholen Sie.","pron":"Hööğən unt viidə̆hoolən zii.","words":"Hören — dinləyin\nund — və\nwiederholen — təkrarlayın\nSie — siz (rəsmi müraciət)","az":"Dinləyin və təkrarlayın. (Rəsmi müraciət.)","rules":"ie → ii (wiederholen, Sie); w → v (wiederholen); S → z (Sie); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (wiederholen); h → h (wiederholen, holen hissəsində); vurğusuz -er → ə-yə yaxın [ɐ] (wiederholen).","ipa":"[ˈhøːʁən ʊnt ˌviːdɐˈhoːlən ziː]","exercise":"A2","section":"A2"},{"de":"Wie heißen Sie?","pron":"Vii haysən zii?","words":"Wie — necə\nheißen — adlanırsınız (heißen – adlanmaq)\nSie — siz (rəsmi müraciət)","az":"Adınız nədir? (Sizi necə çağırırlar? Ad və ya ad-soyad deyilə bilər.)","rules":"ie → ii (Wie, Sie); w → v (Wie); ei → ay (heißen); ß → s; S → z (Sie)","ipa":"[viː ˈhaɪ̯sən ziː]","exercise":"A2","section":"A2"},{"de":"Ich heiße Franziska Binder.","pron":"İx’ haysə Fğantsiska Bində̆.","words":"Ich — mən\nheiße — adlanıram\nFranziska Binder — şəxs adı","az":"Mənim adım Franziska Binderdir. (Özünü ad və soyadla təqdim edir.)","rules":"ch → yumşaq x’ [ç] (Ich); ei → ay (heiße); ß → s; z → ts (Franziska); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); r → ğ-yə yaxın boğaz səsi [ʁ] (Franziska); vurğusuz -er → ə-yə yaxın [ɐ] (Binder).","ipa":"[ɪç ˈhaɪ̯sə fʁanˈtsɪska ˈbɪndɐ]","exercise":"A2","section":"A2"},{"de":"Mein Name ist Peter Heinemann.","pron":"Mayn naamə ist Peetə̆ Haynəman.","words":"Mein — mənim\nName — ad (burada ad və soyad)\nist — -dır\nPeter Heinemann — şəxs adı","az":"Mənim adım Peter Heinemanndır. (Name burada ad və soyadı bildirir.)","rules":"ei → ay (Mein, Heinemann); a → uzun aa (Name); e → uzun ee (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); vurğusuz -er → ə-yə yaxın [ɐ] (Peter).","ipa":"[maɪ̯n ˈnaːmə ɪst ˈpeːtɐ ˈhaɪ̯nəman]","exercise":"A2","section":"A2"},{"de":"Wie ist Ihr Vorname?","pron":"Vii ist iiə̆ fooə̆naamə?","words":"Wie — necə\nist — -dır\nIhr — sizin (rəsmi müraciət)\nVorname — şəxsi ad (soyad deyil)","az":"Adınız nədir? (Yalnız şəxsi adınız, soyadınız deyil.)","rules":"w → v (Wie); ie → ii (Wie); h → i saitini uzadır (Ihr); V → f (Vorname); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Ihr, Vorname)","ipa":"[viː ɪst iːɐ̯ ˈfoːɐ̯ˌnaːmə]","exercise":"A2","section":"A2"},{"de":"Mein Vorname ist Franziska.","pron":"Mayn fooə̆naamə ist Fğantsiska.","words":"Mein — mənim\nVorname — şəxsi ad (soyad deyil)\nist — -dır\nFranziska — şəxs adı","az":"Mənim adım Franziskadır. (Yalnız şəxsi ad.)","rules":"ei → ay (Mein); V → f (Vorname); z → ts (Franziska); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Vorname); r → ğ-yə yaxın boğaz səsi [ʁ] (Franziska)","ipa":"[maɪ̯n ˈfoːɐ̯ˌnaːmə ɪst fʁanˈtsɪska]","exercise":"A2","section":"A2"},{"de":"Mein Vorname ist Peter.","pron":"Mayn fooə̆naamə ist Peetə̆.","words":"Mein — mənim\nVorname — şəxsi ad (soyad deyil)\nist — -dır\nPeter — şəxs adı","az":"Mənim adım Peterdir. (Yalnız şəxsi ad.)","rules":"ei → ay (Mein); V → f (Vorname); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Vorname, Peter); vurğusuz -er → ə-yə yaxın [ɐ] (Peter).","ipa":"[maɪ̯n ˈfoːɐ̯ˌnaːmə ɪst ˈpeːtɐ]","exercise":"A2","section":"A2"},{"de":"Wie ist Ihr Familienname?","pron":"Vii ist iiə̆ famiilyənnaamə?","words":"Wie — necə\nist — -dır\nIhr — sizin (rəsmi müraciət)\nFamilienname — soyad (ailə adı)","az":"Soyadınız nədir? (Ailə adınız.)","rules":"w → v (Wie); ie → ii (Wie); h → i saitini uzadır (Ihr); ie → i-yə yaxın (Familienname); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Ihr); i → ii (Familienname)","ipa":"[viː ɪst iːɐ̯ faˈmiːli̯ənˌnaːmə]","exercise":"A2","section":"A2"},{"de":"Mein Familienname ist Binder.","pron":"Mayn famiilyənnaamə ist Bində̆.","words":"Mein — mənim\nFamilienname — soyad (ailə adı)\nist — -dır\nBinder — soyad","az":"Mənim soyadım Binderdir. (Ailə adı.)","rules":"ei → ay (Mein); ie → i-yə yaxın (Familienname); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); vurğusuz -er → ə-yə yaxın [ɐ] (Binder).","ipa":"[maɪ̯n faˈmiːli̯ənˌnaːmə ɪst ˈbɪndɐ]","exercise":"A2","section":"A2"},{"de":"Mein Familienname ist Heinemann.","pron":"Mayn famiilyənnaamə ist Haynəman.","words":"Mein — mənim\nFamilienname — soyad (ailə adı)\nist — -dır\nHeinemann — soyad","az":"Mənim soyadım Heinemanndır. (Ailə adı.)","rules":"ei → ay (Mein, Heinemann); ie → i-yə yaxın (Familienname)","ipa":"[maɪ̯n faˈmiːli̯ənˌnaːmə ɪst ˈhaɪ̯nəman]","exercise":"A2","section":"A2"},{"de":"Wie alt sind Sie?","pron":"Vii alt zint zii?","words":"Wie — nə qədər\nalt — yaşlı (wie alt – neçə yaşında)\nsind — -sınız\nSie — siz (rəsmi müraciət)","az":"Neçə yaşınız var? (Sözbəsöz: nə qədər yaşlısınız?)","rules":"w → v (Wie); ie → ii (Wie, Sie); s → z (sind, Sie); d → t (sind)","ipa":"[viː alt zɪnt ziː]","exercise":"A2","section":"A2"},{"de":"Ich bin 37 Jahre alt.","pron":"İx’ bin ziibənuntdğaysix’ yaağə alt.","words":"Ich — mən\nbin — -am\n37 — otuz yeddi\nJahre — il (cəm; yaş ifadəsində)\nalt — yaşında","az":"Mənim 37 yaşım var. (Almancada yaş sein – olmaq feli ilə bildirilir.)","rules":"ch → yumşaq x’ (Ich); 37 = siebenunddreißig: ie → ii, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre)","ipa":"[ɪç bɪn ˈziːbənʊntˌdʁaɪ̯sɪç ˈjaːʁə alt]","exercise":"A2","section":"A2"},{"de":"Ich bin 35 Jahre alt.","pron":"İx’ bin fünfuntdğaysix’ yaağə alt.","words":"Ich — mən\nbin — -am\n35 — otuz beş\nJahre — il (cəm; yaş ifadəsində)\nalt — yaşında","az":"Mənim 35 yaşım var. (Almancada yaş sein – olmaq feli ilə bildirilir.)","rules":"ch → yumşaq x’ (Ich); 35 = fünfunddreißig: ü → ü, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre)","ipa":"[ɪç bɪn ˈfʏnfʊntˌdʁaɪ̯sɪç ˈjaːʁə alt]","exercise":"A2","section":"A2"},{"de":"Woher kommen Sie?","pron":"Voheeə̆ komən zii?","words":"Woher — haradan\nkommen — gəlirsiniz (kommen – gəlmək)\nSie — siz (rəsmi müraciət)","az":"Haradansınız? (Mənşəyiniz, haradan gəldiyiniz soruşulur.)","rules":"w → v (Woher); mm → qısa saitdən sonra bir m (kommen); ie → ii (Sie); S → z (Sie); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Woher); h → h (Woher)","ipa":"[voˈheːɐ̯ ˈkɔmən ziː]","exercise":"A2","section":"A2"},{"de":"Ich komme aus Österreich.","pron":"İx’ komə aus Ööstəğayx’.","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nÖsterreich — Avstriya","az":"Mən Avstriyadanam. (Mənşə bildirir.)","rules":"ch → yumşaq x’ (Ich, Österreich); au → au (aus); ei → ay (Österreich); ö → ö; r → ğ-yə yaxın boğaz səsi [ʁ] (Österreich)","ipa":"[ɪç ˈkɔmə aʊ̯s ˈøːstəʁaɪ̯ç]","exercise":"A2","section":"A2"},{"de":"Ich komme aus Deutschland.","pron":"İx’ komə aus Doyçlant.","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nDeutschland — Almaniya","az":"Mən Almaniyadanam. (Mənşə bildirir.)","rules":"ch → yumşaq x’ (Ich); au → au (aus); eu → oy (Deutschland); tsch → ç (Deutschland); d → t (Land sonunda)","ipa":"[ɪç ˈkɔmə aʊ̯s ˈdɔɪ̯tʃlant]","exercise":"A2","section":"A2"},{"de":"Wo wohnen Sie?","pron":"Voo voonən zii?","words":"Wo — harada\nwohnen — yaşayırsınız (wohnen – yaşamaq)\nSie — siz (rəsmi müraciət)","az":"Harada yaşayırsınız? (Hazırkı yaşayış yeriniz soruşulur.)","rules":"w → v (Wo, wohnen); h → o uzadır (wohnen); ie → ii (Sie); S → z (Sie)","ipa":"[voː ˈvoːnən ziː]","exercise":"A2","section":"A2"},{"de":"Ich wohne in Wien.","pron":"İx’ voonə in Viin.","words":"Ich — mən\nwohne — yaşayıram\nin — -da/-də\nWien — Vyana","az":"Mən Vyanada yaşayıram. (Yaşayış yeri.)","rules":"ch → yumşaq x’ (Ich); w → v (wohne, Wien); h → o uzadır (wohne); ie → ii (Wien)","ipa":"[ɪç ˈvoːnə ɪn viːn]","exercise":"A2","section":"A2"},{"de":"Ich wohne in Marburg.","pron":"İx’ voonə in Mağbuğk.","words":"Ich — mən\nwohne — yaşayıram\nin — -da/-də\nMarburg — Marburq","az":"Mən Marburqda yaşayıram. (Yaşayış yeri.)","rules":"ch → yumşaq x’ (Ich); w → v (wohne); h → o uzadır; g → k (Marburg sonunda); r → ğ-yə yaxın boğaz səsi [ʁ] (Marburg, hər iki r; samitli variant)","ipa":"[ɪç ˈvoːnə ɪn ˈmaʁbʊʁk]","exercise":"A2","section":"A2"},{"de":"Was sind Sie von Beruf?","pron":"Vas zint zii fon bəğuuf?","words":"Was — nə\nsind — -sınız\nSie — siz (rəsmi müraciət)\nvon — -dan/-dən (burada sabit ifadənin hissəsi)\nBeruf — peşə\nvon Beruf — peşə etibarilə","az":"Peşəniz nədir? (von Beruf – peşə etibarilə.)","rules":"w → v (Was); s → z (sind, Sie); d → t (sind); ie → ii (Sie); v → f (von); r → ğ-yə yaxın boğaz səsi [ʁ] (Beruf); u → uu (Beruf)","ipa":"[vas zɪnt ziː fɔn bəˈʁuːf]","exercise":"A2","section":"A2"},{"de":"Ich bin Lehrerin.","pron":"İx’ bin leeğəğin.","words":"Ich — mən\nbin — -am\nLehrerin — müəllimə (qadın müəllim)","az":"Mən müəlliməyəm. (Qadın müəllim; kişi forması Lehrer.)","rules":"ch → yumşaq x’ (Ich); h → e uzadır (Lehrerin); h → oxunmur, e uzanır; hər iki r → ğ-yə yaxın boğaz səsi [ʁ] (Lehrerin)","ipa":"[ɪç bɪn ˈleːʁəʁɪn]","exercise":"A2","section":"A2"},{"de":"Ich bin Informatiker.","pron":"İx’ bin infoğmaatikə̆.","words":"Ich — mən\nbin — -am\nInformatiker — informatika mütəxəssisi (kişi)","az":"Mən informatika mütəxəssisiyəm. (Kişi; qadın forması Informatikerin.)","rules":"ch → yumşaq x’ (Ich); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Informatiker); r → ğ-yə yaxın boğaz səsi [ʁ] (Informatiker, ilk r); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (sonluq); vurğusuz -er → ə-yə yaxın [ɐ] (Informatiker).","ipa":"[ɪç bɪn ɪnfɔʁˈmaːtɪkɐ]","exercise":"A2","section":"A2"},{"de":"Welche Sprachen sprechen Sie?","pron":"Velx’ə şpğaaxən şpğex’ən zii?","words":"Welche — hansı\nSprachen — dillər\nsprechen — danışırsınız (sprechen – danışmaq)\nSie — siz (rəsmi müraciət)","az":"Hansı dillərdə danışırsınız? (Birdən çox dil nəzərdə tutula bilər.)","rules":"w → v (Welche); ch → yumşaq x’ (Welche, sprechen), sərt x (Sprachen); sp → şp (Sprachen, sprechen); ie → ii (Sie); S → z (Sie); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprachen, sprechen)","ipa":"[ˈvɛlçə ˈʃpʁaːxən ˈʃpʁɛçən ziː]","exercise":"A2","section":"A2"},{"de":"Meine Muttersprache ist Deutsch.","pron":"Maynə mutə̆şpğaaxə ist doyç.","words":"Meine — mənim\nMuttersprache — ana dili\nist — -dır\nDeutsch — alman dili","az":"Mənim ana dilim alman dilidir. (Muttersprache – ana dili.) (Əvvəlki mənbə qeydi: şəkildə “ich” yazılıb; burada düzgün forma “ist”dir.)","rules":"ei → ay (Meine); sp → şp (Muttersprache); ch → sərt x (Muttersprache); eu → oy (Deutsch); tsch → ç (Deutsch); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Mutter); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprache); vurğusuz -er → ə-yə yaxın [ɐ] (Muttersprache).","ipa":"[ˈmaɪ̯nə ˈmʊtɐˌʃpʁaːxə ɪst dɔɪ̯tʃ]","exercise":"A2","section":"A2"},{"de":"Ich spreche auch Spanisch und Englisch.","pron":"İx’ şpğex’ə aux şpaaniş unt eŋliş.","words":"Ich — mən\nspreche — danışıram\nauch — həmçinin\nSpanisch — ispan dili\nund — və\nEnglisch — ingilis dili","az":"Mən ispan və ingilis dillərində də danışıram. (auch – həmçinin, də.)","rules":"ch → yumşaq x’ (Ich, spreche), sərt x (auch); sp → şp (spreche, Spanisch); sch → ş (Spanisch, Englisch); au → au (auch); ng → burun n [ŋ] (Englisch); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (spreche)","ipa":"[ɪç ˈʃpʁɛçə aʊ̯x ˈʃpaːnɪʃ ʊnt ˈɛŋlɪʃ]","exercise":"A2","section":"A2"},{"de":"Ich lerne jetzt Japanisch.","pron":"İx’ leğnə yetst yapaaniş.","words":"Ich — mən\nlerne — öyrənirəm\njetzt — indi\nJapanisch — yapon dili","az":"Mən indi yapon dilini öyrənirəm. (jetzt – indi, hazırda.)","rules":"ch → yumşaq x’ (Ich); j → y (jetzt, Japanisch); tz → ts (jetzt); sch → ş (Japanisch); r → ğ-yə yaxın boğaz səsi [ʁ] (lerne, samitli variant)","ipa":"[ɪç ˈlɛʁnə jɛtst jaˈpaːnɪʃ]","exercise":"A2","section":"A2"},{"de":"Hören und lesen Sie.","pron":"Hööğən unt leezən zii.","words":"Hören — dinləyin\nund — və\nlesen — oxuyun\nSie — siz (rəsmi müraciət)","az":"Dinləyin və oxuyun. (Rəsmi müraciət.)","rules":"ö → ö (Hören); s → z (lesen, Sie); ie → ii (Sie); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören)","ipa":"[ˈhøːʁən ʊnt ˈleːzən ziː]","exercise":"A3","section":"A3"},{"de":"Ich komme aus:","pron":"İx’ komə aus:","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən","az":"Mən ...-dan/-dənəm. (Sözbəsöz: ...-dan/-dən gəlirəm; mənşə bildirir.)","rules":"ch → yumşaq x’ (Ich); mm → bir m (komme); au → au (aus)","ipa":"[ɪç ˈkɔmə aʊ̯s]","exercise":"A3","section":"A3"},{"de":"Italien","pron":"İtaalyən","az":"İtaliya","ipa":"[iˈtaːli̯ən]","rules":"ie burada yə yaxın","words":"Italien — İtaliya","exercise":"A3","section":"A3"},{"de":"Frankreich","pron":"Fğaŋkğayx’","az":"Fransa","ipa":"[ˈfʁaŋkʁaɪ̯ç]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ]; ei → ay; ch → x’","words":"Frankreich — Fransa","exercise":"A3","section":"A3"},{"de":"Schweden","pron":"Şveedən","az":"İsveç","ipa":"[ˈʃveːdən]","rules":"sch → ş; w → v","words":"Schweden — İsveç","exercise":"A3","section":"A3"},{"de":"Dänemark","pron":"Deenəmağk","az":"Danimarka","ipa":"[ˈdɛːnəmaʁk]","rules":"ä → uzun açıq e; r → ğ-yə yaxın boğaz səsi [ʁ] (variant)","words":"Dänemark — Danimarka","exercise":"A3","section":"A3"},{"de":"Großbritannien","pron":"Gğoosbğitaanyən","az":"Böyük Britaniya","ipa":"[ˌɡʁoːsbʁɪˈtaːni̯ən]","rules":"ß → s; r → ğ-yə yaxın boğaz səsi [ʁ]","words":"Großbritannien — Böyük Britaniya","exercise":"A3","section":"A3"},{"de":"Polen","pron":"Poolən","az":"Polşa","ipa":"[ˈpoːlən]","rules":"o uzun","words":"Polen — Polşa","exercise":"A3","section":"A3"},{"de":"Russland","pron":"Ğuslant","az":"Rusiya","ipa":"[ˈʁʊslant]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ]; d → t","words":"Russland — Rusiya","exercise":"A3","section":"A3"},{"de":"Spanien","pron":"Şpaanyən","az":"İspaniya","ipa":"[ˈʃpaːni̯ən]","rules":"sp → şp","words":"Spanien — İspaniya","exercise":"A3","section":"A3"},{"de":"Portugal","pron":"Poğtugaal","az":"Portuqaliya","ipa":"[pɔʁtuˈɡaːl]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ] (variant)","words":"Portugal — Portuqaliya","exercise":"A3","section":"A3"},{"de":"Brasilien","pron":"Bğaziilyən","az":"Braziliya","ipa":"[bʁaˈziːli̯ən]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ]; s → z","words":"Brasilien — Braziliya","exercise":"A3","section":"A3"},{"de":"China","pron":"X’iina","az":"Çin","ipa":"[ˈçiːna]","rules":"ch → yumşaq x’ (regional variantlar var)","words":"China — Çin","exercise":"A3","section":"A3"},{"de":"Japan","pron":"Yapaan","az":"Yaponiya","ipa":"[jaˈpaːn]","rules":"j → y","words":"Japan — Yaponiya","exercise":"A3","section":"A3"},{"de":"Belgien","pron":"Belgyən","az":"Belçika","ipa":"[ˈbɛlɡi̯ən]","rules":"i → y-yə yaxın","words":"Belgien — Belçika","exercise":"A3","section":"A3"},{"de":"Rumänien","pron":"Ğumeenyən","az":"Rumıniya","ipa":"[ʁuˈmɛːni̯ən]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ]; ä → açıq uzun e","words":"Rumänien — Rumıniya","exercise":"A3","section":"A3"},{"de":"Slowenien","pron":"Sloveenyən","az":"Sloveniya","ipa":"[sloˈveːni̯ən]","rules":"s → s; w → v","words":"Slowenien — Sloveniya","exercise":"A3","section":"A3"},{"de":"Indien","pron":"İndyən","az":"Hindistan","ipa":"[ˈɪndi̯ən]","rules":"i → y-yə yaxın","words":"Indien — Hindistan","exercise":"A3","section":"A3"},{"de":"Ungarn","pron":"Uŋgağn","az":"Macarıstan","ipa":"[ˈʊŋɡaʁn]","rules":"ng → ŋg; r → ğ-yə yaxın boğaz səsi [ʁ] (variant)","words":"Ungarn — Macarıstan","exercise":"A3","section":"A3"},{"de":"Irland","pron":"İğlant","az":"İrlandiya","ipa":"[ˈɪʁlant]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ] (variant); d → t","words":"Irland — İrlandiya","exercise":"A3","section":"A3"},{"de":"Griechenland","pron":"Gğiix’ənlant","az":"Yunanıstan","ipa":"[ˈɡʁiːçənlant]","rules":"ie → ii; ch → x’; d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Griechenland).","words":"Griechenland — Yunanıstan","exercise":"A3","section":"A3"},{"de":"die Türkei","pron":"dii Tüğkay","az":"Türkiyə (die – qadın cinsli müəyyən artikl.)","ipa":"[diː tʏʁˈkaɪ̯]","rules":"ei → ay; r → ğ-yə yaxın boğaz səsi [ʁ] (variant)","words":"die — müəyyən artikl (qadın cinsi)\nTürkei — Türkiyə","exercise":"A3","section":"A3"},{"de":"die Ukraine","pron":"dii Ukğaiinə","az":"Ukrayna (die – qadın cinsli müəyyən artikl.)","ipa":"[diː ukʁaˈiːnə]","rules":"a və i ayrı hecalardır; r → ğ-yə yaxın boğaz səsi [ʁ]","words":"die — müəyyən artikl (qadın cinsi)\nUkraine — Ukrayna","exercise":"A3","section":"A3"},{"de":"die Schweiz","pron":"dii Şvayts","az":"İsveçrə (die – qadın cinsli müəyyən artikl.)","ipa":"[diː ʃvaɪ̯ts]","rules":"sch → ş; w → v; ei → ay; z → ts","words":"die — müəyyən artikl (qadın cinsi)\nSchweiz — İsveçrə","exercise":"A3","section":"A3"},{"de":"die USA","pron":"dii Uu-es-aa","az":"ABŞ (die – cəm artikli.)","ipa":"[diː uː ɛs aː]","rules":"hərflər ayrı oxunur","words":"die — müəyyən artikl (cəm)\nUSA — ABŞ","exercise":"A3","section":"A3"},{"de":"die Niederlande","pron":"dii Niidə̆landə","az":"Niderland (die – cəm artikli.)","ipa":"[diː ˈniːdɐˌlandə]","rules":"ie → ii; -esaitləşən r → qısa ə-yə yaxın [ɐ̯]","words":"die — müəyyən artikl (cəm)\nNiederlande — Niderland","exercise":"A3","section":"A3"},{"de":"Südafrika","pron":"Züüt afğika","az":"Cənubi Afrika","ipa":"[ˈzyːtˌafʁika]","rules":"s → z; d → t; r → ğ-yə yaxın boğaz səsi [ʁ]","words":"Südafrika — Cənubi Afrika","exercise":"A3","section":"A3"},{"de":"England","pron":"Eŋlant","az":"İngiltərə","ipa":"[ˈɛŋlant]","rules":"ng → ŋ; d → t","words":"England — İngiltərə","exercise":"A3","section":"A3"},{"de":"Chile","pron":"Çiilə","az":"Çili","ipa":"[ˈtʃiːlə]","rules":"ch → ç (variant)","words":"Chile — Çili","exercise":"A3","section":"A3"},{"de":"Ich komme aus der Türkei.","pron":"İx’ komə aus dəə̆ Tüğkay.","az":"Mən Türkiyədənəm. (aus + Dativ: die → der.)","ipa":"[ɪç ˈkɔmə aʊ̯s deːɐ̯ tʏʁˈkaɪ̯]","rules":"aus + Dativ: die → der (tək), die → den (cəm); r → ğ-yə yaxın boğaz səsi [ʁ] (Türkei); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nder — müəyyən artikl (Dativ)\nTürkei — Türkiyə","exercise":"A3","section":"A3"},{"de":"Ich komme aus der Ukraine.","pron":"İx’ komə aus dəə̆ Ukğaiinə.","az":"Mən Ukraynadanam. (aus + Dativ: die → der.)","ipa":"[ɪç ˈkɔmə aʊ̯s deːɐ̯ ukʁaˈiːnə]","rules":"aus + Dativ: die → der (tək), die → den (cəm); r → ğ-yə yaxın boğaz səsi [ʁ] (Ukraine); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nder — müəyyən artikl (Dativ)\nUkraine — Ukrayna","exercise":"A3","section":"A3"},{"de":"Ich komme aus der Schweiz.","pron":"İx’ komə aus dəə̆ Şvayts.","az":"Mən İsveçrədənəm. (aus + Dativ: die → der.)","ipa":"[ɪç ˈkɔmə aʊ̯s deːɐ̯ ʃvaɪ̯ts]","rules":"aus + Dativ: die → der (tək), die → den (cəm); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nder — müəyyən artikl (Dativ)\nSchweiz — İsveçrə","exercise":"A3","section":"A3"},{"de":"Ich komme aus den USA.","pron":"İx’ komə aus deen Uu-es-aa.","az":"Mən ABŞ-danam. (aus + Dativ: cəm die → den.)","ipa":"[ɪç ˈkɔmə aʊ̯s deːn uː ɛs aː]","rules":"aus + Dativ: die → der (tək), die → den (cəm).","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nden — müəyyən artikl (Dativ)\nUSA — ABŞ","exercise":"A3","section":"A3"},{"de":"Ich komme aus den Niederlanden.","pron":"İx’ komə aus deen Niidə̆landən.","az":"Mən Niderlanddanam. (aus + Dativ: cəm die → den.)","ipa":"[ɪç ˈkɔmə aʊ̯s deːn ˈniːdɐˌlandən]","rules":"aus + Dativ: die → der (tək), die → den (cəm).","words":"Ich — mən\nkomme — gəlirəm\naus — -dan/-dən\nden — müəyyən artikl (Dativ)\nNiederlanden — Niderland","exercise":"A3","section":"A3"},{"de":"Und Sie? Woher kommen Sie?","pron":"Unt zii? Voheeə̆ komən zii?","az":"Bəs siz? Haradansınız? (Qarşı tərəfin mənşəyi soruşulur.)","ipa":"[ʊnt ziː voˈheːɐ̯ ˈkɔmən ziː]","rules":"d → t; ie → ii; saitləşən r → qısa ə-yə yaxın [ɐ̯]","words":"Und — və/bəs\nSie — siz (rəsmi müraciət)\nWoher — haradan\nkommen — gəlirsiniz (kommen – gəlmək)","exercise":"A3","section":"A3"},{"de":"Woher kommen die Personen?","pron":"Voheeə̆ komən dii Peğzoonən?","az":"Şəxslər haradandır? (Bir neçə insanın mənşəyi soruşulur.)","ipa":"[voˈheːɐ̯ ˈkɔmən diː pɛʁˈzoːnən]","rules":"ie → ii; s → z; Woher: saitləşən r → qısa ə-yə yaxın [ɐ̯]; Personen: r → ğ-yə yaxın boğaz səsi [ʁ]","words":"Woher — haradan\nkommen — gəlirlər (kommen – gəlmək)\ndie Personen — şəxslər","exercise":"A4","section":"A4"},{"de":"Fragen und antworten Sie.","pron":"Fğaagən unt antvoğtən zii.","az":"Sual verin və cavab verin. (Rəsmi müraciət.)","ipa":"[ˈfʁaːɡən ʊnt ˈantvɔʁtən ziː]","rules":"r → ğ-yə yaxın boğaz səsi [ʁ]; w → v; ie → ii","words":"Fragen — sual verin\nund — və\nantworten — cavab verin\nSie — siz (rəsmi müraciət)","exercise":"A4","section":"A4"},{"de":"Hören Sie die Lösungen auf der CD.","pron":"Hööğən zii dii löözuŋən auf deeə̆ tsee-dee.","az":"Həlləri CD-də dinləyin. (Tapşırığın düzgün cavabları.)","ipa":"[ˈhøːʁən ziː diː ˈløːzʊŋən aʊ̯f deːɐ̯ tseː deː]","rules":"ö uzun; s → z; ng → ŋ; CD hərflərlə; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).","words":"Hören — dinləyin\nSie — siz (rəsmi müraciət)\ndie Lösungen — həllər (düzgün cavablar)\nauf der CD — CD-də","exercise":"A4","section":"A4"},{"de":"Er kommt aus Österreich.","pron":"Eeə̆ komt aus Ööstəğayx’.","az":"O, Avstriyadandır. (Er – kişi üçün o.)","ipa":"[eːɐ̯ kɔmt aʊ̯s ˈøːstəʁaɪ̯ç]","rules":"er → eeə̆; kommt: 3-cü şəxs; r → ğ-yə yaxın boğaz səsi [ʁ] (Österreich); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Er).","words":"Er — o (kişi)\nkommt — gəlir\naus — -dan/-dən\nÖsterreich — Avstriya","exercise":"A4","section":"A4"},{"de":"Sie kommt aus Frankreich.","pron":"Zii komt aus Fğaŋkğayx’.","az":"O, Fransadandır. (Sie – burada qadın üçün o, rəsmi siz deyil.)","ipa":"[ziː kɔmt aʊ̯s ˈfʁaŋkʁaɪ̯ç]","rules":"ie → ii; ei → ay; ch → x’; r → ğ-yə yaxın boğaz səsi [ʁ] (Frankreich).","words":"Sie — o (qadın)\nkommt — gəlir\naus — -dan/-dən\nFrankreich — Fransa","exercise":"A4","section":"A4"},{"de":"Woher kommt Wolfgang Amadeus Mozart?","pron":"Voheeə̆ komt Volfgaŋ Amadeeus Mootsağt?","az":"Wolfgang Amadeus Mozart haradandır? (Mənşəyi soruşulur.)","ipa":"[voˈheːɐ̯ kɔmt ˈvɔlfɡaŋ amaˈdeːʊs ˈmoːtsaʁt]","rules":"Adın almanca oxunuşu göstərilib; r → ğ-yə yaxın boğaz səsi [ʁ] (Mozart); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Woher).","words":"Woher — haradan\nkommt — gəlir\nWolfgang Amadeus Mozart — şəxs adı","exercise":"A4","section":"A4"},{"de":"Wolfgang Amadeus Mozart kommt aus Österreich.","pron":"Volfgaŋ Amadeeus Mootsağt komt aus Ööstəğayx’.","az":"Wolfgang Amadeus Mozart Avstriyadandır. (Mənşə bildirir.)","ipa":"[ˈvɔlfɡaŋ amaˈdeːʊs ˈmoːtsaʁt kɔmt aʊ̯s ˈøːstəʁaɪ̯ç]","rules":"Adın almanca oxunuşu göstərilib; r → ğ-yə yaxın boğaz səsi [ʁ] (Mozart, Österreich).","words":"Wolfgang Amadeus Mozart — şəxs adı\nkommt — gəlir\naus — -dan/-dən\nÖsterreich — Avstriya","exercise":"A4","section":"A4"},{"de":"Woher kommt Madame Tussaud?","pron":"Voheeə̆ komt Madame Tussaud?","az":"Madame Tussaud haradandır? (Mənşəyi soruşulur.)","ipa":"Ad xaric: [voˈheːɐ̯ kɔmt]","rules":"Xüsusi adın IPA-sı daxil edilməyib; audio ilə dinlə; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Woher).","words":"Woher — haradan\nkommt — gəlir\nMadame Tussaud — şəxs adı","exercise":"A4","section":"A4"},{"de":"Madame Tussaud kommt aus Frankreich.","pron":"Madame Tussaud komt aus Fğaŋkğayx’.","az":"Madame Tussaud Fransadandır. (Mənşə bildirir.)","ipa":"Ad xaric: [kɔmt aʊ̯s ˈfʁaŋkʁaɪ̯ç]","rules":"Xüsusi adın IPA-sı daxil edilməyib; r → ğ-yə yaxın boğaz səsi [ʁ] (Frankreich).","words":"Madame Tussaud — şəxs adı\nkommt — gəlir\naus — -dan/-dən\nFrankreich — Fransa","exercise":"A4","section":"A4"},{"de":"aber","pron":"aabə̆","az":"amma (lakin, qarşılaşdırma bildirən bağlayıcı.)","ipa":"[ˈaːbɐ]","rules":"-esaitləşən r → qısa ə-yə yaxın [ɐ̯]","words":"aber — amma","exercise":"A4","section":"A4"},{"de":"neun","pron":"noyn","az":"doqquz (9, miqdar sayı.)","ipa":"[nɔɪ̯n]","rules":"eu → oy","words":"neun — doqquz","exercise":"Səhifə qeydləri","section":"Səhifə qeydləri"}],"exercise_answers":[["Sigmund Freud","Österreich"],["Albert Einstein","Deutschland"],["Leonardo da Vinci","Italien"],["William Shakespeare","England"],["Pablo Picasso","Spanien"],["Leo Tolstoi","Russland"],["Alfred Nobel","Schweden"],["Frederic Chopin","Polen"],["Isabel Allende","Chile"],["Jean-Paul Sartre","Frankreich"],["Konfuzius","China"],["Nelson Mandela","Südafrika"],["Mahatma Gandhi","Indien"],["George Washington","den USA"]]};let lessons=[initial],known={},stars={},mode='Dərslər',idx=0,reveal=false,query='',quiz=null;const $=id=>document.getElementById(id);try{const s=JSON.parse(localStorage.getItem('deaz-v1'));if(s){lessons=s.lessons;known=s.known;stars=s.stars;document.body.classList.toggle('dark',s.dark)}}catch{}if(!lessons.some(l=>l.title===initial.title))lessons.push(initial);let li=lessons.findIndex(l=>l.title===initial.title);let showLearnedItems=false;
 try{showLearnedItems=localStorage.getItem('deaz-show-learned-v1')==='1'}catch{}
 function learnedVisibilityControl(){
  const row=el('div',undefined,'learned-filter-row');
@@ -871,7 +871,7 @@ function renderGrammar(view){
  drawQuiz();
 }
 
-function renderPhon(view){let intro=el('section',undefined,'card');intro.append(el('h2','Fonetika'),el('p','Hərfləri və birləşmələri öyrən, nümunələri dinlə. Rənglər yazılış nümunələrini göstərir; tələffüz kontekstdən asılı ola bilər.'));let toggle=el('label',undefined,'phon-toggle');let check=el('input');check.type='checkbox';check.checked=phonEnabled;check.onchange=()=>{phonEnabled=check.checked;try{localStorage.setItem('deaz-phon-highlight',phonEnabled?'on':'off')}catch{}applyPhon()};toggle.append(check,document.createTextNode('Dərslərdə rəngli hərflər'));intro.append(toggle);let legend=el('p',undefined,'phon-legend');for(const [t,c] of [['Sait birləşmələri','ph-vowel'],['Samit birləşmələri','ph-consonant'],['Xüsusi hərflər','ph-special']])legend.append(el('span',t,'phon '+c));intro.append(legend);view.append(intro);let practice=el('section',undefined,'card phon-practice');function question(){practice.replaceChildren(el('h3','Praktika'));let q=[['ei','ay',['ii','oy']],['ie','uzun i',['ay','au']],['eu','oy',['ay','ş']],['sch','ş',['ts','x']],['sp (söz əvvəlində)','şp',['sp','şt']],['st (söz əvvəlində)','şt',['st','şp']],['v (Vater)','f',['v','w']],['v (Video)','v',['f','b']],['w','v',['f','u']],['z','ts',['z','ş']],['ch (Bach)','x',['ş','k']],['tsch','ç',['ş','ts']]][Math.floor(Math.random()*12)];practice.append(el('h2',q[0]+' necə oxunur?'));let feedback=el('p',undefined,'phon-feedback');let buttons=[];for(let a of [q[1],...q[2]].sort(()=>Math.random()-.5)){let b=btn(a,()=>{feedback.textContent=a===q[1]?'✓ Düzdür!':'Düzgün cavab: '+q[1];buttons.forEach(b=>b.disabled=true);practice.append(btn('Növbəti sual',question,'primary'))});buttons.push(b);practice.append(b)}practice.append(feedback)}question();view.append(practice);for(const [pattern,reading,ipa,rule,examples] of phonRules){let c=el('article',undefined,'card');c.append(el('h2',pattern+' → '+reading),el('small',ipa),el('p',rule));for(let word of examples){let r=el('span',undefined,'phon-example');let w=el('span');w.append(coloredWord(word));r.append(w,btn('🔊',()=>say(word,undefined,'sentence')));c.append(r)}view.append(c)}}
+function renderPhon(view){let intro=el('section',undefined,'card');intro.append(el('h2','Fonetika'),el('p','Hərfləri və birləşmələri öyrən, nümunələri dinlə. Rənglər yazılış nümunələrini göstərir; tələffüz kontekstdən asılı ola bilər.'));let toggle=el('label',undefined,'phon-toggle');let check=el('input');check.type='checkbox';check.checked=phonEnabled;check.onchange=()=>{phonEnabled=check.checked;try{localStorage.setItem('deaz-phon-highlight',phonEnabled?'on':'off')}catch{}applyPhon()};toggle.append(check,document.createTextNode('Dərslərdə rəngli hərflər'));intro.append(toggle,el('p','Alman r-si [ʁ] boğazdan səslənəndə oxunuşda ğ-yə yaxın göstərilir (Beruf → bəğuuf). Saitləşən r isə ə-yə yaxın göstərilir (Ihr → iiə̆, Lehrer → leeğə̆).'));let legend=el('p',undefined,'phon-legend');for(const [t,c] of [['Sait birləşmələri','ph-vowel'],['Samit birləşmələri','ph-consonant'],['Xüsusi hərflər','ph-special']])legend.append(el('span',t,'phon '+c));intro.append(legend);view.append(intro);let practice=el('section',undefined,'card phon-practice');function question(){practice.replaceChildren(el('h3','Praktika'));let q=[['ei','ay',['ii','oy']],['ie','uzun i',['ay','au']],['eu','oy',['ay','ş']],['sch','ş',['ts','x']],['sp (söz əvvəlində)','şp',['sp','şt']],['st (söz əvvəlində)','şt',['st','şp']],['v (Vater)','f',['v','w']],['v (Video)','v',['f','b']],['w','v',['f','u']],['z','ts',['z','ş']],['ch (Bach)','x',['ş','k']],['tsch','ç',['ş','ts']]][Math.floor(Math.random()*12)];practice.append(el('h2',q[0]+' necə oxunur?'));let feedback=el('p',undefined,'phon-feedback');let buttons=[];for(let a of [q[1],...q[2]].sort(()=>Math.random()-.5)){let b=btn(a,()=>{feedback.textContent=a===q[1]?'✓ Düzdür!':'Düzgün cavab: '+q[1];buttons.forEach(b=>b.disabled=true);practice.append(btn('Növbəti sual',question,'primary'))});buttons.push(b);practice.append(b)}practice.append(feedback)}question();view.append(practice);for(const [pattern,reading,ipa,rule,examples] of phonRules){let c=el('article',undefined,'card');c.append(el('h2',pattern+' → '+reading),el('small',ipa),el('p',rule));for(let word of examples){let r=el('span',undefined,'phon-example');let w=el('span');w.append(coloredWord(word));r.append(w,btn('🔊',()=>say(word,undefined,'sentence')));c.append(r)}view.append(c)}}
 
 const PRACTICE_ICONS={mixed:'practice',word:'dict',order:'lessons',listen:'listen',speak:'mic',gap:'test',match:'flash',review:'repeat'};
 const practiceModes=[['mixed','Gündəlik praktika','10 sual · qarışıq'],['word','Söz öyrən','Almanca ↔ Azərbaycanca'],['order','Cümlə qur','Sözləri sırala'],['listen','Dinlə və tap','Eşitdiyini seç'],['speak','Danışıq praktikası','Mikrofonla təkrarla'],['gap','Boşluğu doldur','Çatışmayan söz'],['match','Sözləri uyğunlaşdır','Tərcümələri birləşdir'],['review','Səhvlərim və təkrar','Vaxtı çatan ifadələr']];
@@ -1703,7 +1703,7 @@ function renderTest(view){
 }
 function render(){
  try{localStorage.setItem(MENU_STORAGE_KEY,mode)}catch{}
- practiceStop();closeWord();$('nav').after($('settingsPanels'));$('settingsPanels').hidden=mode!=='Ayarlar';if(mode==='Dərslər'&&bookType(lessons[li])==='vocabulary')restoreSentence();let view=$('view');view.dataset.mode=mode;view.replaceChildren();delete view.dataset.lastVocabSection;renderPicker();renderNavigation();refresh();if(mode==='Ayarlar'){}else if(mode==='Dinləyərək öyrən'){renderListening(view)}else if(mode==='Tərcümə'){renderTranslator(view)}else if(mode==='Saylar'){renderNumbers(view)}else if(mode==='Praktika'){renderPractice(view)}else if(mode==='Fonetika'){renderPhon(view)}else if(mode==='Qrammatika'){renderGrammar(view)}else if(mode==='Dərslər'||mode==='Seçilmişlər'){let lastExercise=null,visibleCards=0;if(mode==='Dərslər'){appendLessonPractice(view,lessons[li]);view.append(learnedVisibilityControl())}items().forEach((x,i)=>{if(mode==='Dərslər'&&!showLearnedItems&&known[key(i)])return;let group=exerciseOf(lessons[li],x,i);if(mode==='Dərslər'&&lessonSection!=='all'&&group!==lessonSection)return;if(mode==='Seçilmişlər'&&!stars[key(i)])return;if(mode==='Dərslər'&&group!==lastExercise){if(group!=='Bölmə qeyd edilməyib')vocabSectionHeader(view,{},exerciseLabel(lessons[li],group));lastExercise=group}let c=el('article',undefined,'card');let vocab=bookType(lessons[li])==='vocabulary';if(vocab){if(!view.children.length||view.dataset.lastVocabSection!==vocabGroup(lessons[li],x)){vocabSectionHeader(view,x,vocabGroup(lessons[li],x));view.dataset.lastVocabSection=vocabGroup(lessons[li],x)}c.append(vocabHeading(x));if(x.parent_number!=null)c.append(el('small','№ '+x.parent_number+' · fel forması','vocab-subnumber'))}else c.append(el('small',`İFADƏ ${i+1}`),interactiveHeading(x));c.append(el('p',x.pron,'pron'),vocab?vocabTranslationToggle(x,lessons[li]):lessonTranslation(x,i));let r=el('div',undefined,'row');sound(r,x.de);r.append(btn(stars[key(i)]?'★':'☆',()=>{stars[key(i)]=!stars[key(i)];render()}),btn(known[key(i)]?'✓ Öyrənilib':'Öyrəndim',()=>{known[key(i)]=!known[key(i)];render()},known[key(i)]?'primary':''));c.append(r);let d=el('details');d.append(el('summary','Sözbəsöz tərcümə və fonetika'));for(let line of x.words.split('\n')){if(!line.trim())continue;let w=el('div',undefined,'word');w.append(el('span',line),btn('🔊',()=>say(line.split('—')[0].trim(),undefined,'sentence')));d.append(w)}d.append(el('h3','Tələffüz qaydaları'),el('p',x.rules),el('h3','IPA'),el('p',x.ipa));c.append(d);view.append(c);visibleCards++});if(!visibleCards)view.append(el('p',mode==='Dərslər'&&!showLearnedItems?'Öyrənilməmiş ifadə görünmür. Öyrəndiklərini yuxarıdakı düymə ilə göstərə bilərsən.':'Hələ seçilmiş ifadə yoxdur.','learned-empty'))}else if(mode==='Lüğət'){renderLibrary(view)}else if(mode==='Flashcard'){let x=items()[idx],c=el('div',undefined,'card center');c.append(el('small',`${idx+1} / ${items().length}`),interactiveHeading(x));let r=el('div',undefined,'row');sound(r,x.de);c.append(r);if(reveal)c.append(el('p',x.az,'az'),el('p',x.pron,'pron'),btn('Təkrar etməliyəm',()=>{known[key(idx)]=false;next()}),btn('Bilirəm',()=>{known[key(idx)]=true;next()},'primary'));else c.append(btn('Cavabı göstər',()=>{reveal=true;render()},'primary'));c.append(el('p',''),btn('← Əvvəlki',()=>{idx=(idx+items().length-1)%items().length;reveal=false;render()}),btn('Növbəti →',next));view.append(c)}else if(mode==='Test'){renderTest(view)}}function next(){idx=(idx+1)%items().length;reveal=false;render()}$('lesson').onchange=e=>{practiceSession=null;li=+e.target.value;sentenceTitle=lessons[li].title;resetSelection();render()};$('theme').append(actionIcon('theme'));$('settingsTitle').prepend(navIcon('settings'));$('audioSettingsTitle').prepend(actionIcon('speaker'));$('theme').onclick=()=>{document.body.classList.toggle('dark');save()};const importType=el('select');for(let [v,t] of [['auto','Kitab növü — avtomatik'],['sentences','Dərs kitabı'],['vocabulary','Lüğət kitabı']]){let o=el('option',t);o.value=v;importType.append(o)}$('file').before(importType);const pendingLessons=new Set();try{for(const t of JSON.parse(localStorage.getItem('deaz-pending-v201')||'[]'))if(typeof t==='string')pendingLessons.add(t)}catch{}function savePending(){try{localStorage.setItem('deaz-pending-v201',JSON.stringify([...pendingLessons]))}catch{}}function validVocabPage(l){return l&&l.type==='vocabulary'&&typeof l.title==='string'&&l.title.startsWith('Lüğət kitabı · ')&&Array.isArray(l.items)&&l.items.length>0&&l.items.every(x=>x&&['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string')&&x.de.trim()&&x.az.trim())}function importVocabPages(d){let arr=d.vocabulary_pages;if(d.format!=='deutsch-vocabulary-pages-v1'||!Array.isArray(arr)||!arr.length||!arr.every(validVocabPage)||new Set(arr.map(l=>l.title)).size!==arr.length)throw Error('Fayl uyğun deyil');let conflicts=arr.filter(l=>lessons.some(x=>x.title===l.title));if(conflicts.length&&!confirm(conflicts.length+' mövcud lüğət səhifəsi yenilənsin? Dərs kitabı dəyişməyəcək.'))return;for(let l of arr){let i=lessons.findIndex(x=>x.title===l.title);if(i>=0)lessons[i]=l;else lessons.push(l);pendingLessons.add(l.title)}savePending();li=lessons.findIndex(l=>l.title===arr[0].title);libraryPage=arr[0].title;librarySection='all';idx=0;quiz=null;practiceSession=null;mode='Lüğət';librarySource='vocabulary';query='';render();smartRefresh();$('status').textContent=arr.length+' lüğət səhifəsi əlavə edildi. Əvvəlki dərslər saxlanıldı. Hamı ilə paylaşmaq üçün “Gözləyən lüğət səhifələrini paylaş” düyməsinə basın.'}function importLesson(raw){try{let d=JSON.parse(raw);if(d&&Object.hasOwn(d,'vocabulary_pages')){importVocabPages(d);return;}let arr=d.lessons||[d];if(!d.lessons&&d&&Array.isArray(d.items)){if(importType.value!=='auto')d.type=importType.value;if(bookType(d)==='vocabulary'){d.type='vocabulary';if(!/^Lüğət kitabı · /i.test(d.title))d.title='Lüğət kitabı · '+d.title;d.items=d.items.map(x=>({pron:'',words:'',rules:'',ipa:'',...x}));}}if(!Array.isArray(arr)||!arr.length||!arr.every(l=>typeof l.title==='string'&&Array.isArray(l.items)&&l.items.length&&l.items.every(x=>['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string'))))throw Error();if(d.lessons){if(!confirm('Ehtiyat nüsxə cari dərsləri əvəz etsin?'))return;lessons=arr;addCourseLessons();known=d.known||{};stars=d.stars||{};li=0}else{let existing=lessons.findIndex(l=>l.title===d.title);if(existing>=0){if(!confirm('Mövcud dərsi yenilə?'))return;lessons[existing]=d;li=existing}else{lessons.push(d);li=lessons.length-1}pendingLessons.add(d.title);savePending();}idx=0;quiz=null;mode=!d.lessons&&bookType(d)==='vocabulary'?'Lüğət':'Dərslər';if(mode==='Lüğət'){librarySource='vocabulary';libraryPage=lessons[li].title;librarySection='all'}else if(bookType(lessons[li])==='sentences'){sentenceTitle=lessons[li].title}resetSelection();render();smartRefresh();$('status').textContent='Dərs saxlanıldı. Hamı üçün yeniləmək istəyirsinizsə, Dərsi hamı ilə paylaş düyməsini basın.'}catch{$('status').textContent='Fayl uyğun deyil. Deutsch lernen JSON faylı seçin.'}}$('file').onchange=async e=>{if(!e.target.files.length)return;try{let f=e.target.files[0];let raw=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsText(f)});importLesson(raw)}catch{$('status').textContent='Faylı oxumaq mümkün olmadı.'}finally{e.target.value=''}};$('pasteImport').onclick=()=>importLesson($('paste').value);$('backup').onclick=()=>{let a=el('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({lessons,known,stars},null,2)],{type:'application/json'}));a.download='deutsch-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};const COURSE_LESSONS=[
+ practiceStop();closeWord();$('nav').after($('settingsPanels'));$('settingsPanels').hidden=mode!=='Ayarlar';if(mode==='Dərslər'&&bookType(lessons[li])==='vocabulary')restoreSentence();let view=$('view');view.dataset.mode=mode;view.replaceChildren();delete view.dataset.lastVocabSection;renderPicker();renderNavigation();refresh();if(mode==='Ayarlar'){}else if(mode==='Dinləyərək öyrən'){renderListening(view)}else if(mode==='Tərcümə'){renderTranslator(view)}else if(mode==='Saylar'){renderNumbers(view)}else if(mode==='Praktika'){renderPractice(view)}else if(mode==='Fonetika'){renderPhon(view)}else if(mode==='Qrammatika'){renderGrammar(view)}else if(mode==='Dərslər'||mode==='Seçilmişlər'){let lastExercise=null,visibleCards=0;if(mode==='Dərslər'){appendLessonPractice(view,lessons[li]);view.append(learnedVisibilityControl())}items().forEach((x,i)=>{if(mode==='Dərslər'&&!showLearnedItems&&known[key(i)])return;let group=exerciseOf(lessons[li],x,i);if(mode==='Dərslər'&&lessonSection!=='all'&&group!==lessonSection)return;if(mode==='Seçilmişlər'&&!stars[key(i)])return;if(mode==='Dərslər'&&group!==lastExercise){if(group!=='Bölmə qeyd edilməyib')vocabSectionHeader(view,{},exerciseLabel(lessons[li],group));lastExercise=group}let c=el('article',undefined,'card');let vocab=bookType(lessons[li])==='vocabulary';if(vocab){if(!view.children.length||view.dataset.lastVocabSection!==vocabGroup(lessons[li],x)){vocabSectionHeader(view,x,vocabGroup(lessons[li],x));view.dataset.lastVocabSection=vocabGroup(lessons[li],x)}c.append(vocabHeading(x));if(x.parent_number!=null)c.append(el('small','№ '+x.parent_number+' · fel forması','vocab-subnumber'))}else c.append(el('small',`İFADƏ ${i+1}`),interactiveHeading(x));c.append(el('p',x.pron,'pron'),vocab?vocabTranslationToggle(x,lessons[li]):lessonTranslation(x,i));let r=el('div',undefined,'row');sound(r,x.de);r.append(btn(stars[key(i)]?'★':'☆',()=>{stars[key(i)]=!stars[key(i)];render()}),btn(known[key(i)]?'✓ Öyrənilib':'Öyrəndim',()=>{known[key(i)]=!known[key(i)];render()},known[key(i)]?'primary':''));c.append(r);let d=el('details');d.append(el('summary','Sözbəsöz tərcümə və fonetika'));for(let line of x.words.split('\n')){if(!line.trim())continue;let w=el('div',undefined,'word');w.append(el('span',line),btn('🔊',()=>say(line.split('—')[0].trim(),undefined,'sentence')));d.append(w)}d.append(el('h3','Tələffüz qaydaları'),el('p',x.rules),el('h3','IPA'),el('p',x.ipa));c.append(d);view.append(c);visibleCards++});if(!visibleCards)view.append(el('p',mode==='Dərslər'&&!showLearnedItems?'Öyrənilməmiş ifadə görünmür. Öyrəndiklərini yuxarıdakı düymə ilə göstərə bilərsən.':'Hələ seçilmiş ifadə yoxdur.','learned-empty'))}else if(mode==='Lüğət'){renderLibrary(view)}else if(mode==='Flashcard'){let x=items()[idx],c=el('div',undefined,'card center');c.append(el('small',`${idx+1} / ${items().length}`),interactiveHeading(x));let r=el('div',undefined,'row');sound(r,x.de);c.append(r);if(reveal)c.append(el('p',x.az,'az'),el('p',x.pron,'pron'),btn('Təkrar etməliyəm',()=>{known[key(idx)]=false;next()}),btn('Bilirəm',()=>{known[key(idx)]=true;next()},'primary'));else c.append(btn('Cavabı göstər',()=>{reveal=true;render()},'primary'));c.append(el('p',''),btn('← Əvvəlki',()=>{idx=(idx+items().length-1)%items().length;reveal=false;render()}),btn('Növbəti →',next));view.append(c)}else if(mode==='Test'){renderTest(view)}}function next(){idx=(idx+1)%items().length;reveal=false;render()}$('lesson').onchange=e=>{practiceSession=null;li=+e.target.value;sentenceTitle=lessons[li].title;resetSelection();render()};$('theme').append(actionIcon('theme'));$('settingsTitle').prepend(navIcon('settings'));$('audioSettingsTitle').prepend(actionIcon('speaker'));$('theme').onclick=()=>{document.body.classList.toggle('dark');save()};const importType=el('select');for(let [v,t] of [['auto','Kitab növü — avtomatik'],['sentences','Dərs kitabı'],['vocabulary','Lüğət kitabı']]){let o=el('option',t);o.value=v;importType.append(o)}$('file').before(importType);const pendingLessons=new Set();try{for(const t of JSON.parse(localStorage.getItem('deaz-pending-v201')||'[]'))if(typeof t==='string')pendingLessons.add(t)}catch{}function savePending(){try{localStorage.setItem('deaz-pending-v201',JSON.stringify([...pendingLessons]))}catch{}}function validVocabPage(l){return l&&l.type==='vocabulary'&&typeof l.title==='string'&&l.title.startsWith('Lüğət kitabı · ')&&Array.isArray(l.items)&&l.items.length>0&&l.items.every(x=>x&&['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string')&&x.de.trim()&&x.az.trim())}function importVocabPages(d){let arr=d.vocabulary_pages;if(d.format!=='deutsch-vocabulary-pages-v1'||!Array.isArray(arr)||!arr.length||!arr.every(validVocabPage)||new Set(arr.map(l=>l.title)).size!==arr.length)throw Error('Fayl uyğun deyil');let conflicts=arr.filter(l=>lessons.some(x=>x.title===l.title));if(conflicts.length&&!confirm(conflicts.length+' mövcud lüğət səhifəsi yenilənsin? Dərs kitabı dəyişməyəcək.'))return;for(let l of arr){let i=lessons.findIndex(x=>x.title===l.title);if(i>=0)lessons[i]=l;else lessons.push(l);pendingLessons.add(l.title)}savePending();li=lessons.findIndex(l=>l.title===arr[0].title);libraryPage=arr[0].title;librarySection='all';idx=0;quiz=null;practiceSession=null;mode='Lüğət';librarySource='vocabulary';query='';render();smartRefresh();$('status').textContent=arr.length+' lüğət səhifəsi əlavə edildi. Əvvəlki dərslər saxlanıldı. Hamı ilə paylaşmaq üçün “Gözləyən lüğət səhifələrini paylaş” düyməsinə basın.'}function importLesson(raw){try{let d=JSON.parse(raw);if(d&&Object.hasOwn(d,'vocabulary_pages')){importVocabPages(d);return;}let arr=d.lessons||[d];if(!d.lessons&&d&&Array.isArray(d.items)){if(importType.value!=='auto')d.type=importType.value;if(bookType(d)==='vocabulary'){d.type='vocabulary';if(!/^Lüğət kitabı · /i.test(d.title))d.title='Lüğət kitabı · '+d.title;d.items=d.items.map(x=>({pron:'',words:'',rules:'',ipa:'',...x}));}}if(!Array.isArray(arr)||!arr.length||!arr.every(l=>typeof l.title==='string'&&Array.isArray(l.items)&&l.items.length&&l.items.every(x=>['de','az','pron','words','rules','ipa'].every(k=>typeof x[k]==='string'))))throw Error();if(d.lessons){if(!confirm('Ehtiyat nüsxə cari dərsləri əvəz etsin?'))return;lessons=arr;addCourseLessons();lessons.forEach(updateLessonPronunciation);known=d.known||{};stars=d.stars||{};li=0}else{let existing=lessons.findIndex(l=>l.title===d.title);if(existing>=0){if(!confirm('Mövcud dərsi yenilə?'))return;lessons[existing]=d;li=existing}else{lessons.push(d);li=lessons.length-1}pendingLessons.add(d.title);savePending();}idx=0;quiz=null;mode=!d.lessons&&bookType(d)==='vocabulary'?'Lüğət':'Dərslər';if(mode==='Lüğət'){librarySource='vocabulary';libraryPage=lessons[li].title;librarySection='all'}else if(bookType(lessons[li])==='sentences'){sentenceTitle=lessons[li].title}resetSelection();render();smartRefresh();$('status').textContent='Dərs saxlanıldı. Hamı üçün yeniləmək istəyirsinizsə, Dərsi hamı ilə paylaş düyməsini basın.'}catch{$('status').textContent='Fayl uyğun deyil. Deutsch lernen JSON faylı seçin.'}}$('file').onchange=async e=>{if(!e.target.files.length)return;try{let f=e.target.files[0];let raw=await new Promise((resolve,reject)=>{let r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=reject;r.readAsText(f)});importLesson(raw)}catch{$('status').textContent='Faylı oxumaq mümkün olmadı.'}finally{e.target.value=''}};$('pasteImport').onclick=()=>importLesson($('paste').value);$('backup').onclick=()=>{let a=el('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({lessons,known,stars},null,2)],{type:'application/json'}));a.download='deutsch-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};const COURSE_LESSONS=[
  {
   "type": "sentences",
   "title": "Kapitel 1 · Guten Tag! · Salam və tanışlıq",
@@ -1725,10 +1725,10 @@ function render(){
    {
     "de": "Guten Morgen!",
     "az": "Sabahınız xeyir!",
-    "pron": "Quutən moğqən!",
+    "pron": "Guutən moğgən!",
     "ipa": "[ˈɡuːtən ˈmɔʁɡn̩]",
     "words": "Guten — yaxşı (Akkusativ)\nMorgen — səhər",
-    "rules": "u → uzun [uː]; Morgen sözündə r → [ʁ].",
+    "rules": "u → uzun [uː]; Morgen sözündə r → ğ-yə yaxın boğaz səsi [ʁ].",
     "exercise": "Salamlaşma və tanışlıq",
     "section": "Salamlaşma və tanışlıq"
    },
@@ -1738,17 +1738,17 @@ function render(){
     "pron": "Vii geet əs diiə?",
     "ipa": "[viː ɡeːt ɛs diːɐ̯]",
     "words": "Wie — necə\ngeht — gedir (gehen)\nes — bu ifadədə qrammatik mübtəda\ndir — sənə (Dativ)",
-    "rules": "w → v; ie → uzun [iː]; geht sözündə h e-ni uzadır.",
+    "rules": "w → v; ie → uzun [iː]; geht sözündə h e-ni uzadır; saitləşən r → qısa ə-yə yaxın [ɐ̯] (dir).",
     "exercise": "Salamlaşma və tanışlıq",
     "section": "Salamlaşma və tanışlıq"
    },
    {
     "de": "Wie schreibt man das?",
     "az": "Bu necə yazılır?",
-    "pron": "Vii şraypt man das?",
+    "pron": "Vii şğaypt man das?",
     "ipa": "[viː ʃʁaɪ̯pt man das]",
     "words": "Wie — necə\nschreibt — yazır\nman — ümumi şəxs bildirən əvəzlik\ndas — bu",
-    "rules": "sch → ş; ei → ay; schreibt sözündə b, t-dən əvvəl [p] olur.",
+    "rules": "schr → şğ; ei → ay; schreibt sözündə b, t-dən əvvəl [p] olur; r → ğ-yə yaxın boğaz səsi [ʁ] (schreibt).",
     "exercise": "Əlifba və hərfləmə",
     "section": "Əlifba və hərfləmə"
    },
@@ -1758,7 +1758,7 @@ function render(){
     "pron": "İx’ şpğex’ə tüğkiş.",
     "ipa": "[ɪç ˈʃpʁɛçə ˈtʏʁkɪʃ]",
     "words": "Ich — mən\nspreche — danışıram\nTürkisch — türk dili",
-    "rules": "sp → şp; ch → [ç]; sch → ş.",
+    "rules": "sp → şp; ch → [ç]; sch → ş; r → ğ-yə yaxın boğaz səsi [ʁ] (spreche, Türkisch).",
     "exercise": "Dillər və ölkələr",
     "section": "Dillər və ölkələr"
    },
@@ -1768,7 +1768,7 @@ function render(){
     "pron": "İx’ haabə tsvay bğüüdə.",
     "ipa": "[ɪç ˈhaːbə tsvaɪ̯ ˈbʁyːdɐ]",
     "words": "Ich — mən\nhabe — var (haben)\nzwei — iki\nBrüder — qardaşlar",
-    "rules": "z → ts; ei → ay; Brüder sözündə ü uzundur.",
+    "rules": "z → ts; ei → ay; Brüder sözündə ü uzundur; r → ğ-yə yaxın boğaz səsi [ʁ] (Brüder); vurğusuz -er → ə-yə yaxın [ɐ] (Brüder).",
     "exercise": "Saylar",
     "section": "Saylar"
    },
@@ -1778,7 +1778,7 @@ function render(){
     "pron": "Viiə şpiilən geğn şax.",
     "ipa": "[viːɐ̯ ˈʃpiːlən ɡɛʁn ʃax]",
     "words": "Wir — biz\nspielen — oynayırıq\ngern — həvəslə\nSchach — şahmat",
-    "rules": "sp → şp; ie → uzun [iː]; Schach sözündə ch → [x].",
+    "rules": "sp → şp; ie → uzun [iː]; Schach sözündə ch → [x]; r → ğ-yə yaxın boğaz səsi [ʁ] (gern); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Wir).",
     "exercise": "Şəxslər və hobbilər",
     "section": "Şəxslər və hobbilər"
    },
@@ -1788,7 +1788,7 @@ function render(){
     "pron": "Beğn liikt in deeə şvayts.",
     "ipa": "[bɛʁn liːkt ɪn deːɐ̯ ʃvaɪ̯ts]",
     "words": "Bern — Bern\nliegt — yerləşir\nin — -da/-də\nder — Dativ artikli\nSchweiz — İsveçrə",
-    "rules": "sch → ş; w → v; ei → ay; z → ts.",
+    "rules": "sch → ş; w → v; ei → ay; z → ts; r → ğ-yə yaxın boğaz səsi [ʁ] (Bern); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).",
     "exercise": "Ölkələr haqqında",
     "section": "Ölkələr haqqında"
    },
@@ -1798,7 +1798,7 @@ function render(){
     "pron": "Duu leğnst doyç.",
     "ipa": "[duː lɛʁnst dɔɪ̯tʃ]",
     "words": "Du — sən\nlernst — öyrənirsən\nDeutsch — alman dili",
-    "rules": "eu → oy; tsch → ç; -st du ilə işlənən fel sonluğudur.",
+    "rules": "eu → oy; tsch → ç; -st du ilə işlənən fel sonluğudur; r → ğ-yə yaxın boğaz səsi [ʁ] (lernst).",
     "exercise": "Şəxs əvəzlikləri və indiki zaman",
     "section": "Şəxs əvəzlikləri və indiki zaman"
    },
@@ -1808,7 +1808,7 @@ function render(){
     "pron": "Hoytə ağbaytə ix’.",
     "ipa": "[ˈhɔɪ̯tə ˈaʁbaɪ̯tə ɪç]",
     "words": "Heute — bu gün\narbeite — işləyirəm\nich — mən",
-    "rules": "eu → oy; ei → ay; ich sözündə ch → [ç].",
+    "rules": "eu → oy; ei → ay; ich sözündə ch → [ç]; r → ğ-yə yaxın boğaz səsi [ʁ] (arbeite).",
     "exercise": "Söz sırası",
     "section": "Söz sırası"
    },
@@ -1847,7 +1847,7 @@ function render(){
     "pron": "Deeə dğukə ist kaput.",
     "ipa": "[deːɐ̯ ˈdʁʊkɐ ɪst kaˈpʊt]",
     "words": "Der — müəyyən artikl\nDrucker — printer\nist — -dır\nkaputt — xarab",
-    "rules": "ck → [k]; Drucker sözündə -er → [ɐ]; kaputt sözündə vurğu son hecaya düşür.",
+    "rules": "ck → [k]; Drucker sözündə vurğusuz -er → ə-yə yaxın [ɐ]; kaputt sözündə vurğu son hecaya düşür; r → ğ-yə yaxın boğaz səsi [ʁ] (Drucker); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Der).",
     "exercise": "Ofis",
     "section": "Ofis"
    },
@@ -1857,7 +1857,7 @@ function render(){
     "pron": "İx’ ştudiiğə biologii.",
     "ipa": "[ɪç ʃtuˈdiːʁə bioloˈɡiː]",
     "words": "Ich — mən\nstudiere — təhsil alıram\nBiologie — biologiya",
-    "rules": "st → şt; studiere və Biologie sözlərində ie → uzun [iː].",
+    "rules": "st → şt; studiere və Biologie sözlərində ie → uzun [iː]; r → ğ-yə yaxın boğaz səsi [ʁ] (studiere).",
     "exercise": "Universitet",
     "section": "Universitet"
    },
@@ -1877,7 +1877,7 @@ function render(){
     "pron": "Maynə şvestə ist eətstin.",
     "ipa": "[ˈmaɪ̯nə ˈʃvɛstɐ ɪst ˈɛːɐ̯tstɪn]",
     "words": "Meine — mənim\nSchwester — bacı\nist — -dır\nÄrztin — həkim (qadın)",
-    "rules": "sch → ş; w → v; Ärztin sözündə z → ts.",
+    "rules": "sch → ş; w → v; Ärztin sözündə z → ts; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Ärztin); vurğusuz -er → ə-yə yaxın [ɐ] (Schwester).",
     "exercise": "Peşələr",
     "section": "Peşələr"
    },
@@ -1897,7 +1897,7 @@ function render(){
     "pron": "Eeə ağbaytət hoytə.",
     "ipa": "[eːɐ̯ ˈaʁbaɪ̯tət ˈhɔɪ̯tə]",
     "words": "Er — o (kişi)\narbeitet — işləyir\nheute — bu gün",
-    "rules": "ei → ay; eu → oy; arbeiten felində er üçün sonluq -et-dir.",
+    "rules": "ei → ay; eu → oy; arbeiten felində er üçün sonluq -et-dir; r → ğ-yə yaxın boğaz səsi [ʁ] (arbeitet); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Er).",
     "exercise": "Felin təsrifi",
     "section": "Felin təsrifi"
    },
@@ -1907,7 +1907,7 @@ function render(){
     "pron": "Das ist kayn kompyuutə.",
     "ipa": "[das ɪst kaɪ̯n kɔmˈpjuːtɐ]",
     "words": "Das — bu\nist — -dır\nkein — inkar artikli\nComputer — kompüter",
-    "rules": "kein sözündə ei → ay; Computer sözündə [pj] və uzun [uː] var.",
+    "rules": "kein sözündə ei → ay; Computer sözündə [pj] və uzun [uː] var; vurğusuz -er → ə-yə yaxın [ɐ] (Computer).",
     "exercise": "İnkar",
     "section": "İnkar"
    },
@@ -1917,7 +1917,7 @@ function render(){
     "pron": "Voo ist deeə şlüsəl?",
     "ipa": "[voː ɪst deːɐ̯ ˈʃlʏsl̩]",
     "words": "Wo — harada\nist — -dır\nder — müəyyən artikl\nSchlüssel — açar",
-    "rules": "w → v; sch → ş; ü qısadır.",
+    "rules": "w → v; sch → ş; ü qısadır; saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).",
     "exercise": "Yer və sual",
     "section": "Yer və sual"
    }
@@ -1944,7 +1944,7 @@ function render(){
     "pron": "İst nox ayn tsimə fğay?",
     "ipa": "[ɪst nɔx aɪ̯n ˈtsɪmɐ fʁaɪ̯]",
     "words": "Ist — burada var\nnoch — hələ\nein — bir\nZimmer — otaq\nfrei — boş",
-    "rules": "z → ts; ei → ay; noch sözündə ch → [x].",
+    "rules": "z → ts; ei → ay; noch sözündə ch → [x]; r → ğ-yə yaxın boğaz səsi [ʁ] (frei); vurğusuz -er → ə-yə yaxın [ɐ] (Zimmer).",
     "exercise": "Otel",
     "section": "Otel"
    },
@@ -1954,17 +1954,17 @@ function render(){
     "pron": "Geeən zii bitə gəğaadəaus.",
     "ipa": "[ˈɡeːən ziː ˈbɪtə ɡəˌʁaːdəˈʔaʊ̯s]",
     "words": "Gehen — gedin\nSie — siz (rəsmi)\nbitte — zəhmət olmasa\ngeradeaus — düz irəli",
-    "rules": "gehen sözündə h oxunmur; Sie-də ie → uzun [iː]; au → [aʊ̯].",
+    "rules": "gehen sözündə h oxunmur; Sie-də ie → uzun [iː]; au → [aʊ̯]; r → ğ-yə yaxın boğaz səsi [ʁ] (geradeaus).",
     "exercise": "Şəhər xəritəsi",
     "section": "Şəhər xəritəsi"
    },
    {
     "de": "Das Museum öffnet um zehn Uhr.",
     "az": "Muzey saat onda açılır.",
-    "pron": "Das muzeum öfnət um tseen uuə.",
+    "pron": "Das muzeeum öfnət um tseen uuə.",
     "ipa": "[das muˈzeːʊm ˈœfnət ʊm tseːn uːɐ̯]",
     "words": "Das — müəyyən artikl\nMuseum — muzey\nöffnet — açılır\num — saat ifadəsində işlənir\nzehn — on\nUhr — saat",
-    "rules": "z → ts (zehn); h əvvəlki saiti uzadır (zehn, Uhr).",
+    "rules": "z → ts (zehn); h əvvəlki saiti uzadır (zehn, Uhr); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Uhr).",
     "exercise": "Görməli yerlər",
     "section": "Görməli yerlər"
    },
@@ -1974,7 +1974,7 @@ function render(){
     "pron": "İx’ bğauxə aynən ştatplaan.",
     "ipa": "[ɪç ˈbʁaʊ̯xə ˈaɪ̯nən ˈʃtatˌplaːn]",
     "words": "Ich — mən\nbrauche — mənə lazımdır\neinen — bir (kişi cinsi, Akkusativ)\nStadtplan — şəhər xəritəsi",
-    "rules": "au → [aʊ̯]; st → şt; Stadt hissəsində d → [t].",
+    "rules": "au → [aʊ̯]; st → şt; Stadt hissəsində d → [t]; r → ğ-yə yaxın boğaz səsi [ʁ] (brauche).",
     "exercise": "Akkusativ",
     "section": "Akkusativ"
    },
@@ -1984,7 +1984,7 @@ function render(){
     "pron": "Kan ix’ hiiə bətsaalən?",
     "ipa": "[kan ɪç hiːɐ̯ bəˈtsaːlən]",
     "words": "Kann — bacarmaq (können)\nich — mən\nhier — burada\nbezahlen — ödəmək",
-    "rules": "ie → uzun [iː]; z → ts; bezahlen sözündə h a-nı uzadır.",
+    "rules": "ie → uzun [iː]; z → ts; bezahlen sözündə h a-nı uzadır; saitləşən r → qısa ə-yə yaxın [ɐ̯] (hier).",
     "exercise": "Modal fel",
     "section": "Modal fel"
    },
@@ -1994,7 +1994,7 @@ function render(){
     "pron": "Das hotel liikt neebən deeə baŋk.",
     "ipa": "[das hoˈtɛl liːkt ˈneːbən deːɐ̯ baŋk]",
     "words": "Das — müəyyən artikl\nHotel — otel\nliegt — yerləşir\nneben — yanında\nder — Dativdə müəyyən artikl\nBank — bank",
-    "rules": "ie → uzun [iː]; liegt sözündə g, t-dən əvvəl [k] olur; Bank sözündə n → [ŋ].",
+    "rules": "ie → uzun [iː]; liegt sözündə g, t-dən əvvəl [k] olur; Bank sözündə n → [ŋ]; saitləşən r → qısa ə-yə yaxın [ɐ̯] (der).",
     "exercise": "Yer bildirən sözönülər",
     "section": "Yer bildirən sözönülər"
    }
@@ -2022,7 +2022,7 @@ function render(){
     "pron": "Tsum fğüüştük esə ix’ bğoot.",
     "ipa": "[tsʊm ˈfʁyːʃtʏk ˈɛsə ɪç bʁoːt]",
     "words": "Zum — zu dem\nFrühstück — səhər yeməyi\nesse — yeyirəm\nich — mən\nBrot — çörək",
-    "rules": "z → ts; Frühstück sözündə st → şt; Brot sözündə o uzundur.",
+    "rules": "z → ts; Frühstück sözündə st → şt; Brot sözündə o uzundur; r → ğ-yə yaxın boğaz səsi [ʁ] (Frühstück, Brot).",
     "exercise": "Səhər yeməyi",
     "section": "Səhər yeməyi"
    },
@@ -2032,7 +2032,7 @@ function render(){
     "pron": "Dii gaabəl liikt neebən deem telə.",
     "ipa": "[diː ˈɡaːbl̩ liːkt ˈneːbən deːm ˈtɛlɐ]",
     "words": "Die — müəyyən artikl\nGabel — çəngəl\nliegt — yerləşir\nneben — yanında\ndem — Dativdə müəyyən artikl\nTeller — boşqab",
-    "rules": "ie → uzun [iː]; Teller sözündə son -er → [ɐ].",
+    "rules": "ie → uzun [iː]; Teller sözündə son vurğusuz -er → ə-yə yaxın [ɐ].",
     "exercise": "Qab-qacaq",
     "section": "Qab-qacaq"
    },
@@ -2062,7 +2062,7 @@ function render(){
     "pron": "İx’ kaufə dğay epfəl.",
     "ipa": "[ɪç ˈkaʊ̯fə dʁaɪ̯ ˈɛpfl̩]",
     "words": "Ich — mən\nkaufe — alıram\ndrei — üç\nÄpfel — almalar",
-    "rules": "au → [aʊ̯]; ei → ay; Äpfel sözündə pf ardıcıl səslənir.",
+    "rules": "au → [aʊ̯]; ei → ay; Äpfel sözündə pf ardıcıl səslənir; r → ğ-yə yaxın boğaz səsi [ʁ] (drei).",
     "exercise": "Cəm və artikllər",
     "section": "Cəm və artikllər"
    },
@@ -2072,7 +2072,7 @@ function render(){
     "pron": "Viiə möögən fğişəs oopst.",
     "ipa": "[viːɐ̯ ˈmøːɡn̩ ˈfʁɪʃəs oːpst]",
     "words": "Wir — biz\nmögen — sevirik\nfrisches — təzə\nObst — meyvə",
-    "rules": "ö → uzun [øː]; sch → ş; Obst sözündə b → [p].",
+    "rules": "ö → uzun [øː]; sch → ş; Obst sözündə b → [p]; r → ğ-yə yaxın boğaz səsi [ʁ] (frisches); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Wir).",
     "exercise": "Bəyənmək və istəmək",
     "section": "Bəyənmək və istəmək"
    },
@@ -2109,17 +2109,17 @@ function render(){
     "pron": "İx’ şteeə um ziibən uuə auf.",
     "ipa": "[ɪç ˈʃteːə ʊm ˈziːbən uːɐ̯ aʊ̯f]",
     "words": "Ich — mən\nstehe — dururam (aufstehen)\num — saat ifadəsində işlənir\nsieben — yeddi\nUhr — saat\nauf — aufstehen felinin ayrılan hissəsi",
-    "rules": "st → şt; ie → uzun [iː]; au → [aʊ̯].",
+    "rules": "st → şt; ie → uzun [iː]; au → [aʊ̯]; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Uhr).",
     "exercise": "Gün rejimi",
     "section": "Gün rejimi"
    },
    {
     "de": "Ich muss zuerst die E-Mails lesen.",
     "az": "Əvvəlcə e-poçtları oxumalıyam.",
-    "pron": "İx’ mus tsu-eest dii ii-meyls leezən.",
+    "pron": "İx’ mus tsu-eeə̆st dii ii-meyls leezən.",
     "ipa": "[ɪç mʊs tsuˈʔeːɐ̯st diː ˈiːmeɪ̯ls ˈleːzn̩]",
     "words": "Ich — mən\nmuss — -malıyam\nzuerst — əvvəlcə\ndie — cəm artikli\nE-Mails — e-poçtlar\nlesen — oxumaq",
-    "rules": "z → ts (zuerst); ie → uzun [iː]; lesen sözündə s → z.",
+    "rules": "z → ts (zuerst); ie → uzun [iː]; lesen sözündə s → z; saitləşən r → qısa ə-yə yaxın [ɐ̯] (zuerst).",
     "exercise": "Ofisdə işlər",
     "section": "Ofisdə işlər"
    },
@@ -2129,7 +2129,7 @@ function render(){
     "pron": "İx’ şpayx’əğə dii datay.",
     "ipa": "[ɪç ˈʃpaɪ̯çəʁə diː daˈtaɪ̯]",
     "words": "Ich — mən\nspeichere — yadda saxlayıram\ndie — müəyyən artikl\nDatei — fayl",
-    "rules": "sp → şp; ei → ay; speichere sözündə ch → [ç].",
+    "rules": "sp → şp; ei → ay; speichere sözündə ch → [ç]; r → ğ-yə yaxın boğaz səsi [ʁ] (speichere).",
     "exercise": "Kompüterdə",
     "section": "Kompüterdə"
    },
@@ -2139,17 +2139,17 @@ function render(){
     "pron": "Haabən zii am fğaytaak tsayt?",
     "ipa": "[ˈhaːbn̩ ziː am ˈfʁaɪ̯taːk tsaɪ̯t]",
     "words": "Haben — var (haben)\nSie — siz (rəsmi)\nam — an dem, gün bildirir\nFreitag — cümə\nZeit — vaxt",
-    "rules": "ei → ay; z → ts; Freitag sonunda g → [k].",
+    "rules": "ei → ay; z → ts; Freitag sonunda g → [k]; r → ğ-yə yaxın boğaz səsi [ʁ] (Freitag).",
     "exercise": "Görüş vaxtı təyin etmək",
     "section": "Görüş vaxtı təyin etmək"
    },
    {
     "de": "Ich rufe dich morgen an.",
     "az": "Sabah sənə zəng edəcəyəm.",
-    "pron": "İx’ ğuufə dix’ moğqən an.",
+    "pron": "İx’ ğuufə dix’ moğgən an.",
     "ipa": "[ɪç ˈʁuːfə dɪç ˈmɔʁɡn̩ an]",
     "words": "Ich — mən\nrufe — zəng vururam (anrufen)\ndich — sənə (almancada Akkusativ)\nmorgen — sabah\nan — anrufen felinin ayrılan hissəsi",
-    "rules": "rufe sözündə u uzundur; ch → [ç]; an cümlənin sonuna keçir.",
+    "rules": "rufe sözündə u uzundur; ch → [ç]; an cümlənin sonuna keçir; r → ğ-yə yaxın boğaz səsi [ʁ] (rufe, morgen).",
     "exercise": "Ayrılan fellər",
     "section": "Ayrılan fellər"
    },
@@ -2159,7 +2159,7 @@ function render(){
     "pron": "Zayt moontaak bin ix’ hiiə.",
     "ipa": "[zaɪ̯t ˈmoːntaːk bɪn ɪç hiːɐ̯]",
     "words": "Seit — -dan bəri\nMontag — bazar ertəsi\nbin — -am\nich — mən\nhier — burada",
-    "rules": "ei → ay; Montag sonunda g → [k]; ie → uzun [iː].",
+    "rules": "ei → ay; Montag sonunda g → [k]; ie → uzun [iː]; saitləşən r → qısa ə-yə yaxın [ɐ̯] (hier).",
     "exercise": "Zaman bildirən sözönülər",
     "section": "Zaman bildirən sözönülər"
    }
@@ -2186,7 +2186,7 @@ function render(){
     "pron": "İm heğpst ğeegnət əs oft.",
     "ipa": "[ɪm hɛʁpst ˈʁeːɡnət ɛs ɔft]",
     "words": "Im — in dem, -da/-də\nHerbst — payız\nregnet — yağış yağır\nes — şəxssiz mübtəda\noft — tez-tez",
-    "rules": "Herbst sözündə b → [p]; regnet sözündə e uzundur.",
+    "rules": "Herbst sözündə b → [p]; regnet sözündə e uzundur; r → ğ-yə yaxın boğaz səsi [ʁ] (Herbst, regnet).",
     "exercise": "Fəsillər və hava",
     "section": "Fəsillər və hava"
    },
@@ -2196,7 +2196,7 @@ function render(){
     "pron": "Viiə faağən im zomə ans meeə.",
     "ipa": "[viːɐ̯ ˈfaːʁən ɪm ˈzɔmɐ ans meːɐ̯]",
     "words": "Wir — biz\nfahren — nəqliyyatla gedirik\nim — in dem, -da/-də\nSommer — yay\nans — an das, yanına\nMeer — dəniz",
-    "rules": "fahren sözündə h oxunmur; Sommer sözündə s → z; Meer sözündə ee uzundur.",
+    "rules": "fahren sözündə h oxunmur; Sommer sözündə s → z; Meer sözündə ee uzundur; r → ğ-yə yaxın boğaz səsi [ʁ] (fahren); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Wir, Meer); vurğusuz -er → ə-yə yaxın [ɐ] (Sommer).",
     "exercise": "Səyahət yerləri",
     "section": "Səyahət yerləri"
    },
@@ -2206,17 +2206,17 @@ function render(){
     "pron": "İx’ pakə maynən kofə.",
     "ipa": "[ɪç ˈpakə ˈmaɪ̯nən ˈkɔfɐ]",
     "words": "Ich — mən\npacke — yığıram\nmeinen — mənim (kişi cinsi, Akkusativ)\nKoffer — çamadan",
-    "rules": "ck → [k]; ei → ay; Koffer sözündə son -er → [ɐ].",
+    "rules": "ck → [k]; ei → ay; Koffer sözündə son vurğusuz -er → ə-yə yaxın [ɐ].",
     "exercise": "Səfərə hazırlıq",
     "section": "Səfərə hazırlıq"
    },
    {
     "de": "Der Zug fährt um neun Uhr ab.",
     "az": "Qatar saat doqquzda yola düşür.",
-    "pron": "Deeə tsuuk feeət um noyn uuə ap.",
+    "pron": "Deeə tsuuk feeə̆t um noyn uuə ap.",
     "ipa": "[deːɐ̯ tsuːk fɛːɐ̯t ʊm nɔɪ̯n uːɐ̯ ap]",
     "words": "Der — müəyyən artikl\nZug — qatar\nfährt — gedir (abfahren)\num — saat ifadəsində işlənir\nneun — doqquz\nUhr — saat\nab — abfahren felinin ayrılan hissəsi",
-    "rules": "z → ts; eu → oy; Zug sonunda g → [k], ab sonunda b → [p].",
+    "rules": "z → ts; eu → oy; Zug sonunda g → [k], ab sonunda b → [p]; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Der, fährt, Uhr).",
     "exercise": "Nəqliyyat",
     "section": "Nəqliyyat"
    },
@@ -2226,7 +2226,7 @@ function render(){
     "pron": "İx’ blaybə hiiə, den əs ğeegnət.",
     "ipa": "[ɪç ˈblaɪ̯bə hiːɐ̯ dɛn ɛs ˈʁeːɡnət]",
     "words": "Ich — mən\nbleibe — qalıram\nhier — burada\ndenn — çünki\nes — şəxssiz mübtəda\nregnet — yağış yağır",
-    "rules": "ei → ay; ie → uzun [iː]; denn-dən sonra fel adi xəbər cümləsindəki yerini saxlayır.",
+    "rules": "ei → ay; ie → uzun [iː]; denn-dən sonra fel adi xəbər cümləsindəki yerini saxlayır; r → ğ-yə yaxın boğaz səsi [ʁ] (regnet); saitləşən r → qısa ə-yə yaxın [ɐ̯] (hier).",
     "exercise": "Bağlayıcılar",
     "section": "Bağlayıcılar"
    },
@@ -2260,7 +2260,7 @@ function render(){
    {
     "de": "Die Wohnung hat einen Balkon.",
     "az": "Mənzilin balkonu var.",
-    "pron": "Dii voonuŋ hat aynən balkon.",
+    "pron": "Dii voonuŋ hat aynən balkoŋ.",
     "ipa": "[diː ˈvoːnʊŋ hat ˈaɪ̯nən balˈkɔŋ]",
     "words": "Die — müəyyən artikl\nWohnung — mənzil\nhat — var (haben)\neinen — bir (kişi cinsi, Akkusativ)\nBalkon — balkon",
     "rules": "w → v; ei → ay; Balkon sözünün sonu [ŋ] kimi də tələffüz edilir.",
@@ -2273,17 +2273,17 @@ function render(){
     "pron": "Deeə tiş şteet fooə deem fenstə.",
     "ipa": "[deːɐ̯ tɪʃ ʃteːt foːɐ̯ deːm ˈfɛnstɐ]",
     "words": "Der — müəyyən artikl\nTisch — masa\nsteht — durur\nvor — qabağında\ndem — Dativdə müəyyən artikl\nFenster — pəncərə",
-    "rules": "sch → ş; steht əvvəlində st → şt; vor sözündə v → f.",
+    "rules": "sch → ş; steht əvvəlində st → şt; vor sözündə v → f; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Der, vor); vurğusuz -er → ə-yə yaxın [ɐ] (Fenster).",
     "exercise": "Mənzilin əşyaları",
     "section": "Mənzilin əşyaları"
    },
    {
     "de": "Bitte machen Sie nach zehn Uhr keinen Lärm.",
     "az": "Zəhmət olmasa, saat ondan sonra səs-küy salmayın.",
-    "pron": "Bitə maxən zii naax tseen uuə kaynən leə̆m.",
+    "pron": "Bitə maxən zii naax tseen uuə kaynən leğm.",
     "ipa": "[ˈbɪtə ˈmaxən ziː naːx tseːn uːɐ̯ ˈkaɪ̯nən lɛʁm]",
     "words": "Bitte — zəhmət olmasa\nmachen — edin\nSie — siz (rəsmi)\nnach — sonra\nzehn — on\nUhr — saat\nkeinen — inkar artikli\nLärm — səs-küy",
-    "rules": "ch → [x] (machen, nach); z → ts; ei → ay.",
+    "rules": "ch → [x] (machen, nach); z → ts; ei → ay; r → ğ-yə yaxın boğaz səsi [ʁ] (Lärm); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Uhr).",
     "exercise": "Bina qaydaları",
     "section": "Bina qaydaları"
    },
@@ -2313,7 +2313,7 @@ function render(){
     "pron": "Diizə küx’ə ist gğöösə.",
     "ipa": "[ˈdiːzə ˈkʏçə ɪst ˈɡʁøːsɐ]",
     "words": "Diese — bu\nKüche — mətbəx\nist — -dür\ngrößer — daha böyük",
-    "rules": "ie → uzun [iː]; Küche sözündə ch → [ç]; ß → s.",
+    "rules": "ie → uzun [iː]; Küche sözündə ch → [ç]; ß → s; r → ğ-yə yaxın boğaz səsi [ʁ] (größer); vurğusuz -er → ə-yə yaxın [ɐ] (größer).",
     "exercise": "Sifətlərin müqayisəsi",
     "section": "Sifətlərin müqayisəsi"
    }
@@ -2337,10 +2337,10 @@ function render(){
    {
     "de": "Alles Gute zum Geburtstag!",
     "az": "Ad günün mübarək!",
-    "pron": "Aləs guutə tsum gəbuəts taak!",
+    "pron": "Aləs guutə tsum gəbuuə̆tstaak!",
     "ipa": "[ˈaləs ˈɡuːtə tsʊm ɡəˈbuːɐ̯tsˌtaːk]",
     "words": "Alles — hər şey\nGute — yaxşılıq, xoş arzular\nzum — zu dem\nGeburtstag — ad günü",
-    "rules": "z → ts; Gute sözündə u uzundur; Geburtstag sonunda g → [k].",
+    "rules": "z → ts; Gute sözündə u uzundur; Geburtstag sonunda g → [k]; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Geburtstag).",
     "exercise": "Təbrik və hədiyyələr",
     "section": "Təbrik və hədiyyələr"
    },
@@ -2360,17 +2360,17 @@ function render(){
     "pron": "Əs tuut miiə layt.",
     "ipa": "[ɛs tuːt miːɐ̯ laɪ̯t]",
     "words": "Es — bu ifadədə qrammatik mübtəda\ntut — edir (tun)\nmir — mənə\nleid — təəssüf bildirir",
-    "rules": "ei → ay; leid sonunda d → [t]; mir sözündə i uzundur.",
+    "rules": "ei → ay; leid sonunda d → [t]; mir sözündə i uzundur; saitləşən r → qısa ə-yə yaxın [ɐ̯] (mir).",
     "exercise": "Üzr istəmək",
     "section": "Üzr istəmək"
    },
    {
     "de": "Gestern habe ich meinen Schlüssel verloren.",
     "az": "Dünən açarımı itirdim.",
-    "pron": "Gestəğn haabə ix’ maynən şlüsəl fəəlooğən.",
+    "pron": "Gestə̆n haabə ix’ maynən şlüsəl fəə̆looğən.",
     "ipa": "[ˈɡɛstɐn ˈhaːbə ɪç ˈmaɪ̯nən ˈʃlʏsl̩ fɛɐ̯ˈloːʁən]",
     "words": "Gestern — dünən\nhabe — Perfekt üçün köməkçi fel\nich — mən\nmeinen — mənim (kişi cinsi, Akkusativ)\nSchlüssel — açar\nverloren — itirmişəm (verlieren)",
-    "rules": "ei → ay; sch → ş; ver- əvvəlində v → f.",
+    "rules": "ei → ay; sch → ş; ver- əvvəlində v → f; r → ğ-yə yaxın boğaz səsi [ʁ] (verloren); saitləşən r → qısa ə-yə yaxın [ɐ̯] (verloren); vurğusuz -er → ə-yə yaxın [ɐ] (Gestern).",
     "exercise": "Baş vermiş hadisələr",
     "section": "Baş vermiş hadisələr"
    },
@@ -2380,7 +2380,7 @@ function render(){
     "pron": "Viiə haabən laŋə gəvağtət.",
     "ipa": "[viːɐ̯ ˈhaːbn̩ ˈlaŋə ɡəˈvaʁtət]",
     "words": "Wir — biz\nhaben — Perfekt üçün köməkçi fel\nlange — uzun müddət\ngewartet — gözləmişik",
-    "rules": "w → v; lange sözündə ng → [ŋ]; gewartet sözündə vurğu war hissəsindədir.",
+    "rules": "w → v; lange sözündə ng → [ŋ]; gewartet sözündə vurğu war hissəsindədir; r → ğ-yə yaxın boğaz səsi [ʁ] (gewartet); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Wir).",
     "exercise": "Keçmiş zaman",
     "section": "Keçmiş zaman"
    },
@@ -2390,13 +2390,258 @@ function render(){
     "pron": "Duu zoltest tsum aaətst geeən.",
     "ipa": "[duː ˈzɔltəst tsʊm aːɐ̯tst ˈɡeːən]",
     "words": "Du — sən\nsolltest — tövsiyə bildirir (sollen)\nzum — zu dem, -a/-ə\nArzt — həkim\ngehen — getmək",
-    "rules": "solltest sözündə s → z; z → ts; gehen sözündə h oxunmur.",
+    "rules": "solltest sözündə s → z; z → ts; gehen sözündə h oxunmur; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Arzt).",
     "exercise": "Modal fellər",
     "section": "Modal fellər"
    }
   ]
  }
 ];
+const LESSON_PRONUNCIATION_UPDATES={
+ "Kennenlernen – Tanışlıq (A2–A4, səh. 9)": {
+  "Hören und wiederholen Sie.": {
+   "rules": "ie → ii (wiederholen, Sie); w → v (wiederholen); S → z (Sie); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (wiederholen); h → h (wiederholen, holen hissəsində); vurğusuz -er → ə-yə yaxın [ɐ] (wiederholen)."
+  },
+  "Ich heiße Franziska Binder.": {
+   "rules": "ch → yumşaq x’ [ç] (Ich); ei → ay (heiße); ß → s; z → ts (Franziska); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); r → ğ-yə yaxın boğaz səsi [ʁ] (Franziska); vurğusuz -er → ə-yə yaxın [ɐ] (Binder)."
+  },
+  "Mein Name ist Peter Heinemann.": {
+   "rules": "ei → ay (Mein, Heinemann); a → uzun aa (Name); e → uzun ee (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); vurğusuz -er → ə-yə yaxın [ɐ] (Peter)."
+  },
+  "Wie ist Ihr Vorname?": {
+   "rules": "w → v (Wie); ie → ii (Wie); h → i saitini uzadır (Ihr); V → f (Vorname); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Ihr, Vorname)"
+  },
+  "Mein Vorname ist Franziska.": {
+   "rules": "ei → ay (Mein); V → f (Vorname); z → ts (Franziska); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Vorname); r → ğ-yə yaxın boğaz səsi [ʁ] (Franziska)"
+  },
+  "Mein Vorname ist Peter.": {
+   "rules": "ei → ay (Mein); V → f (Vorname); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Vorname, Peter); vurğusuz -er → ə-yə yaxın [ɐ] (Peter)."
+  },
+  "Wie ist Ihr Familienname?": {
+   "rules": "w → v (Wie); ie → ii (Wie); h → i saitini uzadır (Ihr); ie → i-yə yaxın (Familienname); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Ihr); i → ii (Familienname)"
+  },
+  "Mein Familienname ist Binder.": {
+   "rules": "ei → ay (Mein); ie → i-yə yaxın (Familienname); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); vurğusuz -er → ə-yə yaxın [ɐ] (Binder)."
+  },
+  "Ich bin 37 Jahre alt.": {
+   "rules": "ch → yumşaq x’ (Ich); 37 = siebenunddreißig: ie → ii, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre)"
+  },
+  "Ich bin 35 Jahre alt.": {
+   "rules": "ch → yumşaq x’ (Ich); 35 = fünfunddreißig: ü → ü, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre)"
+  },
+  "Woher kommen Sie?": {
+   "rules": "w → v (Woher); mm → qısa saitdən sonra bir m (kommen); ie → ii (Sie); S → z (Sie); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Woher); h → h (Woher)"
+  },
+  "Ich komme aus Österreich.": {
+   "rules": "ch → yumşaq x’ (Ich, Österreich); au → au (aus); ei → ay (Österreich); ö → ö; r → ğ-yə yaxın boğaz səsi [ʁ] (Österreich)"
+  },
+  "Ich wohne in Marburg.": {
+   "rules": "ch → yumşaq x’ (Ich); w → v (wohne); h → o uzadır; g → k (Marburg sonunda); r → ğ-yə yaxın boğaz səsi [ʁ] (Marburg, hər iki r; samitli variant)"
+  },
+  "Was sind Sie von Beruf?": {
+   "rules": "w → v (Was); s → z (sind, Sie); d → t (sind); ie → ii (Sie); v → f (von); r → ğ-yə yaxın boğaz səsi [ʁ] (Beruf); u → uu (Beruf)"
+  },
+  "Ich bin Lehrerin.": {
+   "rules": "ch → yumşaq x’ (Ich); h → e uzadır (Lehrerin); h → oxunmur, e uzanır; hər iki r → ğ-yə yaxın boğaz səsi [ʁ] (Lehrerin)"
+  },
+  "Ich bin Informatiker.": {
+   "rules": "ch → yumşaq x’ (Ich); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Informatiker); r → ğ-yə yaxın boğaz səsi [ʁ] (Informatiker, ilk r); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (sonluq); vurğusuz -er → ə-yə yaxın [ɐ] (Informatiker)."
+  },
+  "Welche Sprachen sprechen Sie?": {
+   "rules": "w → v (Welche); ch → yumşaq x’ (Welche, sprechen), sərt x (Sprachen); sp → şp (Sprachen, sprechen); ie → ii (Sie); S → z (Sie); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprachen, sprechen)"
+  },
+  "Meine Muttersprache ist Deutsch.": {
+   "rules": "ei → ay (Meine); sp → şp (Muttersprache); ch → sərt x (Muttersprache); eu → oy (Deutsch); tsch → ç (Deutsch); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Mutter); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprache); vurğusuz -er → ə-yə yaxın [ɐ] (Muttersprache)."
+  },
+  "Ich spreche auch Spanisch und Englisch.": {
+   "rules": "ch → yumşaq x’ (Ich, spreche), sərt x (auch); sp → şp (spreche, Spanisch); sch → ş (Spanisch, Englisch); au → au (auch); ng → burun n [ŋ] (Englisch); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (spreche)"
+  },
+  "Ich lerne jetzt Japanisch.": {
+   "rules": "ch → yumşaq x’ (Ich); j → y (jetzt, Japanisch); tz → ts (jetzt); sch → ş (Japanisch); r → ğ-yə yaxın boğaz səsi [ʁ] (lerne, samitli variant)"
+  },
+  "Hören und lesen Sie.": {
+   "rules": "ö → ö (Hören); s → z (lesen, Sie); ie → ii (Sie); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören)"
+  },
+  "Frankreich": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ]; ei → ay; ch → x’"
+  },
+  "Dänemark": {
+   "rules": "ä → uzun açıq e; r → ğ-yə yaxın boğaz səsi [ʁ] (variant)"
+  },
+  "Großbritannien": {
+   "pron": "Gğoosbğitaanyən",
+   "rules": "ß → s; r → ğ-yə yaxın boğaz səsi [ʁ]"
+  },
+  "Russland": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ]; d → t"
+  },
+  "Portugal": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ] (variant)"
+  },
+  "Brasilien": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ]; s → z"
+  },
+  "Rumänien": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ]; ä → açıq uzun e"
+  },
+  "Ungarn": {
+   "rules": "ng → ŋg; r → ğ-yə yaxın boğaz səsi [ʁ] (variant)"
+  },
+  "Irland": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ] (variant); d → t"
+  },
+  "Griechenland": {
+   "rules": "ie → ii; ch → x’; d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Griechenland)."
+  },
+  "die Türkei": {
+   "rules": "ei → ay; r → ğ-yə yaxın boğaz səsi [ʁ] (variant)"
+  },
+  "die Ukraine": {
+   "rules": "a və i ayrı hecalardır; r → ğ-yə yaxın boğaz səsi [ʁ]"
+  },
+  "die Niederlande": {
+   "rules": "ie → ii; -esaitləşən r → qısa ə-yə yaxın [ɐ̯]"
+  },
+  "Südafrika": {
+   "rules": "s → z; d → t; r → ğ-yə yaxın boğaz səsi [ʁ]"
+  },
+  "Ich komme aus der Türkei.": {
+   "rules": "aus + Dativ: die → der (tək), die → den (cəm); r → ğ-yə yaxın boğaz səsi [ʁ] (Türkei); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der)."
+  },
+  "Ich komme aus der Ukraine.": {
+   "rules": "aus + Dativ: die → der (tək), die → den (cəm); r → ğ-yə yaxın boğaz səsi [ʁ] (Ukraine); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der)."
+  },
+  "Ich komme aus der Schweiz.": {
+   "rules": "aus + Dativ: die → der (tək), die → den (cəm); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der)."
+  },
+  "Und Sie? Woher kommen Sie?": {
+   "rules": "d → t; ie → ii; saitləşən r → qısa ə-yə yaxın [ɐ̯]"
+  },
+  "Woher kommen die Personen?": {
+   "rules": "ie → ii; s → z; Woher: saitləşən r → qısa ə-yə yaxın [ɐ̯]; Personen: r → ğ-yə yaxın boğaz səsi [ʁ]"
+  },
+  "Fragen und antworten Sie.": {
+   "rules": "r → ğ-yə yaxın boğaz səsi [ʁ]; w → v; ie → ii"
+  },
+  "Hören Sie die Lösungen auf der CD.": {
+   "rules": "ö uzun; s → z; ng → ŋ; CD hərflərlə; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören); saitləşən r → qısa ə-yə yaxın [ɐ̯] (der)."
+  },
+  "Er kommt aus Österreich.": {
+   "rules": "er → eeə̆; kommt: 3-cü şəxs; r → ğ-yə yaxın boğaz səsi [ʁ] (Österreich); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Er)."
+  },
+  "Sie kommt aus Frankreich.": {
+   "rules": "ie → ii; ei → ay; ch → x’; r → ğ-yə yaxın boğaz səsi [ʁ] (Frankreich)."
+  },
+  "Woher kommt Wolfgang Amadeus Mozart?": {
+   "pron": "Voheeə̆ komt Volfgaŋ Amadeeus Mootsağt?",
+   "ipa": "[voˈheːɐ̯ kɔmt ˈvɔlfɡaŋ amaˈdeːʊs ˈmoːtsaʁt]",
+   "rules": "Adın almanca oxunuşu göstərilib; r → ğ-yə yaxın boğaz səsi [ʁ] (Mozart); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Woher)."
+  },
+  "Wolfgang Amadeus Mozart kommt aus Österreich.": {
+   "pron": "Volfgaŋ Amadeeus Mootsağt komt aus Ööstəğayx’.",
+   "ipa": "[ˈvɔlfɡaŋ amaˈdeːʊs ˈmoːtsaʁt kɔmt aʊ̯s ˈøːstəʁaɪ̯ç]",
+   "rules": "Adın almanca oxunuşu göstərilib; r → ğ-yə yaxın boğaz səsi [ʁ] (Mozart, Österreich)."
+  },
+  "Woher kommt Madame Tussaud?": {
+   "rules": "Xüsusi adın IPA-sı daxil edilməyib; audio ilə dinlə; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Woher)."
+  },
+  "Madame Tussaud kommt aus Frankreich.": {
+   "rules": "Xüsusi adın IPA-sı daxil edilməyib; r → ğ-yə yaxın boğaz səsi [ʁ] (Frankreich)."
+  },
+  "aber": {
+   "rules": "-esaitləşən r → qısa ə-yə yaxın [ɐ̯]"
+  }
+ },
+ "Begegnungen A1+ · Kapitel 1 · A1 – Sich vorstellen (səh. 8)": {
+  "Sich vorstellen / Länder / Berufe": {
+   "pron": "Zix’ fooə̆ştelən / Lendə̆ / Bəğuufə",
+   "rules": "sich: s → z, ch → [ç]; vor: v → f; st → şt (stellen); ä → [ɛ]; vurğusuz -er → ə-yə yaxın [ɐ]; u → uzun [uː] (Berufe); r → ğ-yə yaxın boğaz səsi [ʁ] (Berufe)."
+  },
+  "Guten Morgen!": {
+   "pron": "Guutən moğgən!",
+   "rules": "u → uzun [uː]; r → ğ-yə yaxın boğaz səsi [ʁ]; -en zəif heca"
+  },
+  "Guten Tag!": {
+   "pron": "Guutən taak!"
+  },
+  "Guten Abend!": {
+   "pron": "Guutən aabənt!"
+  },
+  "A1 – Hören und lesen Sie.": {
+   "rules": "A1: A [aː], eins [aɪ̯ns]; ö → ö (Hören); s → z (lesen, Sie); ie → ii (Sie); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (Hören)"
+  },
+  "Ich heiße Franziska Binder.": {
+   "rules": "ch → yumşaq x’ [ç] (Ich); ei → ay (heiße); ß → s; z → ts (Franziska); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); r → ğ-yə yaxın boğaz səsi [ʁ] (Franziska); vurğusuz -er → ə-yə yaxın [ɐ] (Binder)."
+  },
+  "Ich bin 37 Jahre alt.": {
+   "rules": "ch → yumşaq x’ (Ich); 37 = siebenunddreißig: ie → ii, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre)"
+  },
+  "Ich bin Lehrerin.": {
+   "rules": "ch → yumşaq x’ (Ich); h → e uzadır (Lehrerin); h → oxunmur, e uzanır; hər iki r → ğ-yə yaxın boğaz səsi [ʁ] (Lehrerin)"
+  },
+  "Meine Muttersprache ist Deutsch.": {
+   "rules": "ei → ay (Meine); sp → şp (Muttersprache); ch → sərt x (Muttersprache); eu → oy (Deutsch); tsch → ç (Deutsch); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Mutter); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprache); vurğusuz -er → ə-yə yaxın [ɐ] (Muttersprache)."
+  },
+  "Ich spreche auch Spanisch und Englisch.": {
+   "rules": "ch → yumşaq x’ (Ich, spreche), sərt x (auch); sp → şp (spreche, Spanisch); sch → ş (Spanisch, Englisch); au → au (auch); ng → burun n [ŋ] (Englisch); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (spreche)"
+  },
+  "Guten Morgen. Ich heiße Franziska Binder. Ich bin 37 Jahre alt. Ich wohne in Wien. Ich bin Lehrerin. Meine Muttersprache ist Deutsch. Ich spreche auch Spanisch und Englisch.": {
+   "pron": "Guutən moğgən. İx’ haysə Fğantsiska Bində̆. İx’ bin ziibənuntdğaysix’ yaağə alt. İx’ voonə in Viin. İx’ bin leeğəğin. Maynə mutə̆şpğaaxə ist doyç. İx’ şpğex’ə aux şpaaniş unt eŋliş.",
+   "rules": "u → uzun [uː]; r → ğ-yə yaxın boğaz səsi [ʁ]; -en zəif heca; ch → yumşaq x’ [ç] (Ich); ei → ay (heiße); ß → s; z → ts (Franziska); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Binder); r → ğ-yə yaxın boğaz səsi [ʁ] (Franziska); ch → yumşaq x’ (Ich); 37 = siebenunddreißig: ie → ii, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre); ch → yumşaq x’ (Ich); w → v (wohne, Wien); h → o uzadır (wohne); ie → ii (Wien); ch → yumşaq x’ (Ich); h → e uzadır (Lehrerin); h → oxunmur, e uzanır; hər iki r → ğ-yə yaxın boğaz səsi [ʁ] (Lehrerin); ei → ay (Meine); sp → şp (Muttersprache); ch → sərt x (Muttersprache); eu → oy (Deutsch); tsch → ç (Deutsch); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Mutter); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprache); ch → yumşaq x’ (Ich, spreche), sərt x (auch); sp → şp (spreche, Spanisch); sch → ş (Spanisch, Englisch); au → au (auch); ng → burun n [ŋ] (Englisch); und: d → t; r → ğ-yə yaxın boğaz səsi [ʁ] (spreche); vurğusuz -er → ə-yə yaxın [ɐ] (Binder, Muttersprache)."
+  },
+  "Mein Name ist Peter Heinemann.": {
+   "rules": "ei → ay (Mein, Heinemann); a → uzun aa (Name); e → uzun ee (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); vurğusuz -er → ə-yə yaxın [ɐ] (Peter)."
+  },
+  "Ich bin 35 Jahre alt.": {
+   "rules": "ch → yumşaq x’ (Ich); 35 = fünfunddreißig: ü → ü, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre)"
+  },
+  "Ich komme aus Marburg.": {
+   "rules": "ch → [ç] (Ich); au → au; mm: əvvəlki sait qısadır; g → k (Marburg sonunda); r → ğ-yə yaxın boğaz səsi [ʁ] (Marburg)."
+  },
+  "Ich bin Informatiker.": {
+   "rules": "ch → yumşaq x’ (Ich); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Informatiker); r → ğ-yə yaxın boğaz səsi [ʁ] (Informatiker, ilk r); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (sonluq); vurğusuz -er → ə-yə yaxın [ɐ] (Informatiker)."
+  },
+  "Ich lerne jetzt Japanisch.": {
+   "rules": "ch → yumşaq x’ (Ich); j → y (jetzt, Japanisch); tz → ts (jetzt); sch → ş (Japanisch); r → ğ-yə yaxın boğaz səsi [ʁ] (lerne, samitli variant)"
+  },
+  "Guten Tag. Mein Name ist Peter Heinemann. Ich bin 35 Jahre alt. Ich komme aus Marburg. Ich bin Informatiker. Meine Muttersprache ist Deutsch. Ich lerne jetzt Japanisch.": {
+   "pron": "Guutən taak. Mayn naamə ist Peetə̆ Haynəman. İx’ bin fünfuntdğaysix’ yaağə alt. İx’ komə aus Mağbuğk. İx’ bin infoğmaatikə̆. Maynə mutə̆şpğaaxə ist doyç. İx’ leğnə yetst yapaaniş.",
+   "rules": "u, a uzundur; Tag sonunda g → k; ei → ay (Mein, Heinemann); a → uzun aa (Name); e → uzun ee (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Peter); ch → yumşaq x’ (Ich); 35 = fünfunddreißig: ü → ü, ei → ay, ß → s, -ig → yumşaq x’; J → y (Jahre); h → a uzadır; r → ğ-yə yaxın boğaz səsi [ʁ] (dreißig, Jahre); ch → [ç] (Ich); au → au; mm: əvvəlki sait qısadır; g → k (Marburg sonunda); ch → yumşaq x’ (Ich); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Informatiker); r → ğ-yə yaxın boğaz səsi [ʁ] (Informatiker, ilk r); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (sonluq); ei → ay (Meine); sp → şp (Muttersprache); ch → sərt x (Muttersprache); eu → oy (Deutsch); tsch → ç (Deutsch); -esaitləşən r → qısa ə-yə yaxın [ɐ̯] (Mutter); r → ğ-yə yaxın boğaz səsi [ʁ] (Sprache); ch → yumşaq x’ (Ich); j → y (jetzt, Japanisch); tz → ts (jetzt); sch → ş (Japanisch); r → ğ-yə yaxın boğaz səsi [ʁ] (lerne, samitli variant); vurğusuz -er → ə-yə yaxın [ɐ] (Peter, Informatiker, Muttersprache)."
+  },
+  "Mein Vorname ist Sarah.": {
+   "pron": "Mayn fooə̆naamə ist Zaağa.",
+   "rules": "ei → ay; V → f; Vorname: o və a uzun; Sarah: alman dilində S → z, son h oxunmur; adın tələffüzü şəxsdən asılı ola bilər; r → ğ-yə yaxın boğaz səsi [ʁ] (Sarah); saitləşən r → qısa ə-yə yaxın [ɐ̯] (Vorname)."
+  },
+  "Ich bin 22 Jahre alt.": {
+   "rules": "ch → [ç]; z → ts; ei → ay; und: d → t; -ig → [ɪç]; J → y; Jahre: a uzun; r → ğ-yə yaxın boğaz səsi [ʁ] (Jahre)."
+  },
+  "Ich komme aus Frankreich.": {
+   "rules": "ch → [ç] (Ich, Frankreich); au → au; nk → [ŋk]; ei → ay; r → ğ-yə yaxın boğaz səsi [ʁ]"
+  },
+  "Ich studiere in Paris Medizin.": {
+   "pron": "İx’ ştudiiğə in Pağiis meditsiin.",
+   "rules": "ch → [ç]; st → şt; ie → uzun i; z → ts; Paris: almanca [paˈʁiːs], fransızca son s səslənmir; r → ğ-yə yaxın boğaz səsi [ʁ] (studiere, Paris)."
+  },
+  "Meine Muttersprache ist Französisch.": {
+   "rules": "ei → ay; sp → şp (Sprache); ch → [x]; z → ts; ö → uzun [øː]; s → z; sch → ş; r → ğ-yə yaxın boğaz səsi [ʁ] (Muttersprache); vurğusuz -er → ə-yə yaxın [ɐ] (Muttersprache)."
+  },
+  "Ich spreche sehr gut Englisch und ein bisschen Spanisch.": {
+   "pron": "İx’ şpğex’ə zeeə̆ guut eŋliş unt ayn bisx’ən şpaaniş.",
+   "rules": "sp → şp (spreche, Spanisch); ch → [ç]; ng → [ŋ]; sch → ş; ei → ay; und: d → t; sehr, gut, Spanisch: uzun saitlər; r → ğ-yə yaxın boğaz səsi [ʁ] (spreche); saitləşən r → qısa ə-yə yaxın [ɐ̯] (sehr)."
+  },
+  "Hallo. Mein Vorname ist Sarah. Mein Familienname ist Mounier. Ich bin 22 Jahre alt. Ich komme aus Frankreich. Ich bin Studentin. Ich studiere in Paris Medizin. Meine Muttersprache ist Französisch. Ich spreche sehr gut Englisch und ein bisschen Spanisch.": {
+   "pron": "Haloo. Mayn fooə̆naamə ist Zaağa. Mayn famiilyənnaamə ist Munye. İx’ bin tsvayunttsvantsix’ yaağə alt. İx’ komə aus Fğaŋkğayx’. İx’ bin ştudentin. İx’ ştudiiğə in Pağiis meditsiin. Maynə mutə̆şpğaaxə ist fğantsööziş. İx’ şpğex’ə zeeə̆ guut eŋliş unt ayn bisx’ən şpaaniş.",
+   "rules": "Vurğu ikinci hecaya düşür; o → uzun [oː]; ei → ay; V → f; Vorname: o və a uzun; Sarah: alman dilində S → z, son h oxunmur; adın tələffüzü şəxsdən asılı ola bilər; ei → ay; Familienname: uzun [iː], [aː]; Mounier fransız soyadıdır, fransızca [mu.nje]; ch → [ç]; z → ts; ei → ay; und: d → t; -ig → [ɪç]; J → y; Jahre: a uzun; ch → [ç] (Ich, Frankreich); au → au; nk → [ŋk]; ei → ay; r → ğ-yə yaxın boğaz səsi [ʁ]; ch → [ç]; st → şt (söz əvvəlində); Studentin: vurğu dent hecasında; e → [ɛ]; ch → [ç]; st → şt; ie → uzun i; z → ts; Paris: almanca [paˈʁiːs], fransızca son s səslənmir; ei → ay; sp → şp (Sprache); ch → [x]; z → ts; ö → uzun [øː]; s → z; sch → ş; sp → şp (spreche, Spanisch); ch → [ç]; ng → [ŋ]; sch → ş; ei → ay; und: d → t; sehr, gut, Spanisch: uzun saitlər; saitləşən r → qısa ə-yə yaxın [ɐ̯] (Vorname, sehr); vurğusuz -er → ə-yə yaxın [ɐ] (Muttersprache)."
+  }
+ }
+};
+function updateLessonPronunciation(lesson){
+ if(!Object.hasOwn(LESSON_PRONUNCIATION_UPDATES,lesson.title))return;
+ const updates=LESSON_PRONUNCIATION_UPDATES[lesson.title];
+ for(const item of lesson.items){
+  if(Object.hasOwn(updates,item.de))Object.assign(item,updates[item.de]);
+ }
+}
 const COURSE_FILE_HASH='c6f64f4487a8b36fcb940f7a1fec4e6db59b09de712e073dbef41a150e2f7366';
 const COURSE_PDF_MODULE='https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.624/legacy/build/';
 let openCourseBook;
@@ -2554,6 +2799,7 @@ function renderCoursePageButton(panel,lesson){
  if(!button.hidden)button.textContent='Kitab səhifəsi · '+bookPageRange(lesson,lessonSection).page;
 }
 addCourseLessons();
+lessons.forEach(updateLessonPronunciation);
 mode=restoreMenu();render();smartRefresh();
 const publish=btn('Dərsi hamı ilə paylaş',async()=>{const token=$('aiToken').value.trim();if(!token){$('audioPanel').open=true;$('status').textContent='Administrator açarı lazımdır.';return}try{const lessonToPublish=lessons[li];const r=await fetch(AI_URL+'lessons',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(lessonToPublish)});if(!r.ok)throw Error('HTTP '+r.status);pendingLessons.delete(lessonToPublish.title);savePending();$('status').textContent='Dərs hamı ilə paylaşıldı.'}catch(e){$('status').textContent=e.message}});$('backup').after(publish);const publishVocab=btn('Gözləyən lüğət səhifələrini paylaş',async()=>{const token=$('aiToken').value.trim();if(!token){$('audioPanel').open=true;$('status').textContent='Administrator açarı lazımdır.';return}const arr=lessons.filter(l=>bookType(l)==='vocabulary'&&pendingLessons.has(l.title));if(!arr.length){$('status').textContent='Paylaşılmamış lüğət səhifəsi yoxdur.';return}if(!confirm(arr.length+' lüğət səhifəsi hamı ilə paylaşılsın? Mövcud dərslər saxlanılacaq.'))return;publishVocab.disabled=true;publish.disabled=true;let done=0;try{for(const l of arr){$('status').textContent='Paylaşılır: '+(done+1)+' / '+arr.length+' — '+l.title;const r=await fetch(AI_URL+'lessons',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+token},body:JSON.stringify(l)});if(!r.ok)throw Error('HTTP '+r.status);pendingLessons.delete(l.title);savePending();done++;}$('status').textContent=done+' / '+arr.length+' lüğət səhifəsi hamı ilə paylaşıldı.';}catch(e){$('status').textContent=done+' / '+arr.length+' səhifə paylaşıldı. '+e.message+'. Qalan səhifələr üçün düyməni yenidən basın.';}finally{publishVocab.disabled=false;publish.disabled=false;}});publish.after(publishVocab);
 async function loadPublishedVocabulary(){
@@ -2577,5 +2823,5 @@ async function loadPublishedVocabulary(){
  }catch{}
 }
 loadPublishedVocabulary();
-async function loadShared(){try{const r=await fetch(AI_URL+'lessons',{cache:'no-store'});if(!r.ok)return;const arr=await r.json();if(!Array.isArray(arr))return;for(const l of arr){if(!l||!Array.isArray(l.items)||!l.items.length||pendingLessons.has(l.title))continue;const i=lessons.findIndex(x=>x.title===l.title);if(i<0)lessons.push(l);else lessons[i]=l}if(!['Dinləyərək öyrən','Tərcümə'].includes(mode))render();smartRefresh()}catch{}}loadShared();
+async function loadShared(){try{const r=await fetch(AI_URL+'lessons',{cache:'no-store'});if(!r.ok)return;const arr=await r.json();if(!Array.isArray(arr))return;for(const l of arr){if(!l||!Array.isArray(l.items)||!l.items.length||pendingLessons.has(l.title))continue;const i=lessons.findIndex(x=>x.title===l.title);updateLessonPronunciation(l);if(i<0)lessons.push(l);else lessons[i]=l}if(!['Dinləyərək öyrən','Tərcümə'].includes(mode))render();smartRefresh()}catch{}}loadShared();
 </script></body></html>
